@@ -4,189 +4,684 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b14">
+<meta name="description" content="ORVIX — a global workspace for ideas, language and business.">
 <title>ORVIX — Made in Mian Abdullah</title>
 <style>
-:root{--bg:#0b1020;--panel:#141c30;--line:#29354c;--text:#f3f6ff;--muted:#a8b3c8;--blue:#6c8cff;--green:#51d6a2}
+:root{
+  --bg:#080b14;--panel:#101624;--panel2:#151d2e;
+  --line:#263148;--text:#f5f7ff;--muted:#9aa8bf;
+  --blue:#718cff;--purple:#a78bfa;--green:#4fe0b1;
+  --red:#ff7b91;--radius:18px;
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
-header{padding:20px 5%;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-.logo{font-size:25px;font-weight:900;letter-spacing:2px}
-.logo span{color:var(--blue)}
-small,.muted{color:var(--muted)}
-main{max-width:1050px;margin:auto;padding:30px 18px}
-h1{font-size:clamp(30px,6vw,52px);margin:10px 0}
-p{line-height:1.6}
-.hero{padding:28px 0}
-.tag{color:var(--green);font-weight:bold}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px;min-width:0}
-h2{font-size:20px;margin-top:0}
-label{display:block;margin:14px 0 7px;color:var(--muted);font-size:14px}
-input,textarea,select{width:100%;padding:12px;border-radius:9px;border:1px solid var(--line);background:#0b1222;color:white;font:inherit}
-textarea{resize:vertical;min-height:90px}
-button{background:var(--blue);color:#fff;border:0;border-radius:9px;padding:12px 15px;font-weight:bold;cursor:pointer;margin-top:12px}
-button.secondary{background:#29354c}
-button:focus,input:focus,textarea:focus,select:focus{outline:2px solid var(--blue);outline-offset:2px}
-.result{white-space:pre-wrap;overflow-wrap:anywhere;background:#0b1222;border-radius:10px;padding:13px;min-height:44px;margin-top:12px}
-nav{display:flex;gap:8px;flex-wrap:wrap}
-nav button{margin:0}
-footer{text-align:center;color:var(--muted);padding:28px;font-size:13px}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,textarea:focus-visible,
+select:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+button:disabled{opacity:.45;cursor:not-allowed}
+a{color:inherit}
+.app{min-height:100vh}
+.topbar{height:76px;position:sticky;top:0;z-index:20;
+display:flex;align-items:center;gap:18px;padding:0 24px;
+background:#080b14ed;backdrop-filter:blur(18px);
+border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:11px;min-width:220px}
+.brand-mark{width:42px;height:42px;display:grid;place-items:center;
+border-radius:14px;background:linear-gradient(135deg,#7d8cff,#9d73ed);
+font-size:22px;font-weight:900;box-shadow:0 0 28px #718cff30}
+.brand-name{font-weight:900;font-size:22px;letter-spacing:2px}
+.brand-sub{font-size:10px;color:var(--muted);letter-spacing:1.5px}
+.top-search{flex:1;max-width:560px;position:relative}
+.top-search input{width:100%;padding:12px 15px 12px 42px;
+background:var(--panel);border:1px solid var(--line);
+border-radius:12px;color:var(--text)}
+.search-icon{position:absolute;left:14px;top:11px;color:var(--muted)}
+.top-actions{margin-left:auto;display:flex;gap:10px;align-items:center}
+.btn{border:1px solid var(--line);border-radius:11px;
+padding:11px 15px;color:var(--text);background:var(--panel2);
+font-weight:650;transition:.2s}
+.btn:hover{transform:translateY(-1px);border-color:var(--blue)}
+.btn.primary{background:linear-gradient(135deg,#718cff,#866cf0);
+border-color:transparent;color:white}
+.btn.ghost{background:transparent}
+.icon-btn{width:42px;height:42px;display:grid;place-items:center;
+padding:0;border:1px solid var(--line);border-radius:12px;
+background:var(--panel);color:var(--text);font-size:18px}
+.layout{display:grid;grid-template-columns:248px minmax(0,1fr);
+max-width:1600px;margin:auto}
+.sidebar{padding:23px 15px 30px 20px;border-right:1px solid var(--line);
+height:calc(100vh - 76px);position:sticky;top:76px;overflow:auto}
+.nav-label{font-size:10px;letter-spacing:1.8px;color:var(--muted);
+padding:10px 12px}
+.nav-item{width:100%;display:flex;align-items:center;gap:13px;
+padding:12px;border:1px solid transparent;background:transparent;
+color:var(--muted);border-radius:12px;text-align:left;margin-bottom:4px}
+.nav-item .ico{width:23px;text-align:center;font-size:18px}
+.nav-item:hover,.nav-item.active{background:#718cff18;color:white}
+.nav-item.active{border-color:#718cff36}
+.sidebar-note{margin-top:28px;padding:16px;border:1px solid var(--line);
+background:linear-gradient(145deg,#171d32,#101624);border-radius:15px}
+.sidebar-note p{font-size:12px;color:var(--muted);line-height:1.7}
+.main{min-width:0;padding:30px clamp(16px,3vw,42px) 60px}
+.view{display:none;animation:fade .25s ease}
+.view.active{display:block}
+@keyframes fade{from{opacity:.4;transform:translateY(5px)}to{opacity:1;transform:none}}
+.eyebrow{color:var(--green);font-size:11px;font-weight:800;
+letter-spacing:2px;text-transform:uppercase}
+h1{font-size:clamp(30px,4vw,47px);line-height:1.12;
+letter-spacing:-1.7px;margin:12px 0}
+h2{font-size:21px;letter-spacing:-.4px;margin:0 0 10px}
+h3{font-size:15px;margin:0 0 8px}
+p{line-height:1.65}
+.muted{color:var(--muted)}
+.hero{position:relative;overflow:hidden;padding:36px;
+border:1px solid #303b64;border-radius:24px;
+background:radial-gradient(ellipse at 85% 10%,#7065dd30,transparent 45%),
+linear-gradient(125deg,#151d34,#0d1221 70%);margin-bottom:22px}
+.hero:after{content:"✳";position:absolute;right:7%;top:8%;
+font-size:clamp(100px,17vw,205px);color:#a2aaff12;pointer-events:none}
+.hero p{max-width:590px;color:#b4bfd4}
+.hero-buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:17px}
+.card{min-width:0;background:var(--panel);border:1px solid var(--line);
+border-radius:var(--radius);padding:21px}
+.span-4{grid-column:span 4}.span-5{grid-column:span 5}
+.span-6{grid-column:span 6}.span-7{grid-column:span 7}
+.span-8{grid-column:span 8}.span-12{grid-column:span 12}
+.card-head{display:flex;align-items:center;justify-content:space-between;
+gap:12px;margin-bottom:16px}
+.feature-icon{width:43px;height:43px;display:grid;place-items:center;
+background:#718cff18;border:1px solid #718cff30;border-radius:13px;
+font-size:20px;margin-bottom:15px}
+.pill{display:inline-flex;align-items:center;gap:6px;
+border:1px solid var(--line);border-radius:30px;padding:6px 10px;
+font-size:11px;color:var(--muted)}
+.pill.green{color:var(--green);border-color:#4fe0b136;background:#4fe0b10c}
+.pill.purple{color:#c4b5fd;border-color:#a78bfa35}
+.stat{font-size:29px;font-weight:850;letter-spacing:-1px;margin:9px 0}
+label{display:block;color:#c0cade;font-size:12px;margin:15px 0 7px}
+.field{width:100%;min-width:0;padding:12px 13px;border-radius:10px;
+border:1px solid var(--line);background:#0a101e;color:var(--text)}
+textarea.field{min-height:108px;resize:vertical;line-height:1.55}
+select.field option{background:#101624}
+.form-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.form-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}
+.output{background:#090f1b;border:1px solid #263148;border-radius:12px;
+padding:15px;min-height:65px;white-space:pre-wrap;overflow-wrap:anywhere;
+line-height:1.7;font-size:13px;margin-top:14px}
+.output:empty{display:none}
+.empty{color:var(--muted);font-size:13px}
+hr{border:0;border-top:1px solid var(--line);margin:19px 0}
+.chip-row{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}
+.chip{background:#101a2b;border:1px solid var(--line);color:#d7def0;
+padding:8px 11px;border-radius:30px;font-size:12px}
+.chip:hover{border-color:var(--blue)}
+.list-item{display:flex;justify-content:space-between;gap:12px;
+align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.list-item:last-child{border-bottom:0}
+.list-title{font-size:13px;font-weight:700;overflow-wrap:anywhere}
+.list-sub{font-size:11px;color:var(--muted);margin-top:5px}
+.small-btn{border:1px solid var(--line);border-radius:8px;
+padding:7px 9px;background:#151d2e;color:var(--text);font-size:11px}
+.status-dot{display:inline-block;width:7px;height:7px;
+background:var(--green);border-radius:50%;margin-right:6px}
+.notice{border:1px solid #718cff36;background:#718cff0d;
+border-radius:12px;padding:13px;font-size:12px;line-height:1.7;color:#c3cdea}
+footer{margin-top:36px;padding-top:20px;border-top:1px solid var(--line);
+display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;
+font-size:11px;color:var(--muted)}
+.mobile-nav{display:none}
+.toast{position:fixed;z-index:99;bottom:24px;right:24px;
+background:#17253a;border:1px solid #3b506f;color:white;
+padding:13px 17px;border-radius:12px;box-shadow:0 12px 40px #0006;
+max-width:calc(100vw - 32px);font-size:13px}
+[hidden]{display:none!important}
+@media(max-width:1050px){
+ .layout{grid-template-columns:210px minmax(0,1fr)}
+ .brand{min-width:190px}
+ .span-4{grid-column:span 6}
+ .span-5,.span-7,.span-8{grid-column:span 12}
+}
+@media(max-width:720px){
+ .topbar{height:65px;padding:0 13px;gap:10px}
+ .brand{min-width:0}.brand-mark{width:37px;height:37px}
+ .brand-name{font-size:19px}.brand-sub{font-size:8px}
+ .top-search{display:none}
+ .top-actions .desktop-only{display:none}
+ .layout{display:block}
+ .sidebar{display:none}
+ .main{padding:20px 13px 100px}
+ .hero{padding:23px 19px;border-radius:19px}
+ .hero:after{right:0;top:30px;font-size:110px}
+ .grid{gap:12px}
+ .span-4,.span-5,.span-6,.span-7,.span-8,.span-12{grid-column:span 12}
+ .card{padding:17px}
+ .mobile-nav{position:fixed;z-index:30;bottom:0;left:0;right:0;
+ display:flex;justify-content:space-around;gap:2px;padding:8px 3px;
+ background:#0c111ef5;border-top:1px solid var(--line);
+ padding-bottom:max(8px,env(safe-area-inset-bottom))}
+ .mobile-nav button{background:transparent;border:0;color:var(--muted);
+ font-size:10px;padding:6px 3px;display:flex;flex-direction:column;
+ gap:4px;align-items:center;min-width:0}
+ .mobile-nav button span{font-size:19px}
+ .mobile-nav button.active{color:#aabaff}
+ .form-row{grid-template-columns:1fr}
+ footer{padding-bottom:15px}
+}
 </style>
 </head>
 <body>
-<header>
-  <div class="logo"><span>O</span>RVIX <small>WORKSPACE</small></div>
-  <nav>
-    <button class="secondary" onclick="showTab('home')">Home</button>
-    <button class="secondary" onclick="showTab('listing')">Listing</button>
-    <button class="secondary" onclick="showTab('profit')">Profit</button>
-    <button class="secondary" onclick="showTab('language')">Language</button>
-  </nav>
+<div class="app">
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark">O</div>
+    <div><div class="brand-name">ORVIX</div>
+      <div class="brand-sub">MADE IN MIAN ABDULLAH</div></div>
+  </div>
+  <div class="top-search">
+    <span class="search-icon">⌕</span>
+    <input id="globalSearch" type="search" placeholder="Search tools and workspace..." aria-label="Search workspace">
+  </div>
+  <div class="top-actions">
+    <button class="icon-btn" id="themeButton" title="Change appearance" aria-label="Change appearance">◐</button>
+    <button class="btn primary desktop-only" data-go="workspace">＋ New project</button>
+  </div>
 </header>
 
-<main>
-<section class="hero" id="home">
-  <div class="tag">YOUR IDEAS. MORE POSSIBILITIES.</div>
-  <h1>One workspace.<br><span style="color:var(--blue)">A world of ideas.</span></h1>
-  <p class="muted">ORVIX helps you prepare product listings, estimate profit
-  and organize multilingual business drafts in one place.</p>
-  <button onclick="showTab('listing')">Create a listing →</button>
+<div class="layout">
+<aside class="sidebar">
+  <div class="nav-label">WORKSPACE</div>
+  <button class="nav-item active" data-view="home"><span class="ico">⌂</span>Overview</button>
+  <button class="nav-item" data-view="workspace"><span class="ico">✧</span>My workspace</button>
+  <button class="nav-item" data-view="listing"><span class="ico">▤</span>Listing builder</button>
+  <button class="nav-item" data-view="profit"><span class="ico">$</span>Profit calculator</button>
+  <button class="nav-item" data-view="language"><span class="ico">文</span>Language studio</button>
+  <button class="nav-item" data-view="saved"><span class="ico">▣</span>Saved drafts</button>
+  <div class="nav-label" style="margin-top:19px">ACCOUNT</div>
+  <button class="nav-item" data-view="about"><span class="ico">ⓘ</span>About ORVIX</button>
+  <div class="sidebar-note">
+    <div class="pill green"><span class="status-dot"></span>Prototype active</div>
+    <h3 style="margin-top:14px">Build something useful.</h3>
+    <p>Start with one idea. Test it. Improve it. Grow with real users.</p>
+    <button class="btn" style="width:100%" data-go="workspace">Explore workspace →</button>
+  </div>
+</aside>
+
+<main class="main">
+<section class="view active" id="view-home">
+  <div class="hero">
+    <div class="eyebrow">YOUR GLOBAL WORKSPACE</div>
+    <h1>Ideas deserve<br>to go <span style="color:#9baaff">further.</span></h1>
+    <p>Prepare business drafts, explore languages, estimate profit and organize your ideas in one simple workspace.</p>
+    <div class="hero-buttons">
+      <button class="btn primary" data-go="workspace">✧ Open workspace</button>
+      <button class="btn" data-go="listing">Create a listing ↗</button>
+    </div>
+  </div>
+
+  <div class="grid">
+    <article class="card span-4">
+      <div class="feature-icon">✧</div>
+      <h2>Listing builder</h2>
+      <p class="muted">Create a reusable product title and description draft.</p>
+      <button class="btn" data-go="listing">Start creating →</button>
+    </article>
+    <article class="card span-4">
+      <div class="feature-icon">＄</div>
+      <h2>Profit calculator</h2>
+      <p class="muted">Estimate fees, profit and margin before you sell.</p>
+      <button class="btn" data-go="profit">Calculate →</button>
+    </article>
+    <article class="card span-4">
+      <div class="feature-icon">文</div>
+      <h2>Language studio</h2>
+      <p class="muted">Prepare multilingual communication drafts.</p>
+      <button class="btn" data-go="language">Open studio →</button>
+    </article>
+    <article class="card span-7">
+      <div class="card-head"><h2>Your workspace</h2><span class="pill" id="draftCount">0 drafts</span></div>
+      <p class="muted">Your saved projects and drafts will appear here.</p>
+      <div id="recentDrafts"><p class="empty">No drafts yet. Create your first one.</p></div>
+      <button class="btn" data-go="saved">View all drafts →</button>
+    </article>
+    <article class="card span-5">
+      <div class="card-head"><h2>Quick start</h2><span class="pill green">3 steps</span></div>
+      <div class="list-item"><div><div class="list-title">01 · Enter your idea</div><div class="list-sub">Start with a product or task.</div></div><span>✎</span></div>
+      <div class="list-item"><div><div class="list-title">02 · Build your draft</div><div class="list-sub">Use the tools in your workspace.</div></div><span>✧</span></div>
+      <div class="list-item"><div><div class="list-title">03 · Save and review</div><div class="list-sub">Keep your work on this device.</div></div><span>✓</span></div>
+    </article>
+  </div>
 </section>
 
-<div class="grid">
-<section class="card" id="listing">
-  <h2>✦ Product Listing Builder</h2>
-  <label for="product">Product name</label>
-  <input id="product" placeholder="e.g. Wireless headphones">
-  <label for="details">Product details</label>
-  <textarea id="details" placeholder="Features, size, material, benefits..."></textarea>
-  <label for="audience">Target customer</label>
-  <input id="audience" placeholder="e.g. UK online shoppers">
-  <button onclick="makeListing()">Create draft</button>
-  <button class="secondary" onclick="copyText('listingResult')">Copy draft</button>
-  <div class="result" id="listingResult">Your listing draft will appear here.</div>
+<section class="view" id="view-workspace">
+  <div class="eyebrow">YOUR IDEAS, ORGANIZED</div>
+  <h1>My workspace</h1>
+  <p class="muted">Create a project note and save it locally in your browser.</p>
+  <div class="grid">
+    <article class="card span-7">
+      <h2>New project note</h2>
+      <label for="projectTitle">Project name</label>
+      <input class="field" id="projectTitle" maxlength="100" placeholder="e.g. My first online store">
+      <label for="projectNotes">Your idea or next steps</label>
+      <textarea class="field" id="projectNotes" maxlength="10000" placeholder="Write what you want to build, who it helps, and what to do next..."></textarea>
+      <div class="form-actions">
+        <button class="btn primary" id="saveProject">Save project</button>
+        <button class="btn" id="clearProject">Clear fields</button>
+      </div>
+      <div class="output" id="projectMessage" aria-live="polite"></div>
+    </article>
+    <article class="card span-5">
+      <h2>Saved projects</h2>
+      <p class="muted">Projects are stored in this browser only.</p>
+      <div id="projectList"><p class="empty">No saved projects yet.</p></div>
+    </article>
+  </div>
 </section>
 
-<section class="card" id="profit">
-  <h2>＄ Profit Calculator</h2>
-  <label for="cost">Product cost (USD)</label>
-  <input id="cost" type="number" min="0" step="0.01" placeholder="10">
-  <label for="shipping">Shipping cost (USD)</label>
-  <input id="shipping" type="number" min="0" step="0.01" placeholder="3">
-  <label for="price">Selling price (USD)</label>
-  <input id="price" type="number" min="0" step="0.01" placeholder="25">
-  <label for="fees">Estimated fees (%)</label>
-  <input id="fees" type="number" min="0" max="100" step="0.1" value="10">
-  <button onclick="calculate()">Calculate profit</button>
-  <div class="result" id="profitResult">Enter your numbers to begin.</div>
-  <small>Estimate only. Include taxes, returns and other costs separately.</small>
+<section class="view" id="view-listing">
+  <div class="eyebrow">BUSINESS TOOLS</div>
+  <h1>Listing builder</h1>
+  <p class="muted">Generate a structured first draft from your product details.</p>
+  <div class="grid">
+    <article class="card span-6">
+      <h2>Product information</h2>
+      <label for="productName">Product name *</label>
+      <input class="field" id="productName" maxlength="150" placeholder="Wireless headphones">
+      <label for="productDetails">Features and specifications</label>
+      <textarea class="field" id="productDetails" maxlength="3000" placeholder="Battery life, materials, size, included items..."></textarea>
+      <div class="form-row">
+        <div><label for="productAudience">Target market</label>
+          <select class="field" id="productAudience"><option>General customers</option><option>UK shoppers</option><option>US shoppers</option><option>Saudi Arabian shoppers</option><option>Business buyers</option></select>
+        </div>
+        <div><label for="listingTone">Writing style</label>
+          <select class="field" id="listingTone"><option>Professional</option><option>Friendly</option><option>Short and simple</option></select>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn primary" id="buildListing">Generate draft</button>
+        <button class="btn" id="saveListing">Save draft</button>
+      </div>
+    </article>
+    <article class="card span-6">
+      <div class="card-head"><h2>Listing preview</h2><span class="pill">Editable draft</span></div>
+      <div class="output" id="listingOutput" aria-live="polite">Your product listing will appear here.</div>
+      <div class="form-actions">
+        <button class="btn" id="copyListing">Copy text</button>
+        <button class="btn" id="downloadListing">Download .txt</button>
+      </div>
+      <p class="muted" style="font-size:11px">This tool formats your input into a draft. It does not call an AI model or verify product claims.</p>
+    </article>
+  </div>
 </section>
 
-<section class="card" id="language">
-  <h2>◎ Language Workspace</h2>
-  <label for="source">Text to prepare</label>
-  <textarea id="source" placeholder="Write a message in your language..."></textarea>
-  <label for="target">Target language</label>
-  <select id="target">
-    <option>English</option><option>Urdu</option><option>Arabic</option>
-  </select>
-  <button onclick="prepareMessage()">Prepare message</button>
-  <button class="secondary" onclick="copyText('languageResult')">Copy text</button>
-  <div class="result" id="languageResult">Your prepared message will appear here.</div>
-  <small>This first version does not translate languages automatically.</small>
+<section class="view" id="view-profit">
+  <div class="eyebrow">BUSINESS TOOLS</div>
+  <h1>Profit calculator</h1>
+  <p class="muted">Estimate your per-item profit before spending money on inventory or ads.</p>
+  <div class="grid">
+    <article class="card span-6">
+      <h2>Your numbers</h2>
+      <div class="form-row">
+        <div><label for="cost">Product cost ($)</label><input class="field" id="cost" type="number" min="0" step=".01" placeholder="10"></div>
+        <div><label for="shipping">Shipping cost ($)</label><input class="field" id="shipping" type="number" min="0" step=".01" placeholder="3"></div>
+        <div><label for="sellingPrice">Selling price ($)</label><input class="field" id="sellingPrice" type="number" min="0" step=".01" placeholder="25"></div>
+        <div><label for="feeRate">Platform fees (%)</label><input class="field" id="feeRate" type="number" min="0" max="100" step=".1" value="10"></div>
+        <div><label for="adCost">Advertising per sale ($)</label><input class="field" id="adCost" type="number" min="0" step=".01" value="0"></div>
+        <div><label for="otherCost">Other costs ($)</label><input class="field" id="otherCost" type="number" min="0" step=".01" value="0"></div>
+      </div>
+      <button class="btn primary" id="calculateProfit" style="margin-top:20px">Calculate estimate</button>
+    </article>
+    <article class="card span-6">
+      <h2>Estimated result</h2>
+      <div class="pill">Illustrative calculation only</div>
+      <div class="muted" style="margin-top:20px">Profit per sale</div>
+      <div class="stat" id="profitValue">$0.00</div>
+      <div class="list-item"><span class="muted">Platform fee</span><strong id="feeValue">$0.00</strong></div>
+      <div class="list-item"><span class="muted">Total costs</span><strong id="totalCostValue">$0.00</strong></div>
+      <div class="list-item"><span class="muted">Profit margin</span><strong id="marginValue">0%</strong></div>
+      <div class="output" id="profitMessage" aria-live="polite">Enter your figures and calculate.</div>
+      <p class="muted" style="font-size:11px">Does not automatically account for tax, refunds, currency conversion, or every marketplace charge.</p>
+    </article>
+  </div>
 </section>
 
-<section class="card">
-  <h2>▣ My Saved Drafts</h2>
-  <p class="muted">Save a listing draft in this browser for later.</p>
-  <button onclick="saveDraft()">Save current listing</button>
-  <button class="secondary" onclick="loadDraft()">Load saved listing</button>
-  <button class="secondary" onclick="deleteDraft()">Delete saved listing</button>
-  <div class="result" id="savedResult">No action taken yet.</div>
-  <small>Saved locally on this device, not synced across devices.</small>
+<section class="view" id="view-language">
+  <div class="eyebrow">GLOBAL COMMUNICATION</div>
+  <h1>Language studio</h1>
+  <p class="muted">Organize a message and prepare it for translation or later review.</p>
+  <div class="grid">
+    <article class="card span-6">
+      <h2>Your original message</h2>
+      <label for="sourceLanguage">Original language</label>
+      <select class="field" id="sourceLanguage"><option>Urdu</option><option>English</option><option>Arabic</option><option>Other / unknown</option></select>
+      <label for="sourceText">Message</label>
+      <textarea class="field" id="sourceText" maxlength="10000" placeholder="Write your message here..."></textarea>
+      <label for="targetLanguage">Desired language</label>
+      <select class="field" id="targetLanguage"><option>English</option><option>Urdu</option><option>Arabic</option><option>Chinese</option><option>Spanish</option><option>French</option></select>
+      <div class="form-actions">
+        <button class="btn primary" id="prepareTranslation">Prepare request</button>
+        <button class="btn" id="saveLanguage">Save message</button>
+      </div>
+    </article>
+    <article class="card span-6">
+      <h2>Translation workspace</h2>
+      <div class="notice">Automatic translation is not connected in this version. Your original text will be preserved so it can be sent to a translation service in a future version.</div>
+      <div class="output" id="languageOutput" aria-live="polite">Your translation request will appear here.</div>
+      <div class="form-actions"><button class="btn" id="copyLanguage">Copy request</button></div>
+    </article>
+  </div>
 </section>
-</div>
+
+<section class="view" id="view-saved">
+  <div class="eyebrow">YOUR LOCAL LIBRARY</div>
+  <h1>Saved drafts</h1>
+  <p class="muted">View or delete drafts stored in this browser.</p>
+  <div class="card">
+    <div class="card-head"><h2>All saved items</h2><button class="btn" id="refreshDrafts">Refresh</button></div>
+    <div id="allDrafts"><p class="empty">No drafts saved yet.</p></div>
+  </div>
+  <div class="notice" style="margin-top:16px">Important: browser storage is not an online account or cloud backup. Clearing browser data can remove saved items. Do not store passwords or sensitive information here.</div>
+</section>
+
+<section class="view" id="view-about">
+  <div class="eyebrow">OUR VISION</div>
+  <h1>Meet ORVIX</h1>
+  <div class="grid">
+    <article class="card span-7">
+      <div class="feature-icon">✧</div>
+      <h2>One platform. More possibilities.</h2>
+      <p class="muted">ORVIX is an early-stage concept for a global workspace that helps people organize ideas, prepare business content and communicate across languages.</p>
+      <h3>Our starting principles</h3>
+      <div class="list-item"><span>Useful before complicated</span><span>✓</span></div>
+      <div class="list-item"><span>Test with real users</span><span>✓</span></div>
+      <div class="list-item"><span>Protect users' data</span><span>✓</span></div>
+      <div class="list-item"><span>Grow through real value</span><span>✓</span></div>
+    </article>
+    <article class="card span-5">
+      <h2>Current version</h2>
+      <div class="pill green">Frontend prototype</div>
+      <p class="muted">The tools run in your browser. Real AI, secure cloud accounts, live communication, marketplace integrations and payments are not connected yet.</p>
+      <hr>
+      <h3>Created for the vision</h3>
+      <p>ORVIX<br><strong>MADE IN MIAN ABDULLAH</strong></p>
+      <button class="btn primary" data-go="workspace">Start your first project →</button>
+    </article>
+  </div>
+</section>
+
+<footer><span>ORVIX © <span id="year"></span> · MADE IN MIAN ABDULLAH</span><span>Build honestly. Improve continuously.</span></footer>
 </main>
-<footer>ORVIX — MADE IN MIAN ABDULLAH<br>Early prototype • Built step by step</footer>
+</div>
+</div>
+
+<nav class="mobile-nav" aria-label="Mobile navigation">
+  <button class="active" data-view="home"><span>⌂</span>Home</button>
+  <button data-view="workspace"><span>✧</span>Workspace</button>
+  <button data-view="listing"><span>▤</span>Listing</button>
+  <button data-view="profit"><span>$</span>Profit</button>
+  <button data-view="language"><span>文</span>Language</button>
+</nav>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
 <script>
-function el(id){return document.getElementById(id)}
-function showTab(id){
-  el(id).scrollIntoView({behavior:"smooth",block:"start"});
+"use strict";
+const $=id=>document.getElementById(id);
+const KEYS={drafts:"orvix_hd_drafts_v1",projects:"orvix_hd_projects_v1",theme:"orvix_hd_theme_v1"};
+let drafts=[],projects=[],toastTimer;
+
+function notify(message){
+  const box=$("toast");
+  box.textContent=message;box.hidden=false;
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>box.hidden=true,2600);
 }
-function makeListing(){
-  const p=el("product").value.trim();
-  const d=el("details").value.trim();
-  const a=el("audience").value.trim();
-  if(!p){el("listingResult").textContent="Please enter a product name.";return}
-  el("listingResult").textContent=
-    "TITLE: "+p+"\n\n"+
-    "DESCRIPTION:\n"+p+" for "+(a||"your target customers")+".\n"+
-    (d?"Product details: "+d+"\n":"")+
-    "\nPlease verify every product claim before publishing.";
+function readStore(key,fallback=[]){
+  try{
+    const raw=localStorage.getItem(key);
+    if(!raw)return fallback;
+    const data=JSON.parse(raw);
+    return Array.isArray(fallback)&&Array.isArray(data)?data:
+      (typeof data==="string"?data:fallback);
+  }catch(e){return fallback}
 }
-function calculate(){
-  const c=Number(el("cost").value);
-  const s=Number(el("shipping").value);
-  const p=Number(el("price").value);
-  const f=Number(el("fees").value);
-  if(el("cost").value===""||el("shipping").value===""||
-     el("price").value===""||![c,s,p,f].every(Number.isFinite)||
-     c<0||s<0||p<0||f<0||f>100){
-    el("profitResult").textContent="Enter valid non-negative numbers. Fees must be 0–100%.";
-    return;
+function writeStore(key,value){
+  try{localStorage.setItem(key,JSON.stringify(value));return true}
+  catch(e){notify("Browser storage is full or unavailable.");return false}
+}
+function escapeHTML(value){
+  return String(value).replace(/[&<>"']/g,ch=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[ch]));
+}
+function safeText(value){return String(value??"").trim()}
+function makeId(){return Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,8)}
+function go(view){
+  const target=$("view-"+view);
+  if(!target){notify("Page not found.");return}
+  document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v===target));
+  document.querySelectorAll("[data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===view));
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+document.querySelectorAll("[data-view]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.view)));
+document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.go)));
+
+function downloadText(filename,text){
+  const blob=new Blob([text],{type:"text/plain;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;a.download=filename;
+  document.body.appendChild(a);a.click();a.remove();
+  URL.revokeObjectURL(url);
+}
+async function copyValue(text){
+  if(!text){notify("There is no text to copy.");return}
+  try{
+    if(navigator.clipboard&&window.isSecureContext){
+      await navigator.clipboard.writeText(text);
+    }else{
+      const area=document.createElement("textarea");
+      area.value=text;area.style.position="fixed";area.style.opacity="0";
+      document.body.appendChild(area);area.select();
+      const ok=document.execCommand("copy");area.remove();
+      if(!ok)throw new Error("Copy unavailable");
+    }
+    notify("Copied to clipboard.");
+  }catch(e){notify("Copy failed. Select the text and copy it manually.")}
+}
+
+/* Product listing builder: template formatting, not an AI service. */
+function buildListing(){
+  const name=safeText($("productName").value);
+  const details=safeText($("productDetails").value);
+  const audience=$("productAudience").value;
+  const tone=$("listingTone").value;
+  if(!name){notify("Please enter a product name.");$("productName").focus();return ""}
+  const intro=tone==="Friendly"?"Meet your new "+name+".":
+    tone==="Short and simple"?name+" for "+audience+".":name+" designed for "+audience+".";
+  const output="PRODUCT TITLE\n"+name+
+    "\n\nDESCRIPTION\n"+intro+
+    (details?"\n\nFEATURES AND DETAILS\n"+details:"\n\nAdd verified product specifications before publishing.")+
+    "\n\nPLEASE CHECK\nVerify accuracy, availability, product claims and marketplace policies before publishing.";
+  $("listingOutput").textContent=output;
+  return output;
+}
+$("buildListing").addEventListener("click",buildListing);
+$("copyListing").addEventListener("click",()=>copyValue($("listingOutput").textContent));
+$("downloadListing").addEventListener("click",()=>{
+  const text=$("listingOutput").textContent;
+  if(!text||text==="Your product listing will appear here."){notify("Generate a listing first.");return}
+  downloadText("orvix-product-listing.txt",text);
+});
+$("saveListing").addEventListener("click",()=>{
+  const text=buildListing();if(!text)return;
+  addDraft("Product listing",text);
+});
+
+/* Profit calculator. Fees are applied to selling price. */
+function num(id){return Number($(id).value)}
+function validMoney(id){
+  const v=$(id).value;
+  return v!==""&&Number.isFinite(Number(v))&&Number(v)>=0;
+}
+function calculateProfit(){
+  const moneyFields=["cost","shipping","sellingPrice","adCost","otherCost"];
+  if(!moneyFields.every(validMoney)||!validMoney("feeRate")||num("feeRate")>100){
+    $("profitMessage").textContent="Please enter valid non-negative numbers. Platform fees must be between 0 and 100%.";
+    notify("Check your calculator inputs.");return;
   }
-  const fee=p*f/100, profit=p-c-s-fee;
-  const margin=p>0?profit/p*100:null;
-  el("profitResult").textContent=
-    "Estimated fees: $"+fee.toFixed(2)+
-    "\nEstimated profit: $"+profit.toFixed(2)+
-    (margin===null?"":"\nProfit margin: "+margin.toFixed(1)+"%");
+  const price=num("sellingPrice"),fee=price*num("feeRate")/100;
+  const costs=num("cost")+num("shipping")+num("adCost")+num("otherCost")+fee;
+  const profit=price-costs,margin=price>0?profit/price*100:null;
+  const usd=v=>new Intl.NumberFormat("en-US",{style:"currency",currency:"USD"}).format(v);
+  $("profitValue").textContent=usd(profit);
+  $("profitValue").style.color=profit<0?"var(--red)":"var(--green)";
+  $("feeValue").textContent=usd(fee);
+  $("totalCostValue").textContent=usd(costs);
+  $("marginValue").textContent=margin===null?"Not available":margin.toFixed(1)+"%";
+  $("profitMessage").textContent=profit<0?
+    "This estimate shows a loss per sale. Review your price and costs.":
+    "Estimated result only. Check actual supplier costs, payment charges, taxes, returns and currency conversion.";
 }
-function prepareMessage(){
-  const t=el("source").value.trim();
-  if(!t){el("languageResult").textContent="Please enter your message.";return}
-  el("languageResult").textContent=
-    "TARGET LANGUAGE: "+el("target").value+
-    "\n\nOriginal text:\n"+t+
-    "\n\nTranslation is not connected yet. This is a saved text draft, not a translation.";
+$("calculateProfit").addEventListener("click",calculateProfit);
+
+/* Language request organizer: no fake translation. */
+function prepareLanguage(){
+  const source=safeText($("sourceText").value);
+  if(!source){notify("Enter your message first.");return ""}
+  const output="TRANSLATION REQUEST\nFrom: "+$("sourceLanguage").value+
+    "\nTo: "+$("targetLanguage").value+
+    "\n\nORIGINAL TEXT\n"+source+
+    "\n\nSTATUS\nTranslation service is not connected in this prototype. The text above is preserved for later translation.";
+  $("languageOutput").textContent=output;return output;
 }
-function copyText(id){
-  const text=el(id).textContent;
-  if(!text){return}
-  if(navigator.clipboard&&window.isSecureContext){
-    navigator.clipboard.writeText(text).then(()=>alert("Copied!"))
-      .catch(()=>alert("Copy failed. Please select the text and copy it."));
-  }else{
-    alert("Clipboard access needs a secure context. Please select and copy the text.");
+$("prepareTranslation").addEventListener("click",prepareLanguage);
+$("copyLanguage").addEventListener("click",()=>copyValue($("languageOutput").textContent));
+$("saveLanguage").addEventListener("click",()=>{
+  const text=prepareLanguage();if(text)addDraft("Language message",text);
+});
+
+/* Saved drafts in local browser storage. */
+function addDraft(title,content){
+  drafts.unshift({id:makeId(),title,content,created:new Date().toISOString()});
+  drafts=drafts.slice(0,100);
+  if(writeStore(KEYS.drafts,drafts)){renderDrafts();notify("Draft saved on this device.");}
+}
+function removeDraft(id){
+  drafts=drafts.filter(d=>d.id!==id);
+  if(writeStore(KEYS.drafts,drafts)){renderDrafts();notify("Draft deleted.");}
+}
+function renderDrafts(){
+  $("draftCount").textContent=drafts.length+" draft"+(drafts.length===1?"":"s");
+  const recent=drafts.slice(0,3);
+  $("recentDrafts").innerHTML=recent.length?recent.map(d=>`
+    <div class="list-item"><div style="min-width:0">
+      <div class="list-title">${escapeHTML(d.title)}</div>
+      <div class="list-sub">${escapeHTML(new Date(d.created).toLocaleString())}</div>
+    </div><button class="small-btn" data-open-draft="${escapeHTML(d.id)}">Open</button></div>`).join(""):
+    '<p class="empty">No drafts yet. Create your first one.</p>';
+  $("allDrafts").innerHTML=drafts.length?drafts.map(d=>`
+    <div class="list-item"><div style="min-width:0;flex:1">
+      <div class="list-title">${escapeHTML(d.title)}</div>
+      <div class="list-sub">${escapeHTML(new Date(d.created).toLocaleString())}</div>
+      <div class="list-sub">${escapeHTML(d.content.slice(0,130))}</div>
+    </div><div style="display:flex;gap:6px;flex-wrap:wrap">
+      <button class="small-btn" data-open-draft="${escapeHTML(d.id)}">Open</button>
+      <button class="small-btn" data-copy-draft="${escapeHTML(d.id)}">Copy</button>
+      <button class="small-btn" data-delete-draft="${escapeHTML(d.id)}">Delete</button>
+    </div></div>`).join(""):
+    '<p class="empty">No drafts saved yet. Create a listing or message and save it.</p>';
+}
+document.addEventListener("click",e=>{
+  const open=e.target.closest("[data-open-draft]");
+  const del=e.target.closest("[data-delete-draft]");
+  const copy=e.target.closest("[data-copy-draft]");
+  if(open){
+    const d=drafts.find(x=>x.id===open.dataset.openDraft);
+    if(d){$("projectTitle").value=d.title;$("projectNotes").value=d.content;
+      $("projectMessage").textContent="Draft opened in project editor.";go("workspace");}
   }
+  if(del)removeDraft(del.dataset.deleteDraft);
+  if(copy){const d=drafts.find(x=>x.id===copy.dataset.copyDraft);if(d)copyValue(d.content);}
+});
+$("refreshDrafts").addEventListener("click",()=>{drafts=readStore(KEYS.drafts,[]);renderDrafts();notify("Draft list refreshed.");});
+
+/* Project notes. */
+function renderProjects(){
+  $("projectList").innerHTML=projects.length?projects.map(p=>`
+    <div class="list-item"><div style="min-width:0">
+      <div class="list-title">${escapeHTML(p.title)}</div>
+      <div class="list-sub">${escapeHTML(new Date(p.created).toLocaleString())}</div>
+    </div><button class="small-btn" data-load-project="${escapeHTML(p.id)}">Load</button></div>`).join(""):
+    '<p class="empty">No saved projects yet.</p>';
 }
-function saveDraft(){
-  try{
-    localStorage.setItem("orvixListing",JSON.stringify({
-      product:el("product").value,details:el("details").value,
-      audience:el("audience").value,result:el("listingResult").textContent
-    }));
-    el("savedResult").textContent="Draft saved in this browser.";
-  }catch(e){el("savedResult").textContent="Could not save draft in this browser."}
+$("saveProject").addEventListener("click",()=>{
+  const title=safeText($("projectTitle").value),notes=safeText($("projectNotes").value);
+  if(!title){notify("Enter a project name first.");$("projectTitle").focus();return}
+  projects.unshift({id:makeId(),title,notes,created:new Date().toISOString()});
+  projects=projects.slice(0,100);
+  if(writeStore(KEYS.projects,projects)){
+    $("projectMessage").textContent="Project saved in this browser.";
+    renderProjects();notify("Project saved.");
+  }
+});
+$("clearProject").addEventListener("click",()=>{
+  $("projectTitle").value="";$("projectNotes").value="";
+  $("projectMessage").textContent="Fields cleared.";
+});
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-load-project]");if(!b)return;
+  const p=projects.find(x=>x.id===b.dataset.loadProject);if(!p)return;
+  $("projectTitle").value=p.title;$("projectNotes").value=p.notes;
+  $("projectMessage").textContent="Project loaded for editing.";
+});
+
+/* Theme preference. */
+function applyTheme(theme){
+  const light=theme==="light";
+  const vars=light?{
+    "--bg":"#f2f5fb","--panel":"#ffffff","--panel2":"#e9eef8",
+    "--line":"#d7dfed","--text":"#172036","--muted":"#5f6e85"
+  }:{
+    "--bg":"#080b14","--panel":"#101624","--panel2":"#151d2e",
+    "--line":"#263148","--text":"#f5f7ff","--muted":"#9aa8bf"
+  };
+  Object.entries(vars).forEach(([k,v])=>document.documentElement.style.setProperty(k,v));
+  $("themeButton").textContent=light?"☼":"◐";
+  try{localStorage.setItem(KEYS.theme,theme)}catch(e){}
 }
-function loadDraft(){
-  try{
-    const d=JSON.parse(localStorage.getItem("orvixListing")||"null");
-    if(!d){el("savedResult").textContent="No saved draft found.";return}
-    el("product").value=d.product||"";
-    el("details").value=d.details||"";
-    el("audience").value=d.audience||"";
-    el("listingResult").textContent=d.result||"";
-    el("savedResult").textContent="Draft loaded.";
-  }catch(e){el("savedResult").textContent="Could not load draft."}
-}
-function deleteDraft(){
-  try{
-    localStorage.removeItem("orvixListing");
-    el("savedResult").textContent="Saved draft deleted from this browser.";
-  }catch(e){el("savedResult").textContent="Could not delete draft."}
-}
+$("themeButton").addEventListener("click",()=>{
+  let current="dark";try{current=localStorage.getItem(KEYS.theme)||"dark"}catch(e){}
+  applyTheme(current==="dark"?"light":"dark");
+});
+
+/* Simple local search across app tools. */
+$("globalSearch").addEventListener("keydown",e=>{
+  if(e.key!=="Enter")return;
+  const q=safeText(e.target.value).toLowerCase();
+  if(!q)return;
+  const choices=[
+    ["listing",["listing","product","description","title"]],
+    ["profit",["profit","price","cost","calculator","fees"]],
+    ["language",["language","translate","translation","urdu","arabic"]],
+    ["saved",["saved","draft","library"]],
+    ["workspace",["workspace","project","idea","notes"]],
+    ["about",["about","vision","orvix"]]
+  ];
+  const found=choices.find(([,words])=>words.some(w=>w.includes(q)||q.includes(w)));
+  if(found){go(found[0]);notify("Opened "+found[0]+".")}
+  else{notify("No matching tool found. Try listing, profit, language or saved.");}
+});
+$("year").textContent=new Date().getFullYear();
+
+/* Start with stored data, without requiring an account. */
+drafts=readStore(KEYS.drafts,[]);
+projects=readStore(KEYS.projects,[]);
+renderDrafts();renderProjects();
+try{applyTheme(localStorage.getItem(KEYS.theme)||"dark")}catch(e){applyTheme("dark")}
 </script>
 </body>
 </html>
