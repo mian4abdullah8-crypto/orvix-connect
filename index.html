@@ -2,564 +2,569 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#ffffff">
-  <title>ORVIX SOCIAL — Made in Mian Abdullah</title>
-  <style>
-    :root {
-      --bg: #f6f7fb;
-      --surface: #ffffff;
-      --text: #171923;
-      --muted: #777d8b;
-      --line: #e9ebf2;
-      --brand: #6558f5;
-      --brand-light: #efedff;
-      --radius: 20px;
-      --shadow: 0 5px 24px rgba(30, 35, 70, .045);
-    }
-
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Arial, sans-serif;
-    }
-    button, input, textarea { font: inherit; }
-    button { cursor: pointer; }
-    button:focus-visible, input:focus-visible, textarea:focus-visible {
-      outline: 3px solid #aaa4ff;
-      outline-offset: 2px;
-    }
-    .app { max-width: 1440px; margin: auto; }
-    .topbar {
-      height: 76px;
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      background: rgba(255,255,255,.94);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--line);
-      display: flex;
-      align-items: center;
-      gap: 26px;
-      padding: 0 28px;
-    }
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 235px;
-      color: var(--text);
-      text-decoration: none;
-    }
-    .logo-mark {
-      width: 42px; height: 42px;
-      display: grid; place-items: center;
-      color: white;
-      border-radius: 14px;
-      background: linear-gradient(135deg, #7566ff, #4736d8);
-      font-weight: 900; font-size: 21px;
-      box-shadow: 0 6px 15px #6558f536;
-    }
-    .logo-name { font-size: 22px; font-weight: 900; letter-spacing: -1px; }
-    .logo-sub { color: var(--muted); font-size: 9px; letter-spacing: 1.3px; margin-top: 2px; }
-    .search {
-      flex: 1; max-width: 520px;
-      display: flex; align-items: center; gap: 10px;
-      padding: 0 15px; height: 44px;
-      border-radius: 14px; background: var(--bg);
-      border: 1px solid transparent;
-    }
-    .search:focus-within { border-color: #b8b1ff; }
-    .search input { width: 100%; background: transparent; border: 0; outline: 0; color: var(--text); }
-    .top-actions { margin-left: auto; display: flex; align-items: center; gap: 12px; }
-    .icon-btn {
-      width: 42px; height: 42px; border: 1px solid var(--line);
-      border-radius: 14px; background: white; font-size: 19px; position: relative;
-    }
-    .dot { width: 7px; height: 7px; background: #ff4e74; border-radius: 50%; position: absolute; top: 8px; right: 8px; }
-    .avatar {
-      width: 40px; height: 40px; border-radius: 50%;
-      object-fit: cover; background: #e6e1ff;
-    }
-    .layout {
-      display: grid;
-      grid-template-columns: 235px minmax(0, 1fr) 285px;
-      gap: 24px; padding: 24px 28px;
-      align-items: start;
-    }
-    .sidebar, .rightbar { position: sticky; top: 100px; }
-    .nav-label { font-size: 10px; color: var(--muted); font-weight: 800; letter-spacing: 1.7px; margin: 8px 12px 12px; }
-    .nav { display: grid; gap: 5px; }
-    .nav button {
-      width: 100%; display: flex; align-items: center; gap: 13px;
-      text-align: left; padding: 13px 14px; border: 0;
-      background: transparent; border-radius: 14px;
-      color: #646a78; font-weight: 650; font-size: 14px;
-    }
-    .nav button:hover { background: white; color: var(--brand); }
-    .nav button.active { color: var(--brand); background: var(--brand-light); }
-    .nav-icon { width: 23px; font-size: 19px; text-align: center; }
-    .nav-count { margin-left: auto; font-size: 11px; background: #ffedf1; color: #e34d70; border-radius: 8px; padding: 3px 7px; }
-    .sidebar-card {
-      margin-top: 26px; background: white; padding: 18px;
-      border: 1px solid var(--line); border-radius: var(--radius);
-    }
-    .sidebar-card h3 { margin: 0 0 8px; font-size: 14px; }
-    .sidebar-card p { color: var(--muted); font-size: 12px; line-height: 1.6; }
-    .gradient-btn {
-      border: 0; color: white; font-weight: 750; border-radius: 12px;
-      padding: 12px 16px; background: linear-gradient(120deg, #7465ff, #5140dd);
-      box-shadow: 0 6px 15px #6558f52b;
-    }
-    .sidebar-card .gradient-btn { width: 100%; margin-top: 5px; font-size: 12px; }
-    .content { min-width: 0; }
-    .welcome { margin: 2px 0 22px; }
-    .welcome h1 { font-size: clamp(23px, 3vw, 30px); letter-spacing: -1px; margin: 0 0 7px; }
-    .welcome p { color: var(--muted); font-size: 13px; margin: 0; }
-    .stories-card, .composer, .post, .panel, .right-card {
-      background: var(--surface); border: 1px solid var(--line);
-      border-radius: var(--radius); box-shadow: var(--shadow);
-    }
-    .stories-card { padding: 18px; margin-bottom: 18px; overflow: hidden; }
-    .section-heading { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 16px; }
-    .section-heading h2 { font-size: 15px; margin: 0; }
-    .subtle-btn { background: transparent; border: 0; color: var(--brand); font-size: 12px; font-weight: 750; }
-    .stories { display: flex; gap: 17px; overflow-x: auto; padding-bottom: 3px; }
-    .story { flex: 0 0 65px; text-align: center; border: 0; background: transparent; padding: 0; color: var(--text); }
-    .story-ring {
-      width: 61px; height: 61px; margin: 0 auto 8px; border-radius: 50%;
-      padding: 3px; background: linear-gradient(135deg, #ff6a9e, #8b5cff, #ffc35b);
-    }
-    .story-ring img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 3px solid white; }
-    .story.add .story-ring { background: #efedff; border: 2px dashed #9c91ff; padding: 0; display: grid; place-items: center; color: var(--brand); font-size: 26px; }
-    .story-name { display: block; font-size: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .composer { padding: 16px; margin-bottom: 18px; }
-    .composer-top { display: flex; align-items: center; gap: 12px; }
-    .composer input { flex: 1; min-width: 0; background: var(--bg); border: 1px solid transparent; border-radius: 13px; padding: 13px 15px; outline: 0; font-size: 13px; }
-    .composer input:focus { border-color: #b8b1ff; }
-    .composer-bottom { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
-    .quick-action { border: 0; background: transparent; color: #6e7380; font-size: 12px; padding: 7px 4px; }
-    .quick-action:hover { color: var(--brand); }
-    .post { overflow: hidden; margin-bottom: 18px; }
-    .post-head { display: flex; align-items: center; gap: 11px; padding: 17px 18px 12px; }
-    .post-user { min-width: 0; flex: 1; }
-    .post-user strong { font-size: 13px; }
-    .verified { color: var(--brand); }
-    .post-user small { display: block; color: var(--muted); font-size: 10px; margin-top: 4px; }
-    .more { border: 0; background: transparent; color: var(--muted); font-size: 22px; }
-    .post-text { padding: 0 18px 14px; font-size: 13px; line-height: 1.7; }
-    .post-image { display: block; width: 100%; max-height: 460px; object-fit: cover; background: #e8e8f4; }
-    .post-stats { display: flex; justify-content: space-between; padding: 13px 18px; font-size: 11px; color: var(--muted); }
-    .post-actions { display: flex; gap: 4px; border-top: 1px solid var(--line); margin: 0 17px; padding: 8px 0; }
-    .post-actions button { flex: 1; border: 0; background: transparent; padding: 9px 2px; border-radius: 9px; color: #6d7280; font-size: 12px; font-weight: 650; }
-    .post-actions button:hover, .post-actions button.liked { color: #e64d7a; background: #fff0f4; }
-    .right-card { padding: 18px; margin-bottom: 18px; }
-    .right-card h2 { font-size: 14px; margin: 0 0 15px; }
-    .trend { display: flex; gap: 10px; margin: 15px 0; }
-    .trend-num { color: #a4a8b4; font-size: 11px; width: 14px; padding-top: 2px; }
-    .trend strong { font-size: 12px; display: block; }
-    .trend small { display: block; color: var(--muted); font-size: 10px; margin-top: 4px; }
-    .person { display: flex; align-items: center; gap: 9px; margin: 14px 0; }
-    .person-info { flex: 1; min-width: 0; }
-    .person-info strong { display: block; font-size: 11px; }
-    .person-info small { display: block; color: var(--muted); font-size: 10px; margin-top: 3px; }
-    .follow { border: 1px solid #dcd8ff; color: var(--brand); background: #f7f6ff; border-radius: 9px; padding: 7px 9px; font-size: 10px; font-weight: 750; }
-    .footer { color: #a2a5af; font-size: 10px; line-height: 2; padding: 5px 5px 25px; }
-    .footer b { color: #777d8b; }
-    .mobile-nav { display: none; }
-    .empty-state { padding: 45px 20px; text-align: center; color: var(--muted); }
-    .empty-state h2 { color: var(--text); font-size: 20px; }
-    .toast { position: fixed; z-index: 50; bottom: 24px; left: 50%; transform: translateX(-50%); background: #222437; color: white; padding: 12px 18px; border-radius: 12px; font-size: 12px; box-shadow: 0 8px 30px #0002; max-width: calc(100% - 30px); }
-    .modal-backdrop { position: fixed; inset: 0; z-index: 40; background: #17192380; display: grid; place-items: center; padding: 16px; }
-    .modal { background: white; width: min(500px, 100%); border-radius: 22px; padding: 22px; box-shadow: 0 20px 70px #0003; }
-    .modal h2 { margin: 0 0 18px; font-size: 20px; }
-    .modal textarea { resize: vertical; min-height: 130px; width: 100%; border: 1px solid var(--line); border-radius: 12px; padding: 13px; outline-color: #aaa4ff; }
-    .modal-row { display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px; }
-    .cancel-btn { background: #f1f2f7; border: 0; border-radius: 11px; padding: 11px 16px; }
-    .hidden { display: none !important; }
-
-    @media (max-width: 1120px) {
-      .layout { grid-template-columns: 205px minmax(0, 1fr); }
-      .rightbar { display: none; }
-      .logo { min-width: 205px; }
-    }
-    @media (max-width: 720px) {
-      .topbar { height: 64px; padding: 0 14px; gap: 12px; }
-      .logo { min-width: auto; gap: 8px; }
-      .logo-mark { width: 36px; height: 36px; border-radius: 12px; }
-      .logo-name { font-size: 19px; }
-      .logo-sub { font-size: 7px; }
-      .search { max-width: none; flex: 1; height: 38px; padding: 0 10px; }
-      .search input { font-size: 12px; }
-      .top-actions { margin-left: 0; gap: 5px; }
-      .top-actions .icon-btn { display: none; }
-      .top-actions .avatar { width: 34px; height: 34px; }
-      .layout { display: block; padding: 20px 12px 90px; }
-      .sidebar, .rightbar { display: none; }
-      .welcome { margin-bottom: 18px; }
-      .welcome h1 { font-size: 24px; }
-      .stories-card { padding: 15px 13px; }
-      .stories { gap: 13px; }
-      .composer { padding: 13px; }
-      .composer-bottom { flex-wrap: wrap; }
-      .quick-action { font-size: 11px; }
-      .post-head { padding: 14px 13px 10px; }
-      .post-text { padding: 0 13px 12px; }
-      .post-stats { padding: 12px 13px; }
-      .post-actions { margin: 0 10px; }
-      .post-actions button { font-size: 11px; }
-      .mobile-nav {
-        position: fixed; bottom: 0; left: 0; right: 0; z-index: 30;
-        display: flex; justify-content: space-around; align-items: center;
-        padding: 9px 4px calc(9px + env(safe-area-inset-bottom));
-        background: rgba(255,255,255,.97); backdrop-filter: blur(12px);
-        border-top: 1px solid var(--line);
-      }
-      .mobile-nav button { border: 0; background: transparent; color: #777d8b; display: grid; justify-items: center; gap: 3px; font-size: 19px; min-width: 48px; }
-      .mobile-nav button span { font-size: 9px; }
-      .mobile-nav button.active { color: var(--brand); }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#08090d">
+<title>ORVIX SOCIAL — MADE IN MIAN ABDULLAH</title>
+<style>
+:root{--bg:#08090d;--panel:#11131a;--panel2:#181b24;--line:#292c38;--text:#f7f7fb;--muted:#969bad;--brand:#8b75ff;--pink:#ff4d91;--radius:20px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Arial,sans-serif}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--brand);outline-offset:3px}
+.hidden{display:none!important}
+button:disabled{opacity:.5;cursor:not-allowed}
+.top{height:72px;position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:20px;padding:0 24px;background:#0b0c11ee;backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;min-width:220px}
+.logo{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(140deg,#a394ff,#5a43ef);font-size:24px;font-weight:950;box-shadow:0 0 26px #7560ff35}
+.brandname{font-size:21px;font-weight:950;letter-spacing:-1px}
+.tag{font-size:9px;color:var(--muted);letter-spacing:1.3px;margin-top:3px}
+.search{flex:1;max-width:550px}
+input,textarea{color:var(--text)}
+.search input,.field{width:100%;background:var(--panel2);border:1px solid var(--line);padding:12px 15px;border-radius:13px;outline:none}
+.search input:focus,.field:focus,textarea:focus{border-color:var(--brand)}
+.top-right{margin-left:auto;display:flex;align-items:center;gap:10px}
+.btn{border:1px solid var(--line);background:var(--panel2);color:var(--text);padding:10px 14px;border-radius:12px;font-weight:700}
+.primary{background:linear-gradient(120deg,#8b75ff,#6347e8);border:0;color:white;box-shadow:0 6px 22px #7257ff25}
+.danger{color:#ff7c94}
+.layout{max-width:1500px;margin:auto;padding:24px;display:grid;grid-template-columns:220px minmax(0,700px) 260px;gap:24px;justify-content:center;align-items:start}
+.side,.right{position:sticky;top:96px}
+.nav{display:grid;gap:7px}
+.nav button{display:flex;align-items:center;gap:13px;width:100%;padding:13px;border:1px solid transparent;border-radius:13px;text-align:left;color:var(--muted);background:transparent}
+.nav button.active,.nav button:hover{background:#1b1830;color:#c8beff;border-color:#373052}
+.nicon{width:24px;text-align:center;font-size:19px}
+.side-card,.card,.post,.auth-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius)}
+.side-card{margin-top:24px;padding:18px}
+.side-card p,.muted{font-size:12px;line-height:1.7;color:var(--muted)}
+.main{min-width:0}
+.page-title{font-size:28px;font-weight:900;letter-spacing:-1px;margin:0 0 7px}
+.page-sub{font-size:13px;color:var(--muted);margin:0 0 22px;line-height:1.6}
+.card{padding:17px;margin-bottom:17px}
+.row{display:flex;align-items:center;gap:12px}
+.between{justify-content:space-between}
+.avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;object-fit:cover;flex-shrink:0;background:#29253d;border:1px solid #454052;color:#d4ccff;font-weight:800}
+.avatar.big{width:82px;height:82px;font-size:25px}
+.small{font-size:11px;color:var(--muted)}
+.grow{flex:1;min-width:0}
+.composer-input{width:100%;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--panel2);margin:14px 0;cursor:pointer}
+.composer-tools{display:flex;gap:8px;flex-wrap:wrap}
+.pill{padding:9px 11px;border:1px solid var(--line);background:#151720;color:#d0d2de;border-radius:11px;font-size:12px}
+.pill:hover{border-color:var(--brand)}
+.stories{display:flex;gap:14px;overflow:auto;padding:3px 0 7px}
+.story{flex:0 0 65px;border:0;background:none;color:var(--muted);font-size:11px;text-align:center;padding:0}
+.story-ring{width:60px;height:60px;margin:0 auto 7px;border-radius:50%;padding:3px;background:linear-gradient(135deg,var(--pink),#9b68ff,#ffc05a)}
+.story-ring>div,.story-ring img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:3px solid var(--panel);display:grid;place-items:center;background:#28223d;color:white;font-size:24px}
+.post{margin-bottom:17px;overflow:hidden}
+.post-head{padding:17px 17px 12px;display:flex;align-items:center;gap:11px}
+.post-author{font-weight:800;font-size:13px}
+.post-time{font-size:10px;color:var(--muted);margin-top:4px}
+.post-text{font-size:14px;line-height:1.75;white-space:pre-wrap;overflow-wrap:anywhere;padding:0 17px 15px}
+.media{display:block;width:100%;max-height:550px;object-fit:contain;background:#07080b}
+.stats{display:flex;justify-content:space-between;gap:8px;padding:13px 17px;color:var(--muted);font-size:11px}
+.post-actions{display:flex;gap:4px;margin:0 12px;border-top:1px solid var(--line);padding:8px 0}
+.post-actions button{flex:1;padding:10px 2px;background:transparent;color:var(--muted);border:0;border-radius:9px;font-size:12px}
+.post-actions button:hover,.post-actions button.liked{background:#271727;color:#ff80a9}
+.comment-box{display:flex;gap:8px;padding:0 14px 14px}
+.comment-box input{flex:1;min-width:0;background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:10px}
+.comment-list{padding:0 17px 13px;font-size:12px}
+.comment{padding:9px 0;border-top:1px solid var(--line);line-height:1.5;overflow-wrap:anywhere}
+.comment strong{margin-right:6px}
+.section-heading{font-size:15px;font-weight:850;margin:0 0 14px}
+.trend{padding:12px 0;border-bottom:1px solid var(--line)}
+.trend:last-child{border:0}
+.trend strong{font-size:12px}
+.trend p{margin:4px 0 0;font-size:10px;color:var(--muted)}
+.footer{font-size:10px;color:var(--muted);line-height:2;margin-top:22px}
+.footer b{color:#c3baff}
+.empty{text-align:center;padding:45px 18px;color:var(--muted);line-height:1.8}
+.empty strong{display:block;font-size:18px;color:var(--text);margin-bottom:8px}
+.auth-wrap{min-height:100vh;display:grid;place-items:center;padding:20px;background:radial-gradient(ellipse at top,#201a43 0%,#08090d 55%)}
+.auth-card{width:min(430px,100%);padding:28px}
+.auth-card h1{font-size:27px;margin:24px 0 8px}
+.auth-card p{font-size:13px;color:var(--muted);line-height:1.7}
+.auth-card label{display:block;font-size:12px;color:#c8cada;margin:16px 0 7px}
+.auth-card .btn{width:100%;margin-top:16px}
+.auth-card .field{background:#0d0f16}
+.error{color:#ff8ca0;font-size:12px;line-height:1.6;margin-top:12px}
+.success{color:#7fe4b4;font-size:12px;margin-top:12px}
+.tabs{display:flex;gap:8px;margin-bottom:18px}
+.tabs button{flex:1}
+.mobile-nav{display:none}
+#toast{position:fixed;z-index:50;bottom:25px;left:50%;transform:translateX(-50%);background:#222432;border:1px solid #414354;border-radius:12px;padding:12px 17px;font-size:12px;max-width:90%;box-shadow:0 10px 40px #0008}
+@media(max-width:1100px){.layout{grid-template-columns:190px minmax(0,700px)}.right{display:none}.brand{min-width:190px}}
+@media(max-width:700px){
+ .top{height:62px;padding:0 12px;gap:10px}.brand{min-width:auto}.logo{width:36px;height:36px}.brandname{font-size:18px}.tag{font-size:7px}.search{max-width:none}.search input{padding:10px;font-size:12px}.top-right .btn{display:none}
+ .layout{display:block;padding:18px 11px 88px}.side,.right{display:none}.page-title{font-size:24px}.card{padding:14px}.post-head{padding:14px}.post-text{padding:0 14px 13px}.post-actions{margin:0 8px}.post-actions button{font-size:11px}
+ .mobile-nav{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:20;justify-content:space-around;padding:9px 3px calc(9px + env(safe-area-inset-bottom));background:#101118f5;backdrop-filter:blur(15px);border-top:1px solid var(--line)}
+ .mobile-nav button{background:none;border:0;color:var(--muted);display:grid;gap:4px;justify-items:center;font-size:19px;min-width:48px}.mobile-nav span{font-size:9px}.mobile-nav button.active{color:#b6a8ff}
+}
+</style>
 </head>
 <body>
-<div class="app">
-  <header class="topbar">
-    <a href="#" class="logo" aria-label="ORVIX home" onclick="showSection('Home');return false;">
-      <div class="logo-mark">O</div>
-      <div>
-        <div class="logo-name">ORVIX</div>
-        <div class="logo-sub">SOCIAL WORLD</div>
-      </div>
-    </a>
-    <label class="search">
-      <span>⌕</span>
-      <input id="searchInput" type="search" placeholder="Search people, posts, topics..." aria-label="Search ORVIX">
-    </label>
-    <div class="top-actions">
-      <button class="icon-btn" onclick="notify('Notifications demo — real notifications baad mein connect hongi.')" aria-label="Notifications">♧<i class="dot"></i></button>
-      <button class="icon-btn" onclick="notify('Messages demo — real chat aglay phase mein connect hogi.')" aria-label="Messages">✉</button>
-      <img class="avatar" src="https://i.pravatar.cc/100?img=12" alt="Your profile">
+<div id="authScreen" class="auth-wrap">
+  <div class="auth-card">
+    <div class="row">
+      <div class="logo">O</div>
+      <div><div class="brandname">ORVIX SOCIAL</div><div class="tag">MADE IN MIAN ABDULLAH</div></div>
     </div>
-  </header>
-
-  <div class="layout">
-    <aside class="sidebar">
-      <div class="nav-label">YOUR SPACE</div>
-      <nav class="nav" id="sideNav">
-        <button class="active" onclick="showSection('Home',this)"><span class="nav-icon">⌂</span> Home Feed</button>
-        <button onclick="showSection('Explore',this)"><span class="nav-icon">⌕</span> Explore</button>
-        <button onclick="showSection('Reels',this)"><span class="nav-icon">▷</span> Reels & Videos</button>
-        <button onclick="showSection('Messages',this)"><span class="nav-icon">✉</span> Messages <span class="nav-count">3</span></button>
-        <button onclick="showSection('Notifications',this)"><span class="nav-icon">♧</span> Notifications</button>
-        <button onclick="showSection('Live',this)"><span class="nav-icon">◉</span> Live</button>
-        <button onclick="showSection('Marketplace',this)"><span class="nav-icon">▣</span> Marketplace</button>
-        <button onclick="showSection('News',this)"><span class="nav-icon">▤</span> News & Trends</button>
-        <button onclick="showSection('Profile',this)"><span class="nav-icon">♙</span> My Profile</button>
-        <button onclick="showSection('Settings',this)"><span class="nav-icon">⚙</span> Settings</button>
-      </nav>
-      <div class="sidebar-card">
-        <h3>✨ Your world, your way</h3>
-        <p>Share your ideas, discover new creators and connect with the world.</p>
-        <button class="gradient-btn" onclick="openComposer()">＋ Create a post</button>
-      </div>
-      <div class="footer">
-        <b>ORVIX SOCIAL</b><br>
-        About · Community · Privacy · Help<br>
-        © 2026 ORVIX<br>
-        <b>MADE IN MIAN ABDULLAH</b>
-      </div>
-    </aside>
-
-    <main class="content" id="mainContent">
-      <section id="homeSection">
-        <div class="welcome">
-          <h1>Your world. Your people. <span style="color:var(--brand)">Your ORVIX.</span></h1>
-          <p>Discover ideas, share moments and connect with people everywhere.</p>
-        </div>
-
-        <section class="stories-card">
-          <div class="section-heading">
-            <h2>Stories <span style="color:var(--muted);font-weight:400">· Moments today</span></h2>
-            <button class="subtle-btn" onclick="notify('Stories upload aglay phase mein add hoga.')">View all →</button>
-          </div>
-          <div class="stories">
-            <button class="story add" onclick="notify('Story upload abhi demo hai.')" aria-label="Add story">
-              <span class="story-ring">＋</span><span class="story-name">Your story</span>
-            </button>
-            <button class="story" onclick="notify('Demo story selected.')"><span class="story-ring"><img src="https://i.pravatar.cc/100?img=47" alt=""></span><span class="story-name">Ayesha</span></button>
-            <button class="story" onclick="notify('Demo story selected.')"><span class="story-ring"><img src="https://i.pravatar.cc/100?img=12" alt=""></span><span class="story-name">Hamza</span></button>
-            <button class="story" onclick="notify('Demo story selected.')"><span class="story-ring"><img src="https://i.pravatar.cc/100?img=44" alt=""></span><span class="story-name">Sarah</span></button>
-            <button class="story" onclick="notify('Demo story selected.')"><span class="story-ring"><img src="https://i.pravatar.cc/100?img=68" alt=""></span><span class="story-name">Usman</span></button>
-            <button class="story" onclick="notify('Demo story selected.')"><span class="story-ring"><img src="https://i.pravatar.cc/100?img=25" alt=""></span><span class="story-name">Zara</span></button>
-            <button class="story" onclick="notify('Demo story selected.')"><span class="story-ring"><img src="https://i.pravatar.cc/100?img=59" alt=""></span><span class="story-name">Ali</span></button>
-          </div>
-        </section>
-
-        <section class="composer">
-          <div class="composer-top">
-            <img class="avatar" src="https://i.pravatar.cc/100?img=12" alt="">
-            <input id="composerInput" type="text" placeholder="What's on your mind? Share with the world..." onclick="openComposer()" readonly>
-          </div>
-          <div class="composer-bottom">
-            <button class="quick-action" onclick="openComposer()">▧ Photo</button>
-            <button class="quick-action" onclick="notify('Video upload feature aglay phase mein connect hoga.')">▷ Video</button>
-            <button class="quick-action" onclick="notify('Live streaming abhi available nahi.')">◉ Go Live</button>
-            <button class="gradient-btn" onclick="openComposer()">Create Post</button>
-          </div>
-        </section>
-
-        <div id="feed">
-          <article class="post" data-search="nature travel mountains beautiful pakistan">
-            <div class="post-head">
-              <img class="avatar" src="https://i.pravatar.cc/100?img=47" alt="Ayesha">
-              <div class="post-user"><strong>Ayesha Khan <span class="verified">✓</span></strong><small>@ayesha.explores · 12 min ago</small></div>
-              <button class="more" onclick="notify('Post options demo.')">···</button>
-            </div>
-            <div class="post-text">Sometimes all you need is fresh air, beautiful mountains, and a little time for yourself. 🌿 Where would you love to travel next?</div>
-            <img class="post-image" src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1100&q=85" alt="Beautiful mountain landscape" loading="lazy">
-            <div class="post-stats"><span class="like-count">♥ 248 likes</span><span>36 comments · 12 shares</span></div>
-            <div class="post-actions">
-              <button class="like-btn" onclick="toggleLike(this)">♡ Like</button>
-              <button onclick="notify('Comments demo — database baad mein connect hogi.')">▢ Comment</button>
-              <button onclick="sharePost(this)">↗ Share</button>
-              <button onclick="notify('Post save feature aglay phase mein aayega.')">♧ Save</button>
-            </div>
-          </article>
-
-          <article class="post" data-search="technology ai future ideas innovation">
-            <div class="post-head">
-              <img class="avatar" src="https://i.pravatar.cc/100?img=12" alt="Hamza">
-              <div class="post-user"><strong>Hamza Ahmed <span class="verified">✓</span></strong><small>@hamza.tech · 34 min ago</small></div>
-              <button class="more" onclick="notify('Post options demo.')">···</button>
-            </div>
-            <div class="post-text">The future belongs to people who keep learning. 💡 What is one skill you want to master this year? #Learning #Technology</div>
-            <img class="post-image" src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1100&q=85" alt="Technology circuit board" loading="lazy">
-            <div class="post-stats"><span class="like-count">♥ 176 likes</span><span>24 comments · 8 shares</span></div>
-            <div class="post-actions">
-              <button class="like-btn" onclick="toggleLike(this)">♡ Like</button>
-              <button onclick="notify('Comments demo — database baad mein connect hogi.')">▢ Comment</button>
-              <button onclick="sharePost(this)">↗ Share</button>
-              <button onclick="notify('Post save feature aglay phase mein aayega.')">♧ Save</button>
-            </div>
-          </article>
-
-          <article class="post" data-search="friends community positive motivation">
-            <div class="post-head">
-              <img class="avatar" src="https://i.pravatar.cc/100?img=44" alt="Sarah">
-              <div class="post-user"><strong>Sarah Malik</strong><small>@sarah.daily · 1 hour ago</small></div>
-              <button class="more" onclick="notify('Post options demo.')">···</button>
-            </div>
-            <div class="post-text">A small reminder: your journey doesn't have to look like anyone else's. Keep going at your own pace. 💜</div>
-            <div class="post-stats"><span class="like-count">♥ 92 likes</span><span>11 comments · 5 shares</span></div>
-            <div class="post-actions">
-              <button class="like-btn" onclick="toggleLike(this)">♡ Like</button>
-              <button onclick="notify('Comments demo — database baad mein connect hogi.')">▢ Comment</button>
-              <button onclick="sharePost(this)">↗ Share</button>
-              <button onclick="notify('Post save feature aglay phase mein aayega.')">♧ Save</button>
-            </div>
-          </article>
-        </div>
-      </section>
-      <section id="otherSection" class="panel hidden"></section>
-    </main>
-
-    <aside class="rightbar">
-      <section class="right-card">
-        <div class="section-heading"><h2>🔥 Trending now</h2><button class="subtle-btn" onclick="showSection('Explore')">See all</button></div>
-        <div class="trend"><span class="trend-num">01</span><div><strong>#TechForEveryone</strong><small>12.8K posts</small></div></div>
-        <div class="trend"><span class="trend-num">02</span><div><strong>#TravelDiaries</strong><small>8.4K posts</small></div></div>
-        <div class="trend"><span class="trend-num">03</span><div><strong>#CreatorLife</strong><small>6.1K posts</small></div></div>
-        <div class="trend"><span class="trend-num">04</span><div><strong>#ORVIXCommunity</strong><small>2.3K posts</small></div></div>
-      </section>
-      <section class="right-card">
-        <div class="section-heading"><h2>✨ People to follow</h2><button class="subtle-btn" onclick="showSection('Explore')">More</button></div>
-        <div class="person"><img class="avatar" src="https://i.pravatar.cc/100?img=68" alt=""><div class="person-info"><strong>Usman Raza</strong><small>Creator · 12K followers</small></div><button class="follow" onclick="toggleFollow(this)">Follow</button></div>
-        <div class="person"><img class="avatar" src="https://i.pravatar.cc/100?img=25" alt=""><div class="person-info"><strong>Zara Noor</strong><small>Photography</small></div><button class="follow" onclick="toggleFollow(this)">Follow</button></div>
-        <div class="person"><img class="avatar" src="https://i.pravatar.cc/100?img=59" alt=""><div class="person-info"><strong>Ali Hassan</strong><small>Tech enthusiast</small></div><button class="follow" onclick="toggleFollow(this)">Follow</button></div>
-      </section>
-      <section class="right-card">
-        <h2>🌍 One world, many voices</h2>
-        <p style="color:var(--muted);font-size:12px;line-height:1.7;margin:0">Our vision is to help people share ideas and connect across borders.</p>
-        <p style="font-size:10px;color:var(--brand);font-weight:800;letter-spacing:1px;margin-bottom:0">MADE IN MIAN ABDULLAH</p>
-      </section>
-    </aside>
-  </div>
-
-  <nav class="mobile-nav" aria-label="Mobile navigation">
-    <button class="active" onclick="showSection('Home',this)">⌂<span>Home</span></button>
-    <button onclick="showSection('Explore',this)">⌕<span>Explore</span></button>
-    <button onclick="openComposer()">⊕<span>Create</span></button>
-    <button onclick="showSection('Messages',this)">✉<span>Chat</span></button>
-    <button onclick="showSection('Profile',this)">♙<span>Profile</span></button>
-  </nav>
-</div>
-
-<div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
-
-<div id="composerModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle" onclick="if(event.target===this)closeComposer()">
-  <div class="modal">
-    <h2 id="modalTitle">Create a post</h2>
-    <textarea id="postText" maxlength="1000" placeholder="Share something with the ORVIX community..."></textarea>
-    <div class="modal-row">
-      <button class="cancel-btn" onclick="closeComposer()">Cancel</button>
-      <button class="gradient-btn" onclick="publishPost()">Publish post</button>
+    <h1 id="authTitle">Welcome to ORVIX</h1>
+    <p id="authDesc">Connect with your world. Sign in or create your account to get started.</p>
+    <div class="tabs">
+      <button class="btn primary" id="loginTab" onclick="setAuthMode('login')">Login</button>
+      <button class="btn" id="signupTab" onclick="setAuthMode('signup')">Create account</button>
     </div>
+    <form id="authForm">
+      <div id="nameWrap" class="hidden">
+        <label for="displayName">Your name</label>
+        <input class="field" id="displayName" maxlength="50" autocomplete="name" placeholder="Enter your name">
+      </div>
+      <label for="email">Email address</label>
+      <input class="field" id="email" type="email" autocomplete="email" required placeholder="you@example.com">
+      <label for="password">Password (minimum 6 characters)</label>
+      <input class="field" id="password" type="password" minlength="6" autocomplete="current-password" required placeholder="Enter password">
+      <button class="btn primary" id="authSubmit" type="submit">Login to ORVIX</button>
+      <div id="authMessage" aria-live="polite"></div>
+    </form>
+    <p class="small">Secure account access powered by Firebase Authentication.</p>
   </div>
 </div>
 
-<script>
-  let toastTimer;
-  let activeSection = "Home";
+<div id="appScreen" class="hidden">
+<header class="top">
+  <div class="brand"><div class="logo">O</div><div><div class="brandname">ORVIX</div><div class="tag">SOCIAL WORLD</div></div></div>
+  <div class="search"><input id="searchInput" placeholder="Search posts..." aria-label="Search posts"></div>
+  <div class="top-right"><button class="btn" onclick="showPage('Notifications')">♧</button><button class="btn" onclick="showPage('Messages')">✉</button><button class="btn" onclick="logout()">Log out</button></div>
+</header>
+<div class="layout">
+<aside class="side">
+  <div class="nav" id="sideNav">
+    <button class="active" data-page="Home" onclick="showPage('Home')"><span class="nicon">⌂</span>Home Feed</button>
+    <button data-page="Explore" onclick="showPage('Explore')"><span class="nicon">⌕</span>Explore</button>
+    <button data-page="Reels" onclick="showPage('Reels')"><span class="nicon">▷</span>Videos & Reels</button>
+    <button data-page="Messages" onclick="showPage('Messages')"><span class="nicon">✉</span>Messages</button>
+    <button data-page="Notifications" onclick="showPage('Notifications')"><span class="nicon">♧</span>Notifications</button>
+    <button data-page="Live" onclick="showPage('Live')"><span class="nicon">◉</span>Live</button>
+    <button data-page="Marketplace" onclick="showPage('Marketplace')"><span class="nicon">▣</span>Marketplace</button>
+    <button data-page="News" onclick="showPage('News')"><span class="nicon">▤</span>News</button>
+    <button data-page="Profile" onclick="showPage('Profile')"><span class="nicon">♙</span>My Profile</button>
+    <button data-page="Settings" onclick="showPage('Settings')"><span class="nicon">⚙</span>Settings</button>
+  </div>
+  <div class="side-card"><strong>✦ Your world, your people</strong><p>Share moments and connect with your community.</p><button class="btn primary" style="width:100%" onclick="openPost()">＋ Create post</button></div>
+  <div class="footer"><b>ORVIX SOCIAL</b><br>Privacy · Community · Help<br>© 2026 ORVIX<br>MADE IN MIAN ABDULLAH</div>
+</aside>
 
-  function notify(message) {
-    const toast = document.getElementById("toast");
-    toast.textContent = message;
-    toast.classList.remove("hidden");
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => toast.classList.add("hidden"), 2800);
-  }
+<main class="main">
+  <section id="homePage">
+    <h1 class="page-title">Your world. Your people.</h1>
+    <p class="page-sub">Welcome to ORVIX SOCIAL — share your ideas and discover your community.</p>
+    <div class="card">
+      <div class="section-heading">Stories <span class="small">· preview</span></div>
+      <div class="stories">
+        <button class="story" onclick="notify('Story upload aglay phase mein add hogi.')"><div class="story-ring"><div>＋</div></div>Your story</button>
+        <button class="story" onclick="notify('Story feature abhi configure nahi hui.')"><div class="story-ring"><img src="https://i.pravatar.cc/100?img=47" alt=""></div>Creator 1</button>
+        <button class="story" onclick="notify('Story feature abhi configure nahi hui.')"><div class="story-ring"><img src="https://i.pravatar.cc/100?img=12" alt=""></div>Creator 2</button>
+        <button class="story" onclick="notify('Story feature abhi configure nahi hui.')"><div class="story-ring"><img src="https://i.pravatar.cc/100?img=44" alt=""></div>Creator 3</button>
+        <button class="story" onclick="notify('Story feature abhi configure nahi hui.')"><div class="story-ring"><img src="https://i.pravatar.cc/100?img=25" alt=""></div>Creator 4</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="row"><div class="avatar" id="composerAvatar">O</div><div class="grow"><strong id="composerName">Your account</strong><div class="small">Share something with the community</div></div></div>
+      <textarea id="postInput" class="field" maxlength="3000" rows="3" style="margin:14px 0;resize:vertical" placeholder="What's on your mind?"></textarea>
+      <div class="row between" style="flex-wrap:wrap"><label class="pill">▧ Add photo/video <input id="mediaInput" type="file" accept="image/*,video/mp4,video/webm" hidden></label><span class="small" id="fileLabel">Optional media</span><button class="btn primary" id="publishBtn" onclick="publishPost()">Publish post</button></div>
+    </div>
+    <div id="feed"><div class="card empty">Loading posts from Firebase...</div></div>
+  </section>
+  <section id="otherPage" class="card hidden"></section>
+</main>
 
-  function toggleLike(button) {
-    const post = button.closest(".post");
-    const count = post.querySelector(".like-count");
-    const wasLiked = button.classList.contains("liked");
-    let number = parseInt(count.textContent.replace(/\D/g, ""), 10) || 0;
-    if (wasLiked) {
-      button.classList.remove("liked");
-      button.textContent = "♡ Like";
-      number = Math.max(0, number - 1);
+<aside class="right">
+  <div class="card"><div class="section-heading">🔥 Discover</div>
+    <div class="trend"><strong>#Technology</strong><p>Discover new ideas</p></div>
+    <div class="trend"><strong>#Creators</strong><p>Community inspiration</p></div>
+    <div class="trend"><strong>#Travel</strong><p>Places and experiences</p></div>
+    <div class="trend"><strong>#ORVIX</strong><p>Share your world</p></div>
+  </div>
+  <div class="card"><div class="section-heading">About ORVIX</div><p class="muted">A social world built to help people connect, create and share.</p><p style="color:#b6a8ff;font-size:10px;font-weight:800">MADE IN MIAN ABDULLAH</p></div>
+</aside>
+</div>
+<nav class="mobile-nav">
+  <button class="active" data-page="Home" onclick="showPage('Home')">⌂<span>Home</span></button>
+  <button data-page="Explore" onclick="showPage('Explore')">⌕<span>Explore</span></button>
+  <button onclick="document.getElementById('postInput').focus();window.scrollTo({top:0,behavior:'smooth'})">⊕<span>Create</span></button>
+  <button data-page="Messages" onclick="showPage('Messages')">✉<span>Chat</span></button>
+  <button data-page="Profile" onclick="showPage('Profile')">♙<span>Profile</span></button>
+</nav>
+</div>
+<div id="toast" class="hidden" role="status"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile, signOut } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, doc, setDoc, getDoc, query, orderBy, limit, onSnapshot, serverTimestamp, updateDoc, increment, runTransaction, deleteDoc } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-storage.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD7vYjXA3xn_uonUIEkUUzx9Z4r5M2UOLk",
+  authDomain: "orvix-marketplace.firebaseapp.com",
+  projectId: "orvix-marketplace",
+  storageBucket: "orvix-marketplace.firebasestorage.app",
+  messagingSenderId: "644314808302",
+  appId: "1:644314808302:web:572b04a2dd09172790d8ff",
+  measurementId: "G-XXZXX5F0HN"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
+let currentUser = null;
+let stopFeed = null;
+let selectedFile = null;
+let toastTimer = null;
+let authMode = "login";
+
+const $ = id => document.getElementById(id);
+const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+}[c]));
+
+function notify(message) {
+  const el = $("toast");
+  el.textContent = message;
+  el.classList.remove("hidden");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.add("hidden"), 3500);
+}
+
+window.setAuthMode = mode => {
+  authMode = mode;
+  $("nameWrap").classList.toggle("hidden", mode !== "signup");
+  $("authTitle").textContent = mode === "signup" ? "Create your account" : "Welcome to ORVIX";
+  $("authDesc").textContent = mode === "signup" ? "Join the ORVIX community." : "Sign in to connect with your world.";
+  $("authSubmit").textContent = mode === "signup" ? "Create account" : "Login to ORVIX";
+  $("loginTab").classList.toggle("primary", mode === "login");
+  $("signupTab").classList.toggle("primary", mode === "signup");
+  $("authMessage").textContent = "";
+};
+
+$("authForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  const email = $("email").value.trim();
+  const password = $("password").value;
+  const name = $("displayName").value.trim();
+  const submit = $("authSubmit");
+  submit.disabled = true;
+  $("authMessage").className = "";
+  $("authMessage").textContent = "Please wait...";
+  try {
+    if (authMode === "signup") {
+      if (name.length < 2) throw new Error("Apna naam kam az kam 2 letters mein likho.");
+      const credential = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(credential.user, { displayName: name });
+      await setDoc(doc(db, "users", credential.user.uid), {
+        uid: credential.user.uid, displayName: name,
+        email: credential.user.email, bio: "", createdAt: serverTimestamp()
+      });
     } else {
-      button.classList.add("liked");
-      button.textContent = "♥ Liked";
-      number++;
+      await signInWithEmailAndPassword(auth, email, password);
     }
-    count.textContent = "♥ " + number + " likes";
+  } catch (error) {
+    $("authMessage").className = "error";
+    $("authMessage").textContent = friendlyError(error);
+  } finally {
+    submit.disabled = false;
   }
+});
 
-  function toggleFollow(button) {
-    const following = button.textContent === "Following";
-    button.textContent = following ? "Follow" : "Following";
-    button.style.background = following ? "#f7f6ff" : "#efedff";
-    notify(following ? "Demo: unfollowed." : "Demo: following!");
+function friendlyError(error) {
+  const messages = {
+    "auth/email-already-in-use": "Is email ka account pehle se bana hua hai. Login karo.",
+    "auth/invalid-email": "Email address check karo.",
+    "auth/weak-password": "Password kam az kam 6 characters ka rakho.",
+    "auth/invalid-credential": "Email ya password ghalat hai.",
+    "auth/network-request-failed": "Internet connection check karo.",
+    "permission-denied": "Firebase Security Rules check karni hongi."
+  };
+  return messages[error.code] || error.message || "Kuch masla hua. Firebase settings check karo.";
+}
+
+onAuthStateChanged(auth, async user => {
+  currentUser = user;
+  if (user) {
+    $("authScreen").classList.add("hidden");
+    $("appScreen").classList.remove("hidden");
+    $("composerName").textContent = user.displayName || user.email;
+    $("composerAvatar").textContent = (user.displayName || user.email || "O").slice(0,1).toUpperCase();
+    try {
+      const userRef = doc(db, "users", user.uid);
+      const userSnap = await getDoc(userRef);
+      if (!userSnap.exists()) {
+        await setDoc(userRef, {uid:user.uid,displayName:user.displayName || "ORVIX User",email:user.email,bio:"",createdAt:serverTimestamp()});
+      }
+    } catch (error) { notify("Profile setup: " + friendlyError(error)); }
+    startFeed();
+  } else {
+    $("authScreen").classList.remove("hidden");
+    $("appScreen").classList.add("hidden");
+    if (stopFeed) stopFeed();
+    stopFeed = null;
   }
+});
 
-  function sharePost(button) {
-    const text = "Check out ORVIX SOCIAL — MADE IN MIAN ABDULLAH!";
-    if (navigator.share) {
-      navigator.share({ title: "ORVIX SOCIAL", text }).catch(() => {});
-    } else if (navigator.clipboard && window.isSecureContext) {
-      navigator.clipboard.writeText(text).then(() => notify("Share text copied!"));
-    } else {
-      notify("ORVIX SOCIAL — MADE IN MIAN ABDULLAH");
+window.logout = async () => {
+  try { await signOut(auth); notify("Logged out."); }
+  catch (error) { notify(friendlyError(error)); }
+};
+
+$("mediaInput").addEventListener("change", event => {
+  selectedFile = event.target.files[0] || null;
+  if (selectedFile && selectedFile.size > 25 * 1024 * 1024) {
+    selectedFile = null;
+    event.target.value = "";
+    $("fileLabel").textContent = "File too large";
+    notify("Is version mein media limit 25 MB hai.");
+    return;
+  }
+  $("fileLabel").textContent = selectedFile ? selectedFile.name : "Optional media";
+});
+
+window.publishPost = async () => {
+  if (!currentUser) return notify("Pehle login karo.");
+  const text = $("postInput").value.trim();
+  const file = selectedFile;
+  if (!text && !file) return notify("Post text ya media select karo.");
+  const button = $("publishBtn");
+  button.disabled = true;
+  button.textContent = "Publishing...";
+  try {
+    let mediaUrl = "";
+    let mediaType = "";
+    if (file) {
+      const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+      const path = `posts/${currentUser.uid}/${Date.now()}_${safeName}`;
+      const fileRef = ref(storage, path);
+      await uploadBytes(fileRef, file, {contentType:file.type});
+      mediaUrl = await getDownloadURL(fileRef);
+      mediaType = file.type.startsWith("video/") ? "video" : "image";
     }
+    await addDoc(collection(db, "posts"), {
+      uid: currentUser.uid,
+      author: currentUser.displayName || currentUser.email,
+      text, mediaUrl, mediaType,
+      likesCount: 0, commentsCount: 0,
+      createdAt: serverTimestamp()
+    });
+    $("postInput").value = "";
+    $("mediaInput").value = "";
+    $("fileLabel").textContent = "Optional media";
+    selectedFile = null;
+    notify("Post Firebase par publish ho gayi.");
+  } catch (error) {
+    notify("Post publish nahi hui: " + friendlyError(error));
+  } finally {
+    button.disabled = false;
+    button.textContent = "Publish post";
   }
+};
 
-  function openComposer() {
-    document.getElementById("composerModal").classList.remove("hidden");
-    setTimeout(() => document.getElementById("postText").focus(), 50);
-  }
-
-  function closeComposer() {
-    document.getElementById("composerModal").classList.add("hidden");
-  }
-
-  function publishPost() {
-    const field = document.getElementById("postText");
-    const text = field.value.trim();
-    if (!text) {
-      notify("Pehle apni post likho.");
-      field.focus();
+function startFeed() {
+  if (stopFeed) stopFeed();
+  const feedQuery = query(collection(db,"posts"),orderBy("createdAt","desc"),limit(40));
+  stopFeed = onSnapshot(feedQuery, snapshot => {
+    const feed = $("feed");
+    if (snapshot.empty) {
+      feed.innerHTML = '<div class="card empty"><strong>Welcome to ORVIX!</strong>Abhi posts nahi hain. Apni pehli post share karo.</div>';
       return;
     }
-    const article = document.createElement("article");
-    article.className = "post";
-    article.dataset.search = text.toLowerCase();
-    const head = document.createElement("div");
-    head.className = "post-head";
-    head.innerHTML = '<img class="avatar" src="https://i.pravatar.cc/100?img=12" alt=""><div class="post-user"><strong>Your profile</strong><small>@you · just now · local demo</small></div>';
-    const body = document.createElement("div");
-    body.className = "post-text";
-    body.textContent = text;
-    const actions = document.createElement("div");
-    actions.className = "post-actions";
-    actions.innerHTML = '<button class="like-btn" onclick="toggleLike(this)">♡ Like</button><button onclick="notify(\'Real comments ke liye database chahiye.\')">▢ Comment</button><button onclick="sharePost(this)">↗ Share</button>';
-    const stats = document.createElement("div");
-    stats.className = "post-stats";
-    stats.innerHTML = '<span class="like-count">♥ 0 likes</span><span>Demo post</span>';
-    article.append(head, body, stats, actions);
-    document.getElementById("feed").prepend(article);
-    field.value = "";
-    closeComposer();
-    showSection("Home");
-    notify("Post screen par add ho gayi. Abhi sirf isi browser session ka demo hai.");
-  }
+    feed.replaceChildren();
+    snapshot.forEach(postDoc => {
+      const p = postDoc.data();
+      const article = document.createElement("article");
+      article.className = "post";
+      article.dataset.search = (p.text || "").toLowerCase();
+      const media = p.mediaUrl
+        ? p.mediaType === "video"
+          ? `<video class="media" controls preload="metadata" src="${esc(p.mediaUrl)}"></video>`
+          : `<img class="media" loading="lazy" src="${esc(p.mediaUrl)}" alt="Post media">`
+        : "";
+      const time = p.createdAt?.toDate ? p.createdAt.toDate().toLocaleString() : "Just now";
+      article.innerHTML = `
+        <div class="post-head">
+          <div class="avatar">${esc((p.author || "O").slice(0,1).toUpperCase())}</div>
+          <div class="grow"><div class="post-author">${esc(p.author || "ORVIX User")}</div><div class="post-time">${esc(time)}</div></div>
+          ${p.uid === currentUser?.uid ? '<button class="btn danger delete-post">Delete</button>' : ""}
+        </div>
+        ${p.text ? `<div class="post-text">${esc(p.text)}</div>` : ""}
+        ${media}
+        <div class="stats"><span>♥ ${Number(p.likesCount)||0} likes</span><span>${Number(p.commentsCount)||0} comments</span></div>
+        <div class="post-actions">
+          <button class="like-btn">♡ Like</button>
+          <button class="comment-toggle">▢ Comment</button>
+          <button class="share-btn">↗ Share</button>
+        </div>
+        <div class="comment-area hidden">
+          <div class="comment-list">Loading comments...</div>
+          <div class="comment-box"><input maxlength="1000" placeholder="Write a comment..."><button class="btn primary send-comment">Send</button></div>
+        </div>`;
+      article.querySelector(".like-btn").addEventListener("click", () => toggleLike(postDoc.id, article));
+      article.querySelector(".comment-toggle").addEventListener("click", () => toggleComments(postDoc.id, article));
+      article.querySelector(".share-btn").addEventListener("click", () => sharePost(p.text || "Check out ORVIX SOCIAL!"));
+      const del = article.querySelector(".delete-post");
+      if (del) del.addEventListener("click", () => removePost(postDoc.id));
+      feed.append(article);
+    });
+    filterPosts();
+  }, error => {
+    $("feed").innerHTML = `<div class="card empty"><strong>Feed load nahi hui</strong>${esc(friendlyError(error))}<br>Firestore Rules aur database setup check karo.</div>`;
+  });
+}
 
-  const sectionContent = {
-    Explore: ["Explore ORVIX", "Discover creators, new interests and popular topics.", "Search ka use karke feed mein matching demo posts dhoond sakte ho."],
-    Reels: ["Reels & Videos", "Short videos aur creator content ke liye jagah.", "Video upload aur video playback system aglay phase mein add hoga."],
-    Messages: ["Messages", "Apni community se baat karne ki jagah.", "Real private chat, delivery status aur calls ke liye backend aur additional service chahiye."],
-    Notifications: ["Notifications", "Likes, comments aur follows ki updates.", "Abhi sample interface hai; real notifications baad mein connect hongi."],
-    Live: ["ORVIX Live", "Live streaming aur community sessions.", "Real live video ke liye streaming provider aur safety controls ki zaroorat hogi."],
-    Marketplace: ["ORVIX Marketplace", "Products explore karo aur sellers se connect ho.", "Listings, secure payments aur orders abhi implement nahi huay."],
-    News: ["News & Trends", "Apni duniya se updated raho.", "Real country-based news ke liye reliable news API aur source links connect karenge."],
-    Profile: ["Your Profile", "Apni identity aur posts ko ek jagah manage karo.", "Real profile editing aur photo upload aglay phase mein add honge."],
-    Settings: ["Settings", "ORVIX ke future account aur privacy controls.", "Firebase login, privacy controls aur logout abhi setup nahi huay."]
+async function toggleLike(postId, article) {
+  if (!currentUser) return;
+  const likeRef = doc(db,"posts",postId,"likes",currentUser.uid);
+  const postRef = doc(db,"posts",postId);
+  try {
+    await runTransaction(db, async tx => {
+      const likeSnap = await tx.get(likeRef);
+      const postSnap = await tx.get(postRef);
+      if (!postSnap.exists()) throw new Error("Post nahi mili.");
+      if (likeSnap.exists()) {
+        tx.delete(likeRef);
+        tx.update(postRef,{likesCount:increment(-1)});
+      } else {
+        tx.set(likeRef,{uid:currentUser.uid,createdAt:serverTimestamp()});
+        tx.update(postRef,{likesCount:increment(1)});
+      }
+    });
+    notify("Like update ho gaya.");
+  } catch (error) { notify("Like error: " + friendlyError(error)); }
+}
+
+async function toggleComments(postId, article) {
+  const area = article.querySelector(".comment-area");
+  area.classList.toggle("hidden");
+  if (area.dataset.loaded) return;
+  area.dataset.loaded = "1";
+  const list = area.querySelector(".comment-list");
+  try {
+    const { getDocs, query, collection, orderBy, limit } = await import("https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js");
+    const q = query(collection(db,"posts",postId,"comments"),orderBy("createdAt","asc"),limit(50));
+    const snap = await getDocs(q);
+    list.replaceChildren();
+    if (snap.empty) list.textContent = "No comments yet.";
+    snap.forEach(d => {
+      const data = d.data();
+      const div = document.createElement("div");
+      div.className = "comment";
+      const strong = document.createElement("strong");
+      strong.textContent = data.author || "User";
+      const span = document.createElement("span");
+      span.textContent = data.text || "";
+      div.append(strong,span);
+      list.append(div);
+    });
+  } catch (error) { list.textContent = "Comments load nahi huay. Rules check karo."; }
+  area.querySelector(".send-comment").onclick = async () => {
+    const input = area.querySelector("input");
+    const text = input.value.trim();
+    if (!text) return;
+    try {
+      await addDoc(collection(db,"posts",postId,"comments"),{
+        uid:currentUser.uid,author:currentUser.displayName || currentUser.email,
+        text,createdAt:serverTimestamp()
+      });
+      await updateDoc(doc(db,"posts",postId),{commentsCount:increment(1)});
+      input.value = "";
+      area.dataset.loaded = "";
+      await toggleComments(postId, article);
+      notify("Comment publish ho gaya.");
+    } catch (error) { notify("Comment error: " + friendlyError(error)); }
   };
+}
 
-  function showSection(name, button) {
-    activeSection = name;
-    const home = document.getElementById("homeSection");
-    const other = document.getElementById("otherSection");
-    if (name === "Home") {
-      home.classList.remove("hidden");
-      other.classList.add("hidden");
-    } else {
-      home.classList.add("hidden");
-      other.classList.remove("hidden");
-      const details = sectionContent[name] || sectionContent.Explore;
-      other.innerHTML = '<div class="empty-state"><div style="font-size:38px;color:var(--brand)">✦</div><h2></h2><p></p><p></p><button class="gradient-btn" onclick="showSection(\'Home\')">Back to Home</button></div>';
-      other.querySelector("h2").textContent = details[0];
-      other.querySelectorAll("p")[0].textContent = details[1];
-      other.querySelectorAll("p")[1].textContent = details[2];
+async function removePost(postId) {
+  if (!confirm("Kya tum apni post delete karna chahte ho?")) return;
+  try {
+    await deleteDoc(doc(db,"posts",postId));
+    notify("Post delete ho gayi.");
+  } catch (error) { notify("Delete error: " + friendlyError(error)); }
+}
+
+async function sharePost(text) {
+  try {
+    if (navigator.share) await navigator.share({title:"ORVIX SOCIAL",text});
+    else if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      notify("Post text copied.");
+    } else notify(text);
+  } catch (error) {}
+}
+
+const pageInfo = {
+  Explore:["Explore","Search posts using the search box above. Creator discovery can be added next."],
+  Reels:["Videos & Reels","Video posts appear in the home feed. A dedicated vertical swipe player is a later phase."],
+  Messages:["Messages","Real-time private chat requires a separate conversation structure, rules and notification setup."],
+  Notifications:["Notifications","Real likes, follows and notification delivery will be added with the notification system."],
+  Live:["ORVIX Live","Live streaming needs a streaming provider and safety controls; it is not enabled in this version."],
+  Marketplace:["Marketplace","Product listings, seller contact, order management and secure payment need their own implementation."],
+  News:["News & Trends","A verified news source/API will be connected in a later phase."],
+  Profile:["My Profile","Your Firebase account is active. Full profile editing and profile photo upload can be added next."],
+  Settings:["Settings","Your signed-in account is protected by Firebase Authentication. More privacy settings will be added later."]
+};
+
+window.showPage = name => {
+  document.querySelectorAll("[data-page]").forEach(b => b.classList.toggle("active", b.dataset.page === name));
+  const home = name === "Home";
+  $("homePage").classList.toggle("hidden",!home);
+  $("otherPage").classList.toggle("hidden",home);
+  if (!home) {
+    const info = pageInfo[name] || pageInfo.Explore;
+    $("otherPage").replaceChildren();
+    const icon = document.createElement("div");
+    icon.style.cssText = "font-size:34px;color:#b6a8ff;margin-bottom:12px";
+    icon.textContent = "✦";
+    const title = document.createElement("h2");
+    title.className = "page-title";
+    title.textContent = info[0];
+    const description = document.createElement("p");
+    description.className = "page-sub";
+    description.textContent = info[1];
+    const back = document.createElement("button");
+    back.className = "btn primary";
+    back.textContent = "Back to Home";
+    back.onclick = () => showPage("Home");
+    $("otherPage").append(icon,title,description,back);
+    if (name === "Profile" && currentUser) {
+      const detail = document.createElement("p");
+      detail.className = "muted";
+      detail.textContent = "Name: " + (currentUser.displayName || "ORVIX User") + " · Email: " + currentUser.email;
+      $("otherPage").append(detail);
     }
-    document.querySelectorAll(".nav button, .mobile-nav button").forEach(b => b.classList.remove("active"));
-    if (button) button.classList.add("active");
-    document.querySelectorAll("#sideNav button").forEach(b => {
-      if (b.textContent.trim().includes(name) || (name === "Home" && b.textContent.includes("Home Feed"))) b.classList.add("active");
-    });
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (name === "Settings") {
+      const logoutButton = document.createElement("button");
+      logoutButton.className = "btn danger";
+      logoutButton.style.marginTop = "15px";
+      logoutButton.textContent = "Log out";
+      logoutButton.onclick = window.logout;
+      $("otherPage").append(logoutButton);
+    }
   }
+  window.scrollTo({top:0,behavior:"smooth"});
+};
 
-  document.getElementById("searchInput").addEventListener("input", function () {
-    const query = this.value.trim().toLowerCase();
-    if (activeSection !== "Home") showSection("Home");
-    const posts = document.querySelectorAll("#feed .post");
-    let matches = 0;
-    posts.forEach(post => {
-      const text = (post.innerText + " " + (post.dataset.search || "")).toLowerCase();
-      const visible = !query || text.includes(query);
-      post.classList.toggle("hidden", !visible);
-      if (visible) matches++;
-    });
-    let empty = document.getElementById("noResults");
-    if (!empty) {
-      empty = document.createElement("div");
-      empty.id = "noResults";
-      empty.className = "empty-state";
-      empty.textContent = "No matching demo posts found.";
-      document.getElementById("feed").append(empty);
-    }
-    empty.classList.toggle("hidden", matches !== 0);
+function filterPosts() {
+  const term = $("searchInput").value.trim().toLowerCase();
+  document.querySelectorAll("#feed .post").forEach(post => {
+    post.classList.toggle("hidden", !!term && !(post.innerText + " " + post.dataset.search).toLowerCase().includes(term));
   });
+}
+$("searchInput").addEventListener("input",filterPosts);
 
-  document.addEventListener("keydown", function (event) {
-    if (event.key === "Escape") closeComposer();
-    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "enter" &&
-        !document.getElementById("composerModal").classList.contains("hidden")) publishPost();
-  });
+window.openPost = () => {
+  $("postInput").focus();
+  window.scrollTo({top:0,behavior:"smooth"});
+};
 </script>
 </body>
 </html>
