@@ -3,586 +3,190 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0f0f0f">
-<title>ORVIX Video | MADE IN MIAN ABDULLAH</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ORVIX — Made in Mian Abdullah</title>
 <style>
-:root{
-  --bg:#0f0f0f;--panel:#181818;--panel2:#222;
-  --text:#f5f5f5;--muted:#aaa;--line:#303030;
-  --accent:#d6ff64;--red:#ff4141;
-}
+:root{--bg:#0b1020;--panel:#141c30;--line:#29354c;--text:#f3f6ff;--muted:#a8b3c8;--blue:#6c8cff;--green:#51d6a2}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
-button,input{font:inherit}
-button{cursor:pointer}
-button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.topbar{
-  height:64px;position:sticky;top:0;z-index:20;background:#0f0f0ff5;
-  display:flex;align-items:center;gap:18px;padding:0 22px;border-bottom:1px solid #222;
-  backdrop-filter:blur(12px)
-}
-.brand{display:flex;align-items:center;gap:9px;min-width:190px}
-.logo{width:39px;height:31px;background:var(--accent);color:#111;border-radius:10px;display:grid;place-items:center;font-size:20px;font-weight:900}
-.brand-name{font-weight:900;letter-spacing:-.5px;font-size:19px}
-.brand-sub{font-size:8px;letter-spacing:1.2px;color:var(--muted);margin-top:3px}
-.searchbox{display:flex;max-width:590px;flex:1;margin:auto}
-.searchbox input{min-width:0;flex:1;background:#121212;color:white;border:1px solid #3a3a3a;border-radius:24px 0 0 24px;padding:12px 17px;outline:none}
-.searchbox button{width:58px;background:#292929;color:white;border:1px solid #3a3a3a;border-left:0;border-radius:0 24px 24px 0}
-.top-actions{display:flex;gap:9px;align-items:center}
-.icon-btn{border:0;background:transparent;color:white;font-size:20px;width:39px;height:39px;border-radius:50%}
-.icon-btn:hover{background:#2a2a2a}
-.avatar{background:var(--accent);color:#111;border:0;width:34px;height:34px;border-radius:50%;font-weight:900}
-.layout{display:grid;grid-template-columns:220px minmax(0,1fr);min-height:calc(100vh - 64px)}
-.sidebar{position:sticky;top:64px;height:calc(100vh - 64px);overflow:auto;padding:17px 12px;border-right:1px solid #242424}
-.nav-btn{display:flex;align-items:center;gap:15px;padding:12px 13px;border:0;background:transparent;color:#eee;width:100%;border-radius:11px;text-align:left;font-size:13px}
-.nav-btn .ico{font-size:19px;width:23px;text-align:center}
-.nav-btn:hover,.nav-btn.active{background:#292929}
-.nav-btn.active{font-weight:bold}
-.side-divider{height:1px;background:#303030;margin:14px 4px}
-.side-label{padding:7px 13px;color:#888;font-size:10px;font-weight:bold;letter-spacing:1.4px}
-.brand-card{background:#1c1c1c;padding:14px;border-radius:14px;margin:18px 3px;font-size:11px;line-height:1.6;color:#aaa}
-.brand-card strong{color:var(--accent);display:block;font-size:12px;margin-bottom:5px}
-.main{min-width:0;padding:18px 24px 80px}
-.categories{display:flex;gap:9px;overflow:auto;padding:0 0 20px;scrollbar-width:none}
-.categories::-webkit-scrollbar{display:none}
-.cat{white-space:nowrap;background:#272727;border:0;color:white;border-radius:9px;padding:9px 14px;font-size:12px}
-.cat.active{background:var(--accent);color:#111;font-weight:bold}
-.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:6px 0 17px}
-.section-head h2{font-size:20px;margin:0;letter-spacing:-.4px}
-.section-head p{color:var(--muted);font-size:11px;margin:5px 0 0}
-.mini-label{color:var(--accent);font-size:10px;letter-spacing:1.5px;font-weight:bold}
-.video-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:27px 17px}
-.video-card{min-width:0;cursor:pointer}
-.thumb{width:100%;aspect-ratio:16/9;background:#242424;border-radius:13px;overflow:hidden;position:relative}
-.thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
-.video-card:hover .thumb img{transform:scale(1.04)}
-.duration{position:absolute;right:8px;bottom:8px;background:#000d;padding:4px 6px;border-radius:5px;font-size:10px}
-.quality{position:absolute;top:8px;left:8px;background:#111c;color:var(--accent);font-size:9px;padding:5px 7px;border-radius:5px;font-weight:bold}
-.video-info{display:flex;gap:11px;padding-top:12px}
-.channel-avatar{width:36px;height:36px;flex-shrink:0;display:grid;place-items:center;border-radius:50%;background:#333;font-size:15px;font-weight:bold;color:var(--accent)}
-.video-title{font-size:13px;font-weight:bold;line-height:1.45;margin:0 0 7px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.video-meta{font-size:11px;color:var(--muted);line-height:1.7}
-.video-more{margin-left:auto;color:#999;background:transparent;border:0;font-size:18px}
-.empty{grid-column:1/-1;padding:60px 15px;text-align:center;color:var(--muted);background:#181818;border-radius:16px}
-.hidden{display:none!important}
-.short-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
-.short-card{position:relative;aspect-ratio:9/15;border-radius:15px;overflow:hidden;cursor:pointer;background:#222}
-.short-card img{width:100%;height:100%;object-fit:cover}
-.short-gradient{position:absolute;inset:0;background:linear-gradient(transparent 45%,#000d)}
-.short-caption{position:absolute;bottom:12px;left:11px;right:10px;font-size:12px;font-weight:bold;line-height:1.5}
-.short-caption small{display:block;color:#ddd;font-weight:normal;margin-top:5px}
-.player-layout{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(230px,.8fr);gap:22px}
-.player{width:100%;aspect-ratio:16/9;background:#000;border-radius:14px;overflow:hidden}
-.player video{width:100%;height:100%;display:block}
-.player-placeholder{height:100%;display:grid;place-items:center;text-align:center;padding:20px;color:#aaa;font-size:13px}
-.player-title{font-size:20px;line-height:1.4;margin:15px 0}
-.creator-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 0 17px;border-bottom:1px solid var(--line)}
-.creator-details{flex:1;min-width:100px}
-.creator-details strong{font-size:13px}
-.creator-details small{display:block;color:var(--muted);font-size:11px;margin-top:5px}
-.primary-btn,.secondary-btn{border:0;border-radius:22px;padding:10px 16px;font-size:12px;font-weight:bold}
-.primary-btn{background:var(--accent);color:#111}
-.secondary-btn{background:#292929;color:white}
-.action-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}
-.description{background:#202020;padding:14px;border-radius:13px;font-size:12px;line-height:1.7;margin-top:13px;color:#ddd}
-.comments{margin-top:24px}
-.comments h3{font-size:16px}
-.comment-form{display:flex;gap:8px;margin:15px 0}
-.comment-form input{flex:1;min-width:0;background:transparent;border:0;border-bottom:1px solid #555;color:white;padding:10px 4px}
-.comment{font-size:12px;padding:12px 0;border-bottom:1px solid #292929;line-height:1.6}
-.comment b{display:block;margin-bottom:4px}
-.right-recommend{display:flex;flex-direction:column;gap:14px}
-.rec{display:flex;gap:10px;cursor:pointer}
-.rec img{width:46%;aspect-ratio:16/9;object-fit:cover;border-radius:9px}
-.rec div{font-size:11px;line-height:1.5}
-.rec small{display:block;color:var(--muted);margin-top:6px}
-.panel{background:#191919;border:1px solid #303030;border-radius:16px;padding:18px}
-.panel h3{margin:0 0 7px;font-size:17px}
-.panel p{color:var(--muted);font-size:12px;line-height:1.7}
-.upload-box{border:1px dashed #555;border-radius:14px;padding:26px;text-align:center;margin-top:18px}
-.upload-box .upload-icon{font-size:36px}
-.upload-box label{display:inline-block;background:var(--accent);color:#111;padding:11px 16px;border-radius:20px;font-size:12px;font-weight:bold;cursor:pointer}
-.upload-box input{display:none}
-.profile-head{display:flex;gap:17px;align-items:center;padding:25px 0}
-.profile-avatar{width:76px;height:76px;border-radius:50%;background:var(--accent);color:#111;display:grid;place-items:center;font-size:31px;font-weight:900}
-.profile-head h2{margin:0 0 7px}
-.profile-head p{color:var(--muted);font-size:12px;line-height:1.6;margin:0}
-.notice{font-size:11px;color:#b9c79e;background:#1b2414;padding:12px 14px;border-radius:11px;line-height:1.6;margin:14px 0}
-footer{margin-top:50px;border-top:1px solid #292929;padding:22px 0;color:#777;font-size:10px;line-height:1.8}
-.mobile-nav{display:none}
-.toast{position:fixed;z-index:60;bottom:24px;left:50%;transform:translateX(-50%);background:#f2f2f2;color:#111;padding:12px 17px;border-radius:12px;font-size:12px;display:none;max-width:90vw}
-.toast.show{display:block}
-.modal-bg{position:fixed;z-index:50;inset:0;background:#000c;display:none;align-items:center;justify-content:center;padding:18px}
-.modal-bg.show{display:flex}
-.modal{background:#1b1b1b;border:1px solid #444;border-radius:19px;padding:23px;width:100%;max-width:470px;max-height:85vh;overflow:auto}
-.modal h2{margin:0 0 12px}
-.modal p,.modal li{font-size:12px;color:#bbb;line-height:1.8}
-.modal-close{float:right;border:0;background:#333;color:white;border-radius:8px;padding:7px 10px}
-@media(max-width:1100px){.video-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.layout{grid-template-columns:190px minmax(0,1fr)}.brand{min-width:175px}}
-@media(max-width:760px){
- .topbar{padding:0 12px;gap:10px;height:58px}.brand{min-width:0}.brand-name{font-size:16px}.brand-sub{font-size:7px}.searchbox{max-width:none}.searchbox input{padding:10px 12px}.searchbox button{width:42px}.top-actions .desktop-only{display:none}
- .layout{display:block}.sidebar{display:none}.main{padding:15px 12px 90px}.video-grid{gap:22px 11px}.video-info{gap:8px}.channel-avatar{width:30px;height:30px}.video-title{font-size:12px}.video-meta{font-size:10px}
- .player-layout{grid-template-columns:1fr}.right-recommend{display:grid;grid-template-columns:1fr 1fr}.short-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
- .mobile-nav{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:25;justify-content:space-around;background:#171717f5;border-top:1px solid #333;padding:8px 4px calc(8px + env(safe-area-inset-bottom))}
- .mobile-nav button{background:transparent;color:#aaa;border:0;font-size:10px;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:54px}
- .mobile-nav button span:first-child{font-size:19px}.mobile-nav button.active{color:var(--accent)}
-}
-@media(max-width:420px){
- .video-grid{grid-template-columns:1fr}.thumb{border-radius:11px}.video-title{font-size:13px}.main{padding-left:10px;padding-right:10px}
- .top-actions .avatar{width:30px;height:30px}.brand-sub{letter-spacing:.5px}
-}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+header{padding:20px 5%;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font-size:25px;font-weight:900;letter-spacing:2px}
+.logo span{color:var(--blue)}
+small,.muted{color:var(--muted)}
+main{max-width:1050px;margin:auto;padding:30px 18px}
+h1{font-size:clamp(30px,6vw,52px);margin:10px 0}
+p{line-height:1.6}
+.hero{padding:28px 0}
+.tag{color:var(--green);font-weight:bold}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px;min-width:0}
+h2{font-size:20px;margin-top:0}
+label{display:block;margin:14px 0 7px;color:var(--muted);font-size:14px}
+input,textarea,select{width:100%;padding:12px;border-radius:9px;border:1px solid var(--line);background:#0b1222;color:white;font:inherit}
+textarea{resize:vertical;min-height:90px}
+button{background:var(--blue);color:#fff;border:0;border-radius:9px;padding:12px 15px;font-weight:bold;cursor:pointer;margin-top:12px}
+button.secondary{background:#29354c}
+button:focus,input:focus,textarea:focus,select:focus{outline:2px solid var(--blue);outline-offset:2px}
+.result{white-space:pre-wrap;overflow-wrap:anywhere;background:#0b1222;border-radius:10px;padding:13px;min-height:44px;margin-top:12px}
+nav{display:flex;gap:8px;flex-wrap:wrap}
+nav button{margin:0}
+footer{text-align:center;color:var(--muted);padding:28px;font-size:13px}
 </style>
 </head>
 <body>
-<header class="topbar">
-  <div class="brand">
-    <div class="logo">▶</div>
-    <div><div class="brand-name">ORVIX Video</div><div class="brand-sub">MADE IN MIAN ABDULLAH</div></div>
-  </div>
-  <form class="searchbox" id="searchForm">
-    <input id="searchInput" placeholder="Search videos..." aria-label="Search videos">
-    <button aria-label="Search">⌕</button>
-  </form>
-  <div class="top-actions">
-    <button class="icon-btn desktop-only" id="uploadTop" title="Upload video">＋</button>
-    <button class="icon-btn" id="aboutButton" title="About ORVIX">ⓘ</button>
-    <button class="avatar" id="profileTop" title="My channel">O</button>
-  </div>
+<header>
+  <div class="logo"><span>O</span>RVIX <small>WORKSPACE</small></div>
+  <nav>
+    <button class="secondary" onclick="showTab('home')">Home</button>
+    <button class="secondary" onclick="showTab('listing')">Listing</button>
+    <button class="secondary" onclick="showTab('profit')">Profit</button>
+    <button class="secondary" onclick="showTab('language')">Language</button>
+  </nav>
 </header>
 
-<div class="layout">
-<aside class="sidebar">
-  <button class="nav-btn active" data-page="home"><span class="ico">⌂</span>Home</button>
-  <button class="nav-btn" data-page="shorts"><span class="ico">▷</span>ORVIX Shorts</button>
-  <button class="nav-btn" data-page="saved"><span class="ico">▣</span>Saved videos</button>
-  <div class="side-divider"></div>
-  <div class="side-label">YOUR SPACE</div>
-  <button class="nav-btn" data-page="channel"><span class="ico">◉</span>Your channel</button>
-  <button class="nav-btn" data-page="upload"><span class="ico">⊕</span>Upload video</button>
-  <button class="nav-btn" data-page="about"><span class="ico">ⓘ</span>About ORVIX</button>
-  <div class="brand-card"><strong>ORVIX VIDEO</strong>Watch. Create. Connect.<br>MADE IN MIAN ABDULLAH</div>
-</aside>
+<main>
+<section class="hero" id="home">
+  <div class="tag">YOUR IDEAS. MORE POSSIBILITIES.</div>
+  <h1>One workspace.<br><span style="color:var(--blue)">A world of ideas.</span></h1>
+  <p class="muted">ORVIX helps you prepare product listings, estimate profit
+  and organize multilingual business drafts in one place.</p>
+  <button onclick="showTab('listing')">Create a listing →</button>
+</section>
 
-<main class="main">
-  <section id="homePage">
-    <div class="categories" id="categories">
-      <button class="cat active" data-category="All">All</button>
-      <button class="cat" data-category="Technology">Technology</button>
-      <button class="cat" data-category="Learning">Learning</button>
-      <button class="cat" data-category="Travel">Travel</button>
-      <button class="cat" data-category="Music">Music</button>
-      <button class="cat" data-category="Gaming">Gaming</button>
-      <button class="cat" data-category="Lifestyle">Lifestyle</button>
-    </div>
-    <div class="section-head">
-      <div><div class="mini-label">DISCOVER</div><h2>Videos for you</h2><p>Explore the ORVIX demo library.</p></div>
-      <button class="secondary-btn" id="refreshButton">↻ Refresh</button>
-    </div>
-    <div class="video-grid" id="videoGrid"></div>
-  </section>
+<div class="grid">
+<section class="card" id="listing">
+  <h2>✦ Product Listing Builder</h2>
+  <label for="product">Product name</label>
+  <input id="product" placeholder="e.g. Wireless headphones">
+  <label for="details">Product details</label>
+  <textarea id="details" placeholder="Features, size, material, benefits..."></textarea>
+  <label for="audience">Target customer</label>
+  <input id="audience" placeholder="e.g. UK online shoppers">
+  <button onclick="makeListing()">Create draft</button>
+  <button class="secondary" onclick="copyText('listingResult')">Copy draft</button>
+  <div class="result" id="listingResult">Your listing draft will appear here.</div>
+</section>
 
-  <section id="shortsPage" class="hidden">
-    <div class="section-head"><div><div class="mini-label">QUICK WATCH</div><h2>ORVIX Shorts</h2><p>Vertical-video style demo feed.</p></div></div>
-    <div class="short-grid" id="shortGrid"></div>
-    <p class="notice">Yeh sample Shorts cards hain. Public uploads aur creator feed abhi connect nahi hain.</p>
-  </section>
+<section class="card" id="profit">
+  <h2>＄ Profit Calculator</h2>
+  <label for="cost">Product cost (USD)</label>
+  <input id="cost" type="number" min="0" step="0.01" placeholder="10">
+  <label for="shipping">Shipping cost (USD)</label>
+  <input id="shipping" type="number" min="0" step="0.01" placeholder="3">
+  <label for="price">Selling price (USD)</label>
+  <input id="price" type="number" min="0" step="0.01" placeholder="25">
+  <label for="fees">Estimated fees (%)</label>
+  <input id="fees" type="number" min="0" max="100" step="0.1" value="10">
+  <button onclick="calculate()">Calculate profit</button>
+  <div class="result" id="profitResult">Enter your numbers to begin.</div>
+  <small>Estimate only. Include taxes, returns and other costs separately.</small>
+</section>
 
-  <section id="playerPage" class="hidden">
-    <button class="secondary-btn" id="backHome">← Back to videos</button>
-    <div class="player-layout" style="margin-top:15px">
-      <div>
-        <div class="player" id="playerBox"></div>
-        <h2 class="player-title" id="playerTitle">Video title</h2>
-        <div class="creator-row">
-          <div class="channel-avatar" id="playerAvatar">O</div>
-          <div class="creator-details"><strong id="playerChannel">ORVIX Creator</strong><small id="playerViews">Demo video</small></div>
-          <button class="primary-btn" id="subscribeButton">Subscribe</button>
-        </div>
-        <div class="action-row">
-          <button class="secondary-btn" id="likeButton">♡ Like <span id="likeCount">0</span></button>
-          <button class="secondary-btn" id="saveButton">▣ Save</button>
-          <button class="secondary-btn" id="shareButton">↗ Share</button>
-        </div>
-        <div class="description" id="playerDescription"></div>
-        <div class="comments">
-          <h3>Comments <span id="commentCount">0</span></h3>
-          <form class="comment-form" id="commentForm">
-            <input id="commentInput" placeholder="Add a demo comment..." maxlength="300" required>
-            <button class="primary-btn">Post</button>
-          </form>
-          <div id="commentList"></div>
-        </div>
-      </div>
-      <div><h3 style="font-size:14px;margin-top:5px">More to explore</h3><div class="right-recommend" id="recommendations"></div></div>
-    </div>
-  </section>
+<section class="card" id="language">
+  <h2>◎ Language Workspace</h2>
+  <label for="source">Text to prepare</label>
+  <textarea id="source" placeholder="Write a message in your language..."></textarea>
+  <label for="target">Target language</label>
+  <select id="target">
+    <option>English</option><option>Urdu</option><option>Arabic</option>
+  </select>
+  <button onclick="prepareMessage()">Prepare message</button>
+  <button class="secondary" onclick="copyText('languageResult')">Copy text</button>
+  <div class="result" id="languageResult">Your prepared message will appear here.</div>
+  <small>This first version does not translate languages automatically.</small>
+</section>
 
-  <section id="savedPage" class="hidden">
-    <div class="section-head"><div><div class="mini-label">YOUR LIBRARY</div><h2>Saved videos</h2><p>Saved in this browser only.</p></div></div>
-    <div class="video-grid" id="savedGrid"></div>
-  </section>
-
-  <section id="channelPage" class="hidden">
-    <div class="profile-head">
-      <div class="profile-avatar">O</div>
-      <div><h2>My ORVIX Channel</h2><p>@orvix-demo · Local demo profile<br>Subscribers: demo only</p></div>
-    </div>
-    <div class="notice">Abhi real account create nahi hota. Is profile ko doosre users nahi dekh sakte.</div>
-    <div class="section-head"><h2>My local uploads</h2></div>
-    <div class="video-grid" id="myUploads"></div>
-  </section>
-
-  <section id="uploadPage" class="hidden">
-    <div class="section-head"><div><div class="mini-label">CREATE</div><h2>Upload a video</h2><p>Choose a video from your device for a local preview.</p></div></div>
-    <div class="panel">
-      <h3>Video details</h3>
-      <p>This demo previews your selected video in this browser. It does not upload the file to the internet.</p>
-      <form id="uploadForm">
-        <div style="margin-top:15px"><label for="uploadTitle" style="font-size:12px">Video title</label><input id="uploadTitle" required maxlength="100" placeholder="Give your video a title" style="width:100%;margin-top:7px;background:#111;color:white;border:1px solid #444;padding:12px;border-radius:9px"></div>
-        <div style="margin-top:15px"><label for="uploadCategory" style="font-size:12px">Category</label><select id="uploadCategory" style="width:100%;margin-top:7px;background:#111;color:white;border:1px solid #444;padding:12px;border-radius:9px"><option>Technology</option><option>Learning</option><option>Travel</option><option>Music</option><option>Gaming</option><option>Lifestyle</option></select></div>
-        <div class="upload-box">
-          <div class="upload-icon">⇧</div><p>Choose a video file from your device</p>
-          <label for="uploadFile">Choose video</label>
-          <input id="uploadFile" type="file" accept="video/*">
-          <p id="fileLabel">No file selected</p>
-        </div>
-        <button class="primary-btn" style="margin-top:16px">Create local preview</button>
-      </form>
-      <div id="localPreview" class="hidden" style="margin-top:20px"></div>
-      <p class="notice">Important: real public uploads ke liye secure server, storage, file-size limits, content moderation aur database setup chahiye.</p>
-    </div>
-  </section>
-
-  <section id="aboutPage" class="hidden">
-    <div class="panel">
-      <div class="mini-label">MADE IN MIAN ABDULLAH</div>
-      <h2 style="font-size:29px;margin:12px 0">Welcome to ORVIX Video.</h2>
-      <p>Ek video-sharing platform ka early design prototype, jahan log videos discover kar sakein aur creators apna content share karne ki taraf agla qadam lein.</p>
-      <h3 style="margin-top:25px">What works in this demo?</h3>
-      <p>Video browsing, search, category filters, sample video playback, Shorts-style layout, local saved videos, local like toggles, demo comments aur local video preview.</p>
-      <h3 style="margin-top:25px">What needs a backend?</h3>
-      <p>Real login, shared video uploads, creator channels, global likes/comments, subscriptions, recommendations, live streaming, copyright handling aur monetization.</p>
-      <div class="notice">Agar tum local upload karte ho, file tumhare browser se bahar upload nahi hoti. Is demo mein apni file select karne se koi public video create nahi hota.</div>
-    </div>
-  </section>
-
-  <footer>ORVIX VIDEO · MADE IN MIAN ABDULLAH<br>Early prototype — not affiliated with YouTube. Demo video samples may load from external sources.</footer>
+<section class="card">
+  <h2>▣ My Saved Drafts</h2>
+  <p class="muted">Save a listing draft in this browser for later.</p>
+  <button onclick="saveDraft()">Save current listing</button>
+  <button class="secondary" onclick="loadDraft()">Load saved listing</button>
+  <button class="secondary" onclick="deleteDraft()">Delete saved listing</button>
+  <div class="result" id="savedResult">No action taken yet.</div>
+  <small>Saved locally on this device, not synced across devices.</small>
+</section>
+</div>
 </main>
-</div>
-
-<nav class="mobile-nav">
-  <button class="active" data-page="home"><span>⌂</span>Home</button>
-  <button data-page="shorts"><span>▷</span>Shorts</button>
-  <button data-page="upload"><span>⊕</span>Create</button>
-  <button data-page="saved"><span>▣</span>Saved</button>
-  <button data-page="channel"><span>◉</span>You</button>
-</nav>
-
-<div class="toast" id="toast" role="status"></div>
-<div class="modal-bg" id="aboutModal" role="dialog" aria-modal="true">
-  <div class="modal">
-    <button class="modal-close" id="closeModal">✕</button>
-    <h2>ORVIX Video</h2>
-    <p><b>MADE IN MIAN ABDULLAH</b></p>
-    <p>Yeh responsive frontend prototype hai. Is mein public uploads, user accounts aur shared database abhi shamil nahi.</p>
-    <p>Next phase: Firebase Authentication, database aur cloud video storage ko secure tareeqay se connect karna.</p>
-  </div>
-</div>
+<footer>ORVIX — MADE IN MIAN ABDULLAH<br>Early prototype • Built step by step</footer>
 
 <script>
-(() => {
-  const $ = s => document.querySelector(s);
-  const $$ = s => [...document.querySelectorAll(s)];
-
-  const videos = [
-    {id:"v1",title:"Amazing Nature in 4K — Peaceful Views",channel:"Nature Studio",views:"120K views",age:"2 days ago",category:"Travel",duration:"08:42",color:"🌿",poster:"https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=900&q=80",src:"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",description:"Take a relaxing look at beautiful landscapes. Sample video used for the ORVIX interface demo."},
-    {id:"v2",title:"Technology That Could Change Our Future",channel:"Future Lab",views:"85K views",age:"1 week ago",category:"Technology",duration:"12:16",color:"⚡",poster:"https://images.unsplash.com/photo-1518770660439-4636190af475?w=900&q=80",src:"https://www.w3schools.com/html/mov_bbb.mp4",description:"Explore technology and innovation. This is sample content for testing the video player."},
-    {id:"v3",title:"Learn Something New Every Single Day",channel:"Learn Better",views:"43K views",age:"3 days ago",category:"Learning",duration:"06:24",color:"📚",poster:"https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=900&q=80",src:"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",description:"A sample learning video card for the ORVIX demo library."},
-    {id:"v4",title:"Beautiful City Walk and Street Scenes",channel:"Travel Diaries",views:"310K views",age:"5 days ago",category:"Travel",duration:"15:03",color:"🌍",poster:"https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=900&q=80",src:"https://www.w3schools.com/html/mov_bbb.mp4",description:"A demo travel video. Real creator uploads are not connected yet."},
-    {id:"v5",title:"Build Your First Website — Beginner Guide",channel:"Code Corner",views:"19K views",age:"1 day ago",category:"Technology",duration:"18:51",color:"💻",poster:"https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=900&q=80",src:"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",description:"Sample tutorial card. Replace with videos you own or are licensed to use."},
-    {id:"v6",title:"Chill Beats for a Focused Work Session",channel:"Focus Room",views:"510K views",age:"2 weeks ago",category:"Music",duration:"30:12",color:"🎧",poster:"https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=900&q=80",src:"https://www.w3schools.com/html/mov_bbb.mp4",description:"Sample music category preview. This is not a licensed music library."},
-    {id:"v7",title:"Gaming Setup Ideas on a Small Budget",channel:"Play Smart",views:"76K views",age:"4 days ago",category:"Gaming",duration:"09:11",color:"🎮",poster:"https://images.unsplash.com/photo-1593305841991-05c297ba4575?w=900&q=80",src:"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",description:"Demo gaming video listing."},
-    {id:"v8",title:"Simple Daily Habits for a Better Routine",channel:"Daily Growth",views:"28K views",age:"6 days ago",category:"Lifestyle",duration:"07:38",color:"✨",poster:"https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=900&q=80",src:"https://www.w3schools.com/html/mov_bbb.mp4",description:"Sample lifestyle video. No real creator account is connected."},
-    {id:"v9",title:"Explore the Mountains and Open Skies",channel:"Wild Earth",views:"90K views",age:"1 month ago",category:"Travel",duration:"11:28",color:"🏔️",poster:"https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=900&q=80",src:"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",description:"Another sample travel video card."}
-  ];
-
-  let current = null;
-  let category = "All";
-  let query = "";
-  let localVideos = [];
-  let currentLocalUrl = null;
-  let comments = {};
-  let liked = {};
-  let saved = [];
-
-  try {
-    liked = JSON.parse(localStorage.getItem("orvix_video_likes") || "{}");
-    saved = JSON.parse(localStorage.getItem("orvix_video_saved") || "[]");
-  } catch {}
-
-  function toast(text) {
-    const el = $("#toast");
-    el.textContent = text;
-    el.classList.add("show");
-    clearTimeout(toast.timer);
-    toast.timer = setTimeout(() => el.classList.remove("show"), 2500);
+function el(id){return document.getElementById(id)}
+function showTab(id){
+  el(id).scrollIntoView({behavior:"smooth",block:"start"});
+}
+function makeListing(){
+  const p=el("product").value.trim();
+  const d=el("details").value.trim();
+  const a=el("audience").value.trim();
+  if(!p){el("listingResult").textContent="Please enter a product name.";return}
+  el("listingResult").textContent=
+    "TITLE: "+p+"\n\n"+
+    "DESCRIPTION:\n"+p+" for "+(a||"your target customers")+".\n"+
+    (d?"Product details: "+d+"\n":"")+
+    "\nPlease verify every product claim before publishing.";
+}
+function calculate(){
+  const c=Number(el("cost").value);
+  const s=Number(el("shipping").value);
+  const p=Number(el("price").value);
+  const f=Number(el("fees").value);
+  if(el("cost").value===""||el("shipping").value===""||
+     el("price").value===""||![c,s,p,f].every(Number.isFinite)||
+     c<0||s<0||p<0||f<0||f>100){
+    el("profitResult").textContent="Enter valid non-negative numbers. Fees must be 0–100%.";
+    return;
   }
-  function esc(s) {
-    return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const fee=p*f/100, profit=p-c-s-fee;
+  const margin=p>0?profit/p*100:null;
+  el("profitResult").textContent=
+    "Estimated fees: $"+fee.toFixed(2)+
+    "\nEstimated profit: $"+profit.toFixed(2)+
+    (margin===null?"":"\nProfit margin: "+margin.toFixed(1)+"%");
+}
+function prepareMessage(){
+  const t=el("source").value.trim();
+  if(!t){el("languageResult").textContent="Please enter your message.";return}
+  el("languageResult").textContent=
+    "TARGET LANGUAGE: "+el("target").value+
+    "\n\nOriginal text:\n"+t+
+    "\n\nTranslation is not connected yet. This is a saved text draft, not a translation.";
+}
+function copyText(id){
+  const text=el(id).textContent;
+  if(!text){return}
+  if(navigator.clipboard&&window.isSecureContext){
+    navigator.clipboard.writeText(text).then(()=>alert("Copied!"))
+      .catch(()=>alert("Copy failed. Please select the text and copy it."));
+  }else{
+    alert("Clipboard access needs a secure context. Please select and copy the text.");
   }
-  function allVideos() { return [...localVideos,...videos]; }
-  function persist() {
-    try {
-      localStorage.setItem("orvix_video_likes",JSON.stringify(liked));
-      localStorage.setItem("orvix_video_saved",JSON.stringify(saved));
-    } catch {}
-  }
-
-  function card(v) {
-    const article = document.createElement("article");
-    article.className = "video-card";
-    article.tabIndex = 0;
-    article.innerHTML = `
-      <div class="thumb">
-        <img loading="lazy" src="${esc(v.poster)}" alt="${esc(v.title)}" onerror="this.style.display='none'">
-        <span class="quality">ORVIX</span><span class="duration">${esc(v.duration||"DEMO")}</span>
-      </div>
-      <div class="video-info">
-        <div class="channel-avatar">${esc(v.color||"O")}</div>
-        <div style="min-width:0;flex:1">
-          <h3 class="video-title">${esc(v.title)}</h3>
-          <div class="video-meta">${esc(v.channel)}<br>${esc(v.views||"Local preview")} · ${esc(v.age||"Just now")}</div>
-        </div>
-        <button class="video-more" aria-label="Video options" title="Video options">⋮</button>
-      </div>`;
-    article.addEventListener("click",()=>openVideo(v.id));
-    article.addEventListener("keydown",e=>{if(e.key==="Enter")openVideo(v.id)});
-    $(".video-more",article).addEventListener("click",e=>{
-      e.stopPropagation();
-      if(saved.includes(v.id)) {
-        saved = saved.filter(id=>id!==v.id);
-        toast("Removed from saved videos.");
-      } else {
-        saved.push(v.id);
-        toast("Saved in this browser.");
-      }
-      persist(); renderHome();
-    });
-    return article;
-  }
-
-  function filteredVideos() {
-    return allVideos().filter(v=>{
-      const matchesCat = category==="All" || v.category===category;
-      const text = (v.title+" "+v.channel+" "+v.category).toLowerCase();
-      return matchesCat && text.includes(query.toLowerCase());
-    });
-  }
-
-  function renderHome() {
-    const grid=$("#videoGrid");
-    grid.innerHTML="";
-    const list=filteredVideos();
-    if(!list.length) {
-      grid.innerHTML='<div class="empty">No videos found. Try a different search or category.</div>';
-      return;
-    }
-    list.forEach(v=>grid.appendChild(card(v)));
-  }
-
-  function renderShorts() {
-    const grid=$("#shortGrid"); grid.innerHTML="";
-    allVideos().slice(0,8).forEach(v=>{
-      const item=document.createElement("article");
-      item.className="short-card";
-      item.innerHTML=`<img loading="lazy" src="${esc(v.poster)}" alt="${esc(v.title)}"><div class="short-gradient"></div><div class="short-caption">▶ ${esc(v.title)}<small>${esc(v.channel)}</small></div>`;
-      item.addEventListener("click",()=>openVideo(v.id));
-      grid.appendChild(item);
-    });
-  }
-
-  function showPage(page) {
-    const pages = ["home","shorts","player","saved","channel","upload","about"];
-    pages.forEach(p=>{
-      const el=$("#"+p+"Page");
-      if(el) el.classList.toggle("hidden",p!==page);
-    });
-    $$(".nav-btn,.mobile-nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
-    if(page==="home") renderHome();
-    if(page==="shorts") renderShorts();
-    if(page==="saved") renderSaved();
-    if(page==="channel") renderMyUploads();
-    if(page==="upload") $("#uploadTitle").focus({preventScroll:true});
-    window.scrollTo({top:0,behavior:"smooth"});
-  }
-
-  function openVideo(id) {
-    const v=allVideos().find(item=>item.id===id);
-    if(!v) return;
-    current=v;
-    showPage("player");
-    $("#playerTitle").textContent=v.title;
-    $("#playerChannel").textContent=v.channel;
-    $("#playerViews").textContent=(v.views||"Local preview")+" · "+(v.age||"Just now");
-    $("#playerAvatar").textContent=v.color||"O";
-    $("#playerDescription").textContent=v.description||"Local preview video.";
-    $("#playerBox").innerHTML="";
-    if(v.src) {
-      const video=document.createElement("video");
-      video.controls=true; video.playsInline=true; video.preload="metadata";
-      video.poster=v.poster||"";
-      video.src=v.src;
-      video.innerHTML="Your browser does not support HTML video.";
-      video.addEventListener("error",()=>toast("Sample video load nahi hua. Internet ya source unavailable ho sakta hai."));
-      $("#playerBox").appendChild(video);
-    } else if(v.localUrl) {
-      const video=document.createElement("video");
-      video.controls=true; video.playsInline=true; video.src=v.localUrl;
-      $("#playerBox").appendChild(video);
-    } else {
-      $("#playerBox").innerHTML='<div class="player-placeholder">Is video ke liye playable sample source available nahi.</div>';
-    }
-    updateVideoActions();
-    renderComments();
-    renderRecommendations();
-  }
-
-  function updateVideoActions() {
-    if(!current) return;
-    $("#likeButton").innerHTML=(liked[current.id]?"♥":"♡")+" Like <span id='likeCount'>"+(liked[current.id]?1:0)+"</span>";
-    $("#saveButton").textContent=saved.includes(current.id)?"▣ Saved":"▣ Save";
-  }
-
-  function renderComments() {
-    const list=comments[current.id]||[];
-    $("#commentCount").textContent=list.length;
-    $("#commentList").innerHTML=list.length ? list.slice().reverse().map(c=>`<div class="comment"><b>${esc(c.name)}</b>${esc(c.text)}</div>`).join("") : '<div class="video-meta">Abhi koi demo comment nahi. Pehla comment likho.</div>';
-  }
-
-  function renderRecommendations() {
-    const box=$("#recommendations");box.innerHTML="";
-    allVideos().filter(v=>v.id!==current.id).slice(0,5).forEach(v=>{
-      const el=document.createElement("div");el.className="rec";
-      el.innerHTML=`<img loading="lazy" src="${esc(v.poster)}" alt=""><div><b>${esc(v.title)}</b><small>${esc(v.channel)}<br>${esc(v.views||"Local preview")}</small></div>`;
-      el.addEventListener("click",()=>openVideo(v.id));
-      box.appendChild(el);
-    });
-  }
-
-  function renderSaved() {
-    const grid=$("#savedGrid");grid.innerHTML="";
-    const list=allVideos().filter(v=>saved.includes(v.id));
-    if(!list.length){grid.innerHTML='<div class="empty">Abhi saved videos nahi hain. Video ke ⋮ menu ya player par Save dabao.</div>';return}
-    list.forEach(v=>grid.appendChild(card(v)));
-  }
-
-  function renderMyUploads() {
-    const grid=$("#myUploads");grid.innerHTML="";
-    if(!localVideos.length){grid.innerHTML='<div class="empty">Abhi koi local preview nahi. Upload Video par jao aur device se file select karo.</div>';return}
-    localVideos.forEach(v=>grid.appendChild(card(v)));
-  }
-
-  $$(".nav-btn,.mobile-nav button").forEach(btn=>btn.addEventListener("click",()=>showPage(btn.dataset.page)));
-  $("#profileTop").addEventListener("click",()=>showPage("channel"));
-  $("#uploadTop").addEventListener("click",()=>showPage("upload"));
-  $("#aboutButton").addEventListener("click",()=>$("#aboutModal").classList.add("show"));
-  $("#closeModal").addEventListener("click",()=>$("#aboutModal").classList.remove("show"));
-  $("#aboutModal").addEventListener("click",e=>{if(e.target.id==="aboutModal")$("#aboutModal").classList.remove("show")});
-  document.addEventListener("keydown",e=>{if(e.key==="Escape")$("#aboutModal").classList.remove("show")});
-  $("#backHome").addEventListener("click",()=>showPage("home"));
-
-  $("#categories").addEventListener("click",e=>{
-    const btn=e.target.closest("[data-category]");if(!btn)return;
-    category=btn.dataset.category;
-    $$(".cat").forEach(c=>c.classList.toggle("active",c===btn));
-    renderHome();
-  });
-
-  $("#searchForm").addEventListener("submit",e=>{
-    e.preventDefault();query=$("#searchInput").value.trim();
-    showPage("home");renderHome();
-  });
-  $("#searchInput").addEventListener("input",()=>{
-    query=$("#searchInput").value.trim();
-    if(!$("#homePage").classList.contains("hidden"))renderHome();
-  });
-  $("#refreshButton").addEventListener("click",()=>{
-    query="";category="All";$("#searchInput").value="";
-    $$(".cat").forEach(c=>c.classList.toggle("active",c.dataset.category==="All"));
-    renderHome();toast("Demo video feed refreshed.");
-  });
-
-  $("#likeButton").addEventListener("click",()=>{
-    if(!current)return;
-    liked[current.id]=!liked[current.id];
-    persist();updateVideoActions();
-    toast(liked[current.id]?"Liked in this browser.":"Like removed.");
-  });
-  $("#saveButton").addEventListener("click",()=>{
-    if(!current)return;
-    if(saved.includes(current.id)) {
-      saved=saved.filter(id=>id!==current.id);
-      toast("Removed from saved videos.");
-    } else {saved.push(current.id);toast("Saved in this browser.");}
-    persist();updateVideoActions();
-  });
-  $("#shareButton").addEventListener("click",async()=>{
-    if(!current)return;
-    const shareData={title:current.title,text:"Watch on ORVIX Video: "+current.title,url:location.href};
-    try {
-      if(navigator.share) await navigator.share(shareData);
-      else if(navigator.clipboard && window.isSecureContext) {await navigator.clipboard.writeText(location.href);toast("Page link copied.");}
-      else toast("Is browser mein share supported nahi. Page link manually copy karein.");
-    } catch(e) { if(e.name!=="AbortError")toast("Share nahi ho saka.");}
-  });
-  $("#subscribeButton").addEventListener("click",()=>toast("Demo only: real subscriptions ke liye user accounts aur database chahiye."));
-  $("#commentForm").addEventListener("submit",e=>{
-    e.preventDefault();if(!current)return;
-    const text=$("#commentInput").value.trim();if(!text)return;
-    comments[current.id]=comments[current.id]||[];
-    comments[current.id].push({name:"You (local demo)",text});
-    $("#commentInput").value="";renderComments();toast("Comment sirf is page session mein add hua.");
-  });
-
-  let selectedFile=null;
-  $("#uploadFile").addEventListener("change",e=>{
-    selectedFile=e.target.files?.[0]||null;
-    $("#fileLabel").textContent=selectedFile?selectedFile.name+" · "+(selectedFile.size/1024/1024).toFixed(1)+" MB":"No file selected";
-  });
-
-  $("#uploadForm").addEventListener("submit",e=>{
-    e.preventDefault();
-    if(!selectedFile)return toast("Pehle video file select karo.");
-    if(!selectedFile.type.startsWith("video/"))return toast("Please choose a video file.");
-    if(currentLocalUrl)URL.revokeObjectURL(currentLocalUrl);
-    currentLocalUrl=URL.createObjectURL(selectedFile);
-    const id="local-"+Date.now();
-    const v={
-      id,title:$("#uploadTitle").value.trim(),channel:"My Local Channel",
-      category:$("#uploadCategory").value,views:"Local preview",age:"Just now",
-      duration:"LOCAL",color:"O",poster:"",
-      src:null,localUrl:currentLocalUrl,
-      description:"This video is previewed locally in your browser. It has not been uploaded to ORVIX servers."
-    };
-    localVideos.unshift(v);
-    $("#localPreview").classList.remove("hidden");
-    $("#localPreview").innerHTML="";
-    const video=document.createElement("video");
-    video.controls=true;video.playsInline=true;video.style.cssText="width:100%;max-height:360px;background:#000;border-radius:12px";
-    video.src=currentLocalUrl;
-    $("#localPreview").appendChild(video);
-    const msg=document.createElement("p");
-    msg.className="notice";
-    msg.textContent="Local preview ready. Doosre users yeh video nahi dekh sakte.";
-    $("#localPreview").appendChild(msg);
-    renderMyUploads();
-    toast("Local video preview created.");
-  });
-
-  renderHome();
-})();
+}
+function saveDraft(){
+  try{
+    localStorage.setItem("orvixListing",JSON.stringify({
+      product:el("product").value,details:el("details").value,
+      audience:el("audience").value,result:el("listingResult").textContent
+    }));
+    el("savedResult").textContent="Draft saved in this browser.";
+  }catch(e){el("savedResult").textContent="Could not save draft in this browser."}
+}
+function loadDraft(){
+  try{
+    const d=JSON.parse(localStorage.getItem("orvixListing")||"null");
+    if(!d){el("savedResult").textContent="No saved draft found.";return}
+    el("product").value=d.product||"";
+    el("details").value=d.details||"";
+    el("audience").value=d.audience||"";
+    el("listingResult").textContent=d.result||"";
+    el("savedResult").textContent="Draft loaded.";
+  }catch(e){el("savedResult").textContent="Could not load draft."}
+}
+function deleteDraft(){
+  try{
+    localStorage.removeItem("orvixListing");
+    el("savedResult").textContent="Saved draft deleted from this browser.";
+  }catch(e){el("savedResult").textContent="Could not delete draft."}
+}
 </script>
 </body>
 </html>
-
