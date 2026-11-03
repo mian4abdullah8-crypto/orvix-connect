@@ -1,0 +1,610 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10120f">
+<title>ORVIX Connect — MADE IN MIAN ABDULLAH</title>
+<style>
+:root {
+  --bg:#f5f6f3; --surface:#fff; --ink:#171a16;
+  --muted:#72786f; --line:#e5e8e1; --lime:#c6f36b;
+  --dark:#10120f; --radius:20px;
+}
+* { box-sizing:border-box }
+body {
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:Arial,Helvetica,sans-serif;
+}
+button,input,select,textarea { font:inherit }
+button { cursor:pointer }
+.app { max-width:1100px; margin:auto; padding:16px 18px 85px }
+header {
+  display:flex; align-items:center; justify-content:space-between;
+  gap:12px; padding:8px 0 20px;
+}
+.brand { display:flex; align-items:center; gap:10px }
+.logo {
+  display:grid; place-items:center; width:43px; height:43px;
+  border-radius:14px; background:var(--dark); color:var(--lime);
+  font-weight:900; font-size:24px;
+}
+.brand-name { font-weight:900; font-size:19px }
+.brand-sub {
+  margin-top:3px; font-size:9px; letter-spacing:1.5px;
+  color:var(--muted); font-weight:bold;
+}
+.mode {
+  border:1px solid var(--line); border-radius:30px;
+  padding:10px 12px; background:white; font-size:11px;
+  font-weight:bold;
+}
+.hero {
+  background:var(--dark); color:white; padding:clamp(25px,5vw,50px);
+  border-radius:27px; overflow:hidden; position:relative;
+}
+.eyebrow { color:var(--lime); font-size:11px; letter-spacing:2px; font-weight:bold }
+h1 { font-size:clamp(35px,6vw,56px); letter-spacing:-2px; line-height:1.05; margin:17px 0 }
+h1 span { color:var(--lime) }
+.hero p { max-width:570px; color:#c5c9c0; font-size:14px; line-height:1.7 }
+.hero-art {
+  margin-top:25px; display:flex; gap:9px; flex-wrap:wrap;
+}
+.language-chip {
+  background:#252a21; border:1px solid #424a39; color:white;
+  padding:10px 13px; border-radius:12px; font-size:12px;
+}
+.language-chip b { color:var(--lime) }
+.layout {
+  display:grid; grid-template-columns:minmax(0,1.5fr) minmax(260px,.8fr);
+  gap:18px; margin-top:20px; align-items:start;
+}
+.panel {
+  background:white; border:1px solid var(--line);
+  border-radius:var(--radius); overflow:hidden;
+}
+.panel-head {
+  padding:20px 20px 0; display:flex;
+  justify-content:space-between; gap:10px;
+}
+.panel-title { font-size:17px; font-weight:850 }
+.sub { color:var(--muted); font-size:12px; line-height:1.6; margin-top:5px }
+.tag { font-size:10px; color:var(--muted); letter-spacing:1px; font-weight:bold }
+.languages {
+  display:grid; grid-template-columns:1fr auto 1fr; align-items:center;
+  gap:8px; padding:12px; margin:18px 20px 0;
+  background:#f7f8f5; border:1px solid var(--line); border-radius:15px;
+}
+.languages label {
+  display:block; color:var(--muted); font-size:10px;
+  font-weight:bold; margin-bottom:6px;
+}
+.languages select {
+  border:0; background:transparent; width:100%;
+  font-size:12px; font-weight:bold; color:var(--ink);
+}
+.swap {
+  width:34px; height:34px; border:1px solid var(--line);
+  border-radius:10px; background:white; font-size:18px;
+}
+.chat {
+  padding:20px; min-height:200px; max-height:410px;
+  overflow:auto; display:flex; flex-direction:column; gap:14px;
+}
+.empty { margin:auto; text-align:center; color:var(--muted); padding:25px 5px }
+.empty-icon {
+  display:grid; place-items:center; margin:0 auto 12px;
+  width:50px; height:50px; border-radius:16px;
+  background:#eff6e5; font-size:24px;
+}
+.empty b { display:block; color:var(--ink); font-size:13px; margin-bottom:6px }
+.empty small { font-size:12px; line-height:1.6 }
+.message { max-width:90%; display:flex; flex-direction:column; gap:6px }
+.message.user { align-self:flex-end; align-items:flex-end }
+.message.bot { align-self:flex-start; align-items:flex-start }
+.meta { font-size:10px; color:var(--muted) }
+.bubble {
+  padding:12px 14px; border-radius:16px;
+  font-size:14px; line-height:1.65; overflow-wrap:anywhere;
+  white-space:pre-wrap;
+}
+.user .bubble { background:var(--dark); color:white; border-bottom-right-radius:5px }
+.bot .bubble { background:#eff6e5; border-bottom-left-radius:5px }
+.rtl { direction:rtl; text-align:right }
+.result-actions { display:flex; gap:6px; flex-wrap:wrap }
+.small-btn {
+  background:white; border:1px solid var(--line); border-radius:9px;
+  padding:7px 10px; font-size:11px; font-weight:bold;
+}
+.composer { border-top:1px solid var(--line); padding:15px 20px 20px }
+.tones { display:flex; gap:6px; flex-wrap:wrap; align-items:center; margin-bottom:12px }
+.tones span { font-size:11px; color:var(--muted); margin-right:3px }
+.tone {
+  border:1px solid var(--line); background:white; color:#62695b;
+  border-radius:20px; padding:7px 10px; font-size:11px;
+}
+.tone.active { background:#eff8dc; border-color:#c6e58b; color:#36570b }
+.compose {
+  display:flex; gap:8px; align-items:flex-end;
+  border:1px solid #dfe4d8; border-radius:15px; padding:8px;
+}
+textarea {
+  resize:vertical; min-height:45px; max-height:140px;
+  flex:1; min-width:0; border:0; outline:0; padding:10px 6px;
+  font-size:13px; background:transparent;
+}
+.send {
+  width:44px; height:44px; flex-shrink:0; border:0;
+  border-radius:12px; background:var(--lime); font-size:19px; font-weight:bold;
+}
+.note { font-size:10px; line-height:1.6; color:var(--muted); margin-top:10px }
+.side { display:flex; flex-direction:column; gap:18px }
+.phrases,.starters { padding:16px 18px 19px }
+.phrase {
+  display:flex; gap:9px; align-items:flex-start;
+  padding:11px 0; border-bottom:1px solid var(--line);
+}
+.phrase:last-child { border-bottom:0 }
+.phrase-content { flex:1; min-width:0; overflow-wrap:anywhere }
+.phrase-original { font-size:12px; font-weight:bold; line-height:1.5 }
+.phrase-translation { font-size:11px; color:var(--muted); line-height:1.5; margin-top:5px }
+.phrase-actions { display:flex; gap:4px }
+.phrase-actions button {
+  width:28px; height:28px; border:1px solid var(--line);
+  background:#f8f9f6; border-radius:8px;
+}
+.phrase-empty { font-size:12px; color:var(--muted); line-height:1.7; padding:12px 0 }
+.starter {
+  width:100%; text-align:left; display:flex; align-items:center; gap:10px;
+  border:1px solid var(--line); background:white; border-radius:12px;
+  padding:11px; margin-top:9px; font-size:12px; font-weight:bold;
+}
+.starter-icon {
+  display:grid; place-items:center; width:31px; height:31px;
+  flex-shrink:0; background:#eff6e5; border-radius:9px;
+}
+.how { padding:22px; margin-top:20px }
+.steps { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:16px }
+.step { background:#f7f8f5; padding:14px; border-radius:13px }
+.step-number {
+  width:28px; height:28px; display:grid; place-items:center;
+  background:var(--lime); border-radius:9px; font-weight:bold; font-size:12px;
+}
+.step b { display:block; font-size:12px; margin-top:11px }
+.step p { color:var(--muted); font-size:11px; line-height:1.6 }
+footer {
+  display:flex; justify-content:space-between; gap:15px;
+  padding:23px 3px 0; color:var(--muted); font-size:10px; line-height:1.7;
+}
+footer strong { color:var(--ink); letter-spacing:1px }
+.toast {
+  position:fixed; z-index:5; bottom:20px; left:50%;
+  transform:translateX(-50%); background:#171a16; color:white;
+  padding:12px 17px; border-radius:12px; font-size:12px;
+  display:none; max-width:90vw;
+}
+.toast.show { display:block }
+.modal-bg {
+  position:fixed; inset:0; background:#0009; z-index:10;
+  display:none; align-items:center; justify-content:center; padding:20px;
+}
+.modal-bg.show { display:flex }
+.modal { background:white; max-width:450px; width:100%; padding:25px; border-radius:20px }
+.modal h2 { margin-top:0 }
+.modal p,.modal li { color:var(--muted); font-size:13px; line-height:1.7 }
+.modal-close { float:right; background:white; border:1px solid var(--line); padding:7px 10px; border-radius:8px }
+.mobile-nav { display:none }
+@media(max-width:780px) {
+  .layout { grid-template-columns:1fr }
+  .side { display:grid; grid-template-columns:1fr 1fr; align-items:start }
+}
+@media(max-width:520px) {
+  .app { padding:10px 10px 88px }
+  .brand-name { font-size:17px }
+  .brand-sub { font-size:8px; letter-spacing:1px }
+  .logo { width:39px; height:39px }
+  .hero { padding:25px 20px; border-radius:22px }
+  h1 { font-size:39px }
+  .layout { gap:14px; margin-top:14px }
+  .side { grid-template-columns:1fr; gap:14px }
+  .panel-head { padding:18px 16px 0 }
+  .languages { margin:16px 14px 0; padding:9px; gap:5px }
+  .chat { padding:17px 14px; min-height:175px }
+  .composer { padding:12px 14px 16px }
+  .steps { grid-template-columns:1fr }
+  .step { display:grid; grid-template-columns:30px 1fr; gap:0 10px }
+  .step-number { grid-row:span 2 }
+  .step b { margin-top:0 }
+  footer { flex-direction:column; gap:5px }
+  .mobile-nav {
+    position:fixed; display:flex; justify-content:space-around; gap:4px;
+    bottom:0; left:0; right:0; z-index:4;
+    padding:8px 5px calc(8px + env(safe-area-inset-bottom));
+    background:#ffffffed; border-top:1px solid var(--line);
+  }
+  .nav-item {
+    border:0; background:transparent; color:#72786f; font-size:10px;
+    font-weight:bold; display:flex; flex-direction:column;
+    align-items:center; gap:4px; min-width:65px;
+  }
+  .nav-item span:first-child { font-size:19px }
+  .nav-item.active { color:#36570b }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="brand">
+      <div class="logo">O+</div>
+      <div>
+        <div class="brand-name">ORVIX Connect</div>
+        <div class="brand-sub">MADE IN MIAN ABDULLAH</div>
+      </div>
+    </div>
+    <button class="mode" id="modeButton">🟠 DEMO MODE</button>
+  </header>
+
+  <section class="hero">
+    <div class="eyebrow">ONE WORLD. MORE UNDERSTANDING.</div>
+    <h1>Say it your way.<br><span>Be understood.</span></h1>
+    <p>Apni zubaan mein baat karo. ORVIX Connect ka maqsad hai ke mukhtalif zubaan bolne walay log ek doosray ko behtar samajh sakein.</p>
+    <div class="hero-art">
+      <div class="language-chip">اردو <b>↔</b> English</div>
+      <div class="language-chip">English <b>↔</b> العربية</div>
+      <div class="language-chip">✳ Made for understanding</div>
+    </div>
+  </section>
+
+  <main class="layout" id="translateSection">
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <div class="panel-title">Translation chat</div>
+          <div class="sub">Message likho aur translation preview dekho.</div>
+        </div>
+        <div class="tag">01 / CONNECT</div>
+      </div>
+
+      <div class="languages">
+        <div>
+          <label for="sourceLang">FROM</label>
+          <select id="sourceLang">
+            <option value="ur">Urdu · اردو</option>
+            <option value="en" selected>English</option>
+            <option value="ar">Arabic · العربية</option>
+          </select>
+        </div>
+        <button class="swap" id="swapButton" title="Swap languages">⇄</button>
+        <div>
+          <label for="targetLang">TO</label>
+          <select id="targetLang">
+            <option value="ur" selected>Urdu · اردو</option>
+            <option value="en">English</option>
+            <option value="ar">Arabic · العربية</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="chat" id="chat">
+        <div class="empty" id="empty">
+          <div class="empty-icon">✳</div>
+          <b>Your conversation starts here</b>
+          <small>Sample phrase chuno ya apna message likho.</small>
+        </div>
+      </div>
+
+      <div class="composer">
+        <div class="tones">
+          <span>Reply tone:</span>
+          <button class="tone active" data-tone="Natural">Natural</button>
+          <button class="tone" data-tone="Polite">Polite</button>
+          <button class="tone" data-tone="Business">Business</button>
+          <button class="tone" data-tone="Friendly">Friendly</button>
+        </div>
+        <form id="messageForm">
+          <div class="compose">
+            <textarea id="message" rows="2" maxlength="2000" required placeholder="Type a message in your language…"></textarea>
+            <button class="send" type="submit" aria-label="Translate">➤</button>
+          </div>
+        </form>
+        <div class="note">Demo mode sirf neeche diye gaye sample phrases ko translate karta hai. Custom text ke liye real translation service connect karni hogi.</div>
+      </div>
+    </section>
+
+    <aside class="side">
+      <section class="panel" id="phrasebookSection">
+        <div class="panel-head">
+          <div><div class="panel-title">My phrasebook</div><div class="sub">Useful messages save karo.</div></div>
+          <div class="tag">02 / SAVE</div>
+        </div>
+        <div class="phrases" id="phraseList">
+          <div class="phrase-empty">Abhi koi phrase save nahi hai. Translation ke baad Save button dabao.</div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div><div class="panel-title">Quick phrases</div><div class="sub">Aam jumlay se shuru karo.</div></div>
+        </div>
+        <div class="starters">
+          <button class="starter" data-phrase="Hello! How are you?"><span class="starter-icon">👋</span>Hello! How are you?</button>
+          <button class="starter" data-phrase="Thank you for your help."><span class="starter-icon">💚</span>Thank you for your help.</button>
+          <button class="starter" data-phrase="When will my order arrive?"><span class="starter-icon">📦</span>When will my order arrive?</button>
+          <button class="starter" data-phrase="Could you please explain this?"><span class="starter-icon">💬</span>Could you please explain this?</button>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <section class="panel how" id="howItWorks">
+    <div class="tag">OUR FIRST STEP</div>
+    <div class="panel-title" style="margin-top:8px">Communication without the guesswork.</div>
+    <div class="steps">
+      <div class="step"><div class="step-number">1</div><b>Write naturally</b><p>Apni baat us zubaan mein likho jo tumhein achhi aati hai.</p></div>
+      <div class="step"><div class="step-number">2</div><b>Check the meaning</b><p>Translation ko review karo aur bhejne se pehle samajh lo.</p></div>
+      <div class="step"><div class="step-number">3</div><b>Save what helps</b><p>Roz istemal honay walay jumlay phrasebook mein rakho.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <div><strong>ORVIX CONNECT</strong><br>MADE IN MIAN ABDULLAH</div>
+    <div>Early prototype · Demo translations only<br>Legal ya medical aham messages ke liye demo par bharosa na karein.</div>
+  </footer>
+</div>
+
+<nav class="mobile-nav">
+  <button class="nav-item active" data-scroll="translateSection"><span>✳</span><span>Translate</span></button>
+  <button class="nav-item" data-scroll="phrasebookSection"><span>▤</span><span>Phrasebook</span></button>
+  <button class="nav-item" data-scroll="howItWorks"><span>◎</span><span>How it works</span></button>
+</nav>
+
+<div class="toast" id="toast" role="status"></div>
+<div class="modal-bg" id="aboutModal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <button class="modal-close" id="closeModal">✕</button>
+    <h2>ORVIX Connect</h2>
+    <p>Yeh pehla frontend prototype hai. Yeh file local browser mein chalti hai aur tumhara text kisi AI service ko send nahi karti.</p>
+    <ul>
+      <li><b>Working:</b> language selectors, sample phrases, copy buttons aur local phrasebook.</li>
+      <li><b>Abhi nahi:</b> arbitrary text ki real translation, accounts, device sync aur voice features.</li>
+      <li><b>Privacy:</b> saved phrases isi browser ke local storage mein rehti hain.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+(() => {
+  const $ = s => document.querySelector(s);
+  const $$ = s => [...document.querySelectorAll(s)];
+  const names = {ur:"Urdu",en:"English",ar:"Arabic"};
+  const samples = {
+    "hello! how are you?": {
+      ur:"السلام علیکم! آپ کیسے ہیں؟",
+      ar:"مرحبًا! كيف حالك؟"
+    },
+    "thank you for your help.": {
+      ur:"آپ کی مدد کا شکریہ۔",
+      ar:"شكرًا لك على مساعدتك."
+    },
+    "when will my order arrive?": {
+      ur:"میرا آرڈر کب پہنچے گا؟",
+      ar:"متى سيصل طلبي؟"
+    },
+    "could you please explain this?": {
+      ur:"کیا آپ براہِ کرم یہ سمجھا سکتے ہیں؟",
+      ar:"هل يمكنك أن تشرح هذا من فضلك؟"
+    },
+    "good morning": {
+      ur:"صبح بخیر",
+      ar:"صباح الخير"
+    },
+    "how much does this cost?": {
+      ur:"اس کی قیمت کتنی ہے؟",
+      ar:"كم سعر هذا؟"
+    },
+    "i understand.": {
+      ur:"میں سمجھ گیا/گئی۔",
+      ar:"أنا أفهم."
+    },
+    "please wait a moment.": {
+      ur:"براہِ کرم ایک لمحہ انتظار کریں۔",
+      ar:"يرجى الانتظار لحظة."
+    }
+  };
+
+  let tone = "Natural";
+  let phrases = [];
+  try {
+    const stored = JSON.parse(localStorage.getItem("orvix_phrases") || "[]");
+    if (Array.isArray(stored)) phrases = stored;
+  } catch {}
+
+  let toastTimer;
+  function toast(text) {
+    const el = $("#toast");
+    el.textContent = text;
+    el.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove("show"), 2400);
+  }
+
+  function escapeHTML(text) {
+    return String(text).replace(/[&<>"']/g, c => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+    })[c]);
+  }
+
+  function rtl(lang) { return lang === "ur" || lang === "ar"; }
+
+  function translateDemo(text, from, to) {
+    if (from === to) return {text, matched:true};
+    const cleaned = text.trim();
+    if (from === "en" && samples[cleaned.toLowerCase()]?.[to]) {
+      return {text:samples[cleaned.toLowerCase()][to], matched:true};
+    }
+
+    if (from === "ur" || from === "ar") {
+      for (const [english, translations] of Object.entries(samples)) {
+        if (translations[from] === cleaned) {
+          if (to === "en") {
+            return {text:english.charAt(0).toUpperCase()+english.slice(1), matched:true};
+          }
+          if (translations[to]) return {text:translations[to], matched:true};
+        }
+      }
+    }
+
+    return {
+      text:"Is jumlay ki demo translation available nahi hai. Custom text translate karne ke liye real translation service connect karni hogi.",
+      matched:false
+    };
+  }
+
+  function addMessage(original, translated, from, to, matched) {
+    $("#empty")?.remove();
+    const chat = $("#chat");
+
+    const user = document.createElement("div");
+    user.className = "message user";
+    user.innerHTML =
+      `<div class="meta">YOU · ${escapeHTML(names[from])}</div>` +
+      `<div class="bubble ${rtl(from)?"rtl":""}" dir="${rtl(from)?"rtl":"auto"}">${escapeHTML(original)}</div>`;
+    chat.appendChild(user);
+
+    const result = document.createElement("div");
+    result.className = "message bot";
+    result.innerHTML =
+      `<div class="meta"><b>${matched?"DEMO EXAMPLE":"DEMO LIMITATION"}</b> · ${escapeHTML(names[to])}</div>` +
+      `<div class="bubble ${rtl(to)?"rtl":""}" dir="${rtl(to)?"rtl":"auto"}">${escapeHTML(translated)}</div>` +
+      `<div class="meta">Reply tone: ${escapeHTML(tone)}</div>` +
+      `<div class="result-actions"><button class="small-btn copy">▣ Copy result</button><button class="small-btn save">＋ Save phrase</button></div>`;
+
+    $(".copy", result).addEventListener("click", () => copyText(translated));
+    $(".save", result).addEventListener("click", () => savePhrase({original,translated,from,to}));
+    chat.appendChild(result);
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  async function copyText(text) {
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        const field = document.createElement("textarea");
+        field.value = text;
+        field.style.position = "fixed";
+        field.style.opacity = "0";
+        document.body.appendChild(field);
+        field.select();
+        const ok = document.execCommand("copy");
+        field.remove();
+        if (!ok) throw new Error("copy failed");
+      }
+      toast("Text copied.");
+    } catch {
+      toast("Copy nahi hua. Text manually select karke copy karein.");
+    }
+  }
+
+  function savePhrase(phrase) {
+    const exists = phrases.some(p =>
+      p.original === phrase.original &&
+      p.translated === phrase.translated &&
+      p.from === phrase.from && p.to === phrase.to
+    );
+    if (exists) return toast("Yeh phrase pehle se saved hai.");
+    phrases.unshift({...phrase,id:Date.now()});
+    phrases = phrases.slice(0,80);
+    try {
+      localStorage.setItem("orvix_phrases", JSON.stringify(phrases));
+      toast("Phrase is browser mein save ho gaya.");
+    } catch {
+      toast("Browser storage available nahi hai.");
+    }
+    renderPhrases();
+  }
+
+  function renderPhrases() {
+    const box = $("#phraseList");
+    box.innerHTML = "";
+    if (!phrases.length) {
+      box.innerHTML = '<div class="phrase-empty">Abhi koi phrase save nahi hai. Translation ke baad Save button dabao.</div>';
+      return;
+    }
+
+    phrases.forEach((p,index) => {
+      const row = document.createElement("div");
+      row.className = "phrase";
+      row.innerHTML =
+        `<div class="phrase-content"><div class="phrase-original">${escapeHTML(p.original)}</div>`+
+        `<div class="phrase-translation" dir="${rtl(p.to)?"rtl":"auto"}">${escapeHTML(p.translated)}</div>`+
+        `<div class="meta" style="margin-top:6px">${escapeHTML(names[p.from])} → ${escapeHTML(names[p.to])}</div></div>`+
+        `<div class="phrase-actions"><button class="copy-phrase" title="Copy">▣</button><button class="delete-phrase" title="Delete">×</button></div>`;
+
+      $(".copy-phrase",row).addEventListener("click",()=>copyText(p.translated));
+      $(".delete-phrase",row).addEventListener("click",()=>{
+        phrases.splice(index,1);
+        try { localStorage.setItem("orvix_phrases",JSON.stringify(phrases)); } catch {}
+        renderPhrases();
+        toast("Phrase removed.");
+      });
+      box.appendChild(row);
+    });
+  }
+
+  $("#messageForm").addEventListener("submit", event => {
+    event.preventDefault();
+    const text = $("#message").value.trim();
+    if (!text) return toast("Pehle message likhein.");
+    const from = $("#sourceLang").value;
+    const to = $("#targetLang").value;
+    const result = translateDemo(text,from,to);
+    addMessage(text,result.text,from,to,result.matched);
+    $("#message").value = "";
+    $("#message").focus();
+  });
+
+  $$(".tone").forEach(button => button.addEventListener("click",()=>{
+    tone = button.dataset.tone;
+    $$(".tone").forEach(item => item.classList.toggle("active",item===button));
+  }));
+
+  $("#swapButton").addEventListener("click",()=>{
+    const from = $("#sourceLang"), to = $("#targetLang");
+    const old = from.value;
+    from.value = to.value;
+    to.value = old;
+    toast("Languages swapped.");
+  });
+
+  $$(".starter").forEach(button => button.addEventListener("click",()=>{
+    $("#message").value = button.dataset.phrase;
+    $("#message").focus();
+    $("#message").scrollIntoView({behavior:"smooth",block:"center"});
+  }));
+
+  $("#modeButton").addEventListener("click",()=>{
+    toast("Demo mode active hai. Real translation API connected nahi hai.");
+  });
+
+  $("#aboutButton")?.addEventListener("click",()=>$("#aboutModal").classList.add("show"));
+  $("#closeModal").addEventListener("click",()=>$("#aboutModal").classList.remove("show"));
+  $("#aboutModal").addEventListener("click",e=>{
+    if (e.target.id === "aboutModal") $("#aboutModal").classList.remove("show");
+  });
+  document.addEventListener("keydown",e=>{
+    if (e.key === "Escape") $("#aboutModal").classList.remove("show");
+  });
+
+  $$(".nav-item").forEach(button => button.addEventListener("click",()=>{
+    document.getElementById(button.dataset.scroll)?.scrollIntoView({behavior:"smooth"});
+    $$(".nav-item").forEach(item=>item.classList.toggle("active",item===button));
+  }));
+
+  renderPhrases();
+})();
+</script>
+</body>
+</html>
