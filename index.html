@@ -2,599 +2,564 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#10111a">
-<title>ORVIX Marketplace — Made in Mian Abdullah</title>
-<style>
-:root{
-  --bg:#0d0e14;--surface:#151721;--surface2:#1c1f2b;
-  --text:#f7f7fb;--muted:#a0a4b6;--line:#2b2e3d;
-  --purple:#8565ff;--pink:#ff5ca8;--green:#44dfb2;
-  --radius:18px;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif}
-button,input,select,textarea{font:inherit}
-button{cursor:pointer}
-a{color:inherit;text-decoration:none}
-button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--purple);outline-offset:2px}
-.header{position:sticky;top:0;z-index:20;background:#0d0e14ed;backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
-.header-inner{max-width:1450px;margin:auto;padding:14px 24px;display:flex;align-items:center;gap:22px}
-.brand{display:flex;align-items:center;gap:10px;flex-shrink:0;cursor:pointer}
-.brand-logo{height:43px;width:43px;border-radius:14px;background:linear-gradient(135deg,var(--purple),var(--pink));display:grid;place-items:center;font-size:25px;font-weight:950;box-shadow:0 6px 25px #8565ff40}
-.brand-name{font-weight:950;font-size:21px;letter-spacing:1px}
-.brand-tag{font-size:9px;color:var(--muted);letter-spacing:1.1px;margin-top:3px}
-.search{flex:1;position:relative;min-width:100px}
-.search input{width:100%;background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:13px;padding:13px 15px 13px 42px}
-.search-icon{position:absolute;left:14px;top:12px;color:var(--muted)}
-.header-actions{display:flex;align-items:center;gap:8px}
-.btn{border:1px solid var(--line);background:var(--surface2);color:var(--text);padding:10px 14px;border-radius:11px;font-weight:650;transition:.2s}
-.btn:hover{filter:brightness(1.15);transform:translateY(-1px)}
-.btn.primary{background:linear-gradient(120deg,var(--purple),#a14df4);border-color:transparent;color:white}
-.btn.green{background:var(--green);color:#071912;border-color:transparent}
-.btn.ghost{background:transparent}
-.btn.small{padding:7px 10px;font-size:12px}
-.count{display:inline-grid;place-items:center;background:var(--pink);color:white;min-width:19px;height:19px;border-radius:20px;font-size:10px;margin-left:4px}
-.wrap{max-width:1450px;margin:auto;padding:24px}
-.hero{position:relative;overflow:hidden;border:1px solid #3a305c;border-radius:27px;padding:clamp(25px,5vw,60px);background:radial-gradient(ellipse at 85% 25%,#6b40bc66,transparent 37%),radial-gradient(ellipse at 65% 110%,#e74d9950,transparent 35%),linear-gradient(125deg,#1b1730,#151722 70%);margin-bottom:28px}
-.hero:after{content:"O";position:absolute;right:7%;top:50%;transform:translateY(-50%);font-size:clamp(150px,25vw,340px);font-weight:950;color:#ffffff07;pointer-events:none}
-.eyebrow{font-size:11px;letter-spacing:2.2px;color:var(--green);font-weight:850}
-.hero h1{font-size:clamp(34px,5vw,66px);line-height:1.05;letter-spacing:-2px;max-width:700px;margin:17px 0}
-.gradient-text{background:linear-gradient(100deg,#b6a3ff,#ff8ec3);background-clip:text;-webkit-background-clip:text;color:transparent}
-.hero p{max-width:590px;color:#c0c1d0;line-height:1.8}
-.hero-actions{display:flex;gap:11px;flex-wrap:wrap;margin-top:25px}
-.hero-badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:26px}
-.badge{font-size:11px;padding:7px 11px;border:1px solid #ffffff1e;border-radius:30px;background:#ffffff09;color:#ded8ff}
-.section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin:30px 0 17px}
-.section-head h2{font-size:25px;margin:0 0 5px}
-.section-head p{margin:0;color:var(--muted);font-size:13px}
-.categories{display:flex;gap:9px;overflow-x:auto;padding:3px 1px 13px;scrollbar-width:thin}
-.cat{white-space:nowrap;border:1px solid var(--line);border-radius:30px;background:var(--surface);color:var(--muted);padding:10px 16px}
-.cat.active,.cat:hover{background:#29213e;border-color:var(--purple);color:white}
-.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:17px}
-.product{min-width:0;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--surface);transition:transform .2s,border-color .2s}
-.product:hover{transform:translateY(-4px);border-color:#6650aa}
-.product-image{height:205px;background:linear-gradient(145deg,#25283a,#171923);position:relative;display:grid;place-items:center;overflow:hidden}
-.product-image img{width:100%;height:100%;object-fit:cover;display:block}
-.product-image .placeholder{font-size:62px;filter:drop-shadow(0 8px 18px #0004)}
-.product-tag{position:absolute;top:11px;left:11px;background:#11121bdf;border:1px solid #ffffff20;border-radius:7px;padding:6px 8px;font-size:10px}
-.heart{position:absolute;right:10px;top:10px;width:34px;height:34px;border-radius:50%;border:1px solid #ffffff30;background:#11121bdc;color:white;font-size:18px}
-.heart.liked{color:#ff6ca6}
-.product-body{padding:14px}
-.product-category{font-size:10px;color:var(--green);text-transform:uppercase;letter-spacing:1px}
-.product-title{font-size:15px;font-weight:750;line-height:1.4;margin:8px 0;overflow-wrap:anywhere}
-.product-desc{font-size:12px;line-height:1.6;color:var(--muted);height:38px;overflow:hidden}
-.price-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:13px 0}
-.price{font-size:20px;font-weight:900}
-.seller{font-size:10px;color:var(--muted);overflow-wrap:anywhere}
-.product-actions{display:flex;gap:7px}
-.product-actions .btn{flex:1;padding:9px 5px;font-size:11px}
-.panel{border:1px solid var(--line);border-radius:19px;background:var(--surface);padding:21px;margin-bottom:18px}
-.panel h2{margin:0 0 7px;font-size:21px}
-.muted{color:var(--muted);font-size:12px;line-height:1.65}
-.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.field{margin:12px 0}
-.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:7px}
-.field input,.field textarea,.field select{width:100%;border:1px solid var(--line);border-radius:11px;padding:12px;background:#0f1119;color:var(--text)}
-.field textarea{min-height:95px;resize:vertical;line-height:1.6}
-.field input[type=file]{font-size:12px}
-.hidden{display:none!important}
-.page{display:none}.page.active{display:block}
-.empty{grid-column:1/-1;padding:38px 15px;text-align:center;border:1px dashed var(--line);border-radius:16px;color:var(--muted);line-height:1.8}
-.notice{padding:13px 15px;background:#292214;border:1px solid #58472a;color:#f3d99b;border-radius:12px;font-size:12px;line-height:1.7;margin:14px 0}
-.success{background:#112b25;border-color:#1d624e;color:#a8f5d8}
-.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:22px}
-.stat{padding:18px;border:1px solid var(--line);border-radius:15px;background:var(--surface)}
-.stat strong{display:block;font-size:25px;margin-bottom:6px}
-.cart-row{display:flex;gap:13px;align-items:center;padding:13px 0;border-bottom:1px solid var(--line)}
-.cart-row img,.cart-emoji{width:60px;height:60px;object-fit:cover;border-radius:12px;background:var(--surface2);display:grid;place-items:center;font-size:27px}
-.cart-info{flex:1;min-width:0}
-.cart-info strong{display:block;font-size:13px;margin-bottom:5px}
-.total-row{display:flex;justify-content:space-between;padding:17px 0;font-size:17px;font-weight:800}
-.modal-backdrop{position:fixed;inset:0;background:#000a;z-index:50;display:none;place-items:center;padding:16px}
-.modal-backdrop.open{display:grid}
-.modal{width:min(450px,100%);max-height:90vh;overflow:auto;border:1px solid var(--line);border-radius:20px;background:var(--surface);padding:23px;box-shadow:0 25px 100px #0008}
-.modal-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.modal-top h2{margin:0}
-.close{border:0;background:var(--surface2);color:var(--text);border-radius:9px;width:35px;height:35px;font-size:19px}
-.status{font-size:12px;color:var(--muted);line-height:1.6;margin:10px 0;overflow-wrap:anywhere}
-.footer{border-top:1px solid var(--line);margin-top:50px;padding:28px 0 90px;color:var(--muted);font-size:12px;text-align:center;line-height:1.9}
-.mobile-nav{display:none}
-@media(max-width:1050px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.header-inner{gap:13px}.brand-tag{display:none}}
-@media(max-width:740px){
- .header-inner{padding:11px 13px;gap:10px;flex-wrap:wrap}.brand-logo{width:37px;height:37px}.brand-name{font-size:18px}.search{order:3;flex-basis:100%}
- .header-actions{margin-left:auto}.header-actions .account-label{display:none}.header-actions .btn{padding:9px 10px;font-size:12px}
- .wrap{padding:15px 13px 85px}.hero{border-radius:20px;padding:26px 20px}.hero h1{letter-spacing:-1px}
- .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.product-image{height:155px}.product-body{padding:10px}.product-title{font-size:13px}.product-desc{font-size:11px}.price{font-size:17px}
- .product-actions{flex-direction:column}.product-actions .btn{width:100%}
- .section-head h2{font-size:21px}.panel{padding:15px}.form-grid{grid-template-columns:1fr}
- .stats{gap:7px}.stat{padding:12px}.stat strong{font-size:20px}
- .mobile-nav{display:flex;position:fixed;z-index:30;bottom:0;left:0;right:0;justify-content:space-around;background:#10111af5;border-top:1px solid var(--line);padding:7px 2px max(7px,env(safe-area-inset-bottom));backdrop-filter:blur(14px)}
- .mobile-nav button{flex:1;background:transparent;border:0;color:var(--muted);font-size:10px;padding:5px 2px}
- .mobile-nav button span{display:block;font-size:20px;margin-bottom:3px}
-}
-@media(max-width:360px){.grid{grid-template-columns:1fr}.product-image{height:210px}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff">
+  <title>ORVIX SOCIAL — Made in Mian Abdullah</title>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --surface: #ffffff;
+      --text: #171923;
+      --muted: #777d8b;
+      --line: #e9ebf2;
+      --brand: #6558f5;
+      --brand-light: #efedff;
+      --radius: 20px;
+      --shadow: 0 5px 24px rgba(30, 35, 70, .045);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Arial, sans-serif;
+    }
+    button, input, textarea { font: inherit; }
+    button { cursor: pointer; }
+    button:focus-visible, input:focus-visible, textarea:focus-visible {
+      outline: 3px solid #aaa4ff;
+      outline-offset: 2px;
+    }
+    .app { max-width: 1440px; margin: auto; }
+    .topbar {
+      height: 76px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(255,255,255,.94);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      padding: 0 28px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 235px;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .logo-mark {
+      width: 42px; height: 42px;
+      display: grid; place-items: center;
+      color: white;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #7566ff, #4736d8);
+      font-weight: 900; font-size: 21px;
+      box-shadow: 0 6px 15px #6558f536;
+    }
+    .logo-name { font-size: 22px; font-weight: 900; letter-spacing: -1px; }
+    .logo-sub { color: var(--muted); font-size: 9px; letter-spacing: 1.3px; margin-top: 2px; }
+    .search {
+      flex: 1; max-width: 520px;
+      display: flex; align-items: center; gap: 10px;
+      padding: 0 15px; height: 44px;
+      border-radius: 14px; background: var(--bg);
+      border: 1px solid transparent;
+    }
+    .search:focus-within { border-color: #b8b1ff; }
+    .search input { width: 100%; background: transparent; border: 0; outline: 0; color: var(--text); }
+    .top-actions { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+    .icon-btn {
+      width: 42px; height: 42px; border: 1px solid var(--line);
+      border-radius: 14px; background: white; font-size: 19px; position: relative;
+    }
+    .dot { width: 7px; height: 7px; background: #ff4e74; border-radius: 50%; position: absolute; top: 8px; right: 8px; }
+    .avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      object-fit: cover; background: #e6e1ff;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 235px minmax(0, 1fr) 285px;
+      gap: 24px; padding: 24px 28px;
+      align-items: start;
+    }
+    .sidebar, .rightbar { position: sticky; top: 100px; }
+    .nav-label { font-size: 10px; color: var(--muted); font-weight: 800; letter-spacing: 1.7px; margin: 8px 12px 12px; }
+    .nav { display: grid; gap: 5px; }
+    .nav button {
+      width: 100%; display: flex; align-items: center; gap: 13px;
+      text-align: left; padding: 13px 14px; border: 0;
+      background: transparent; border-radius: 14px;
+      color: #646a78; font-weight: 650; font-size: 14px;
+    }
+    .nav button:hover { background: white; color: var(--brand); }
+    .nav button.active { color: var(--brand); background: var(--brand-light); }
+    .nav-icon { width: 23px; font-size: 19px; text-align: center; }
+    .nav-count { margin-left: auto; font-size: 11px; background: #ffedf1; color: #e34d70; border-radius: 8px; padding: 3px 7px; }
+    .sidebar-card {
+      margin-top: 26px; background: white; padding: 18px;
+      border: 1px solid var(--line); border-radius: var(--radius);
+    }
+    .sidebar-card h3 { margin: 0 0 8px; font-size: 14px; }
+    .sidebar-card p { color: var(--muted); font-size: 12px; line-height: 1.6; }
+    .gradient-btn {
+      border: 0; color: white; font-weight: 750; border-radius: 12px;
+      padding: 12px 16px; background: linear-gradient(120deg, #7465ff, #5140dd);
+      box-shadow: 0 6px 15px #6558f52b;
+    }
+    .sidebar-card .gradient-btn { width: 100%; margin-top: 5px; font-size: 12px; }
+    .content { min-width: 0; }
+    .welcome { margin: 2px 0 22px; }
+    .welcome h1 { font-size: clamp(23px, 3vw, 30px); letter-spacing: -1px; margin: 0 0 7px; }
+    .welcome p { color: var(--muted); font-size: 13px; margin: 0; }
+    .stories-card, .composer, .post, .panel, .right-card {
+      background: var(--surface); border: 1px solid var(--line);
+      border-radius: var(--radius); box-shadow: var(--shadow);
+    }
+    .stories-card { padding: 18px; margin-bottom: 18px; overflow: hidden; }
+    .section-heading { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .section-heading h2 { font-size: 15px; margin: 0; }
+    .subtle-btn { background: transparent; border: 0; color: var(--brand); font-size: 12px; font-weight: 750; }
+    .stories { display: flex; gap: 17px; overflow-x: auto; padding-bottom: 3px; }
+    .story { flex: 0 0 65px; text-align: center; border: 0; background: transparent; padding: 0; color: var(--text); }
+    .story-ring {
+      width: 61px; height: 61px; margin: 0 auto 8px; border-radius: 50%;
+      padding: 3px; background: linear-gradient(135deg, #ff6a9e, #8b5cff, #ffc35b);
+    }
+    .story-ring img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 3px solid white; }
+    .story.add .story-ring { background: #efedff; border: 2px dashed #9c91ff; padding: 0; display: grid; place-items: center; color: var(--brand); font-size: 26px; }
+    .story-name { display: block; font-size: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .composer { padding: 16px; margin-bottom: 18px; }
+    .composer-top { display: flex; align-items: center; gap: 12px; }
+    .composer input { flex: 1; min-width: 0; background: var(--bg); border: 1px solid transparent; border-radius: 13px; padding: 13px 15px; outline: 0; font-size: 13px; }
+    .composer input:focus { border-color: #b8b1ff; }
+    .composer-bottom { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
+    .quick-action { border: 0; background: transparent; color: #6e7380; font-size: 12px; padding: 7px 4px; }
+    .quick-action:hover { color: var(--brand); }
+    .post { overflow: hidden; margin-bottom: 18px; }
+    .post-head { display: flex; align-items: center; gap: 11px; padding: 17px 18px 12px; }
+    .post-user { min-width: 0; flex: 1; }
+    .post-user strong { font-size: 13px; }
+    .verified { color: var(--brand); }
+    .post-user small { display: block; color: var(--muted); font-size: 10px; margin-top: 4px; }
+    .more { border: 0; background: transparent; color: var(--muted); font-size: 22px; }
+    .post-text { padding: 0 18px 14px; font-size: 13px; line-height: 1.7; }
+    .post-image { display: block; width: 100%; max-height: 460px; object-fit: cover; background: #e8e8f4; }
+    .post-stats { display: flex; justify-content: space-between; padding: 13px 18px; font-size: 11px; color: var(--muted); }
+    .post-actions { display: flex; gap: 4px; border-top: 1px solid var(--line); margin: 0 17px; padding: 8px 0; }
+    .post-actions button { flex: 1; border: 0; background: transparent; padding: 9px 2px; border-radius: 9px; color: #6d7280; font-size: 12px; font-weight: 650; }
+    .post-actions button:hover, .post-actions button.liked { color: #e64d7a; background: #fff0f4; }
+    .right-card { padding: 18px; margin-bottom: 18px; }
+    .right-card h2 { font-size: 14px; margin: 0 0 15px; }
+    .trend { display: flex; gap: 10px; margin: 15px 0; }
+    .trend-num { color: #a4a8b4; font-size: 11px; width: 14px; padding-top: 2px; }
+    .trend strong { font-size: 12px; display: block; }
+    .trend small { display: block; color: var(--muted); font-size: 10px; margin-top: 4px; }
+    .person { display: flex; align-items: center; gap: 9px; margin: 14px 0; }
+    .person-info { flex: 1; min-width: 0; }
+    .person-info strong { display: block; font-size: 11px; }
+    .person-info small { display: block; color: var(--muted); font-size: 10px; margin-top: 3px; }
+    .follow { border: 1px solid #dcd8ff; color: var(--brand); background: #f7f6ff; border-radius: 9px; padding: 7px 9px; font-size: 10px; font-weight: 750; }
+    .footer { color: #a2a5af; font-size: 10px; line-height: 2; padding: 5px 5px 25px; }
+    .footer b { color: #777d8b; }
+    .mobile-nav { display: none; }
+    .empty-state { padding: 45px 20px; text-align: center; color: var(--muted); }
+    .empty-state h2 { color: var(--text); font-size: 20px; }
+    .toast { position: fixed; z-index: 50; bottom: 24px; left: 50%; transform: translateX(-50%); background: #222437; color: white; padding: 12px 18px; border-radius: 12px; font-size: 12px; box-shadow: 0 8px 30px #0002; max-width: calc(100% - 30px); }
+    .modal-backdrop { position: fixed; inset: 0; z-index: 40; background: #17192380; display: grid; place-items: center; padding: 16px; }
+    .modal { background: white; width: min(500px, 100%); border-radius: 22px; padding: 22px; box-shadow: 0 20px 70px #0003; }
+    .modal h2 { margin: 0 0 18px; font-size: 20px; }
+    .modal textarea { resize: vertical; min-height: 130px; width: 100%; border: 1px solid var(--line); border-radius: 12px; padding: 13px; outline-color: #aaa4ff; }
+    .modal-row { display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px; }
+    .cancel-btn { background: #f1f2f7; border: 0; border-radius: 11px; padding: 11px 16px; }
+    .hidden { display: none !important; }
+
+    @media (max-width: 1120px) {
+      .layout { grid-template-columns: 205px minmax(0, 1fr); }
+      .rightbar { display: none; }
+      .logo { min-width: 205px; }
+    }
+    @media (max-width: 720px) {
+      .topbar { height: 64px; padding: 0 14px; gap: 12px; }
+      .logo { min-width: auto; gap: 8px; }
+      .logo-mark { width: 36px; height: 36px; border-radius: 12px; }
+      .logo-name { font-size: 19px; }
+      .logo-sub { font-size: 7px; }
+      .search { max-width: none; flex: 1; height: 38px; padding: 0 10px; }
+      .search input { font-size: 12px; }
+      .top-actions { margin-left: 0; gap: 5px; }
+      .top-actions .icon-btn { display: none; }
+      .top-actions .avatar { width: 34px; height: 34px; }
+      .layout { display: block; padding: 20px 12px 90px; }
+      .sidebar, .rightbar { display: none; }
+      .welcome { margin-bottom: 18px; }
+      .welcome h1 { font-size: 24px; }
+      .stories-card { padding: 15px 13px; }
+      .stories { gap: 13px; }
+      .composer { padding: 13px; }
+      .composer-bottom { flex-wrap: wrap; }
+      .quick-action { font-size: 11px; }
+      .post-head { padding: 14px 13px 10px; }
+      .post-text { padding: 0 13px 12px; }
+      .post-stats { padding: 12px 13px; }
+      .post-actions { margin: 0 10px; }
+      .post-actions button { font-size: 11px; }
+      .mobile-nav {
+        position: fixed; bottom: 0; left: 0; right: 0; z-index: 30;
+        display: flex; justify-content: space-around; align-items: center;
+        padding: 9px 4px calc(9px + env(safe-area-inset-bottom));
+        background: rgba(255,255,255,.97); backdrop-filter: blur(12px);
+        border-top: 1px solid var(--line);
+      }
+      .mobile-nav button { border: 0; background: transparent; color: #777d8b; display: grid; justify-items: center; gap: 3px; font-size: 19px; min-width: 48px; }
+      .mobile-nav button span { font-size: 9px; }
+      .mobile-nav button.active { color: var(--brand); }
+    }
+  </style>
 </head>
 <body>
-<header class="header">
-  <div class="header-inner">
-    <div class="brand" data-page="home" role="button" tabindex="0" aria-label="ORVIX home">
-      <div class="brand-logo">O</div>
-      <div><div class="brand-name">ORVIX</div><div class="brand-tag">MADE IN MIAN ABDULLAH</div></div>
-    </div>
-    <div class="search">
-      <span class="search-icon">⌕</span>
-      <input id="searchInput" type="search" placeholder="Search products, categories..." aria-label="Search products">
-    </div>
-    <div class="header-actions">
-      <button class="btn" data-page="wishlist" aria-label="Wishlist">♡ <span class="count" id="wishCount">0</span></button>
-      <button class="btn" data-page="cart" aria-label="Shopping cart">🛒 <span class="count" id="cartCount">0</span></button>
-      <button class="btn primary" id="accountBtn">Login</button>
-    </div>
-  </div>
-</header>
-
-<main class="wrap">
-  <section class="page active" id="home">
-    <div class="hero">
-      <div class="eyebrow">THE WORLD IS YOUR MARKETPLACE</div>
-      <h1>Discover more.<br><span class="gradient-text">Shop without limits.</span></h1>
-      <p>Explore products, discover independent sellers and build your own online shop with ORVIX Marketplace.</p>
-      <div class="hero-actions">
-        <button class="btn primary" data-scroll="productsSection">Explore products ↗</button>
-        <button class="btn" data-page="sell">＋ Start selling</button>
+<div class="app">
+  <header class="topbar">
+    <a href="#" class="logo" aria-label="ORVIX home" onclick="showSection('Home');return false;">
+      <div class="logo-mark">O</div>
+      <div>
+        <div class="logo-name">ORVIX</div>
+        <div class="logo-sub">SOCIAL WORLD</div>
       </div>
-      <div class="hero-badges"><span class="badge">✦ Modern shopping</span><span class="badge">◇ Seller marketplace</span><span class="badge">◎ Mobile friendly</span></div>
+    </a>
+    <label class="search">
+      <span>⌕</span>
+      <input id="searchInput" type="search" placeholder="Search people, posts, topics..." aria-label="Search ORVIX">
+    </label>
+    <div class="top-actions">
+      <button class="icon-btn" onclick="notify('Notifications demo — real notifications baad mein connect hongi.')" aria-label="Notifications">♧<i class="dot"></i></button>
+      <button class="icon-btn" onclick="notify('Messages demo — real chat aglay phase mein connect hogi.')" aria-label="Messages">✉</button>
+      <img class="avatar" src="https://i.pravatar.cc/100?img=12" alt="Your profile">
     </div>
-    <div class="stats">
-      <div class="stat"><strong id="statProducts">0</strong><span class="muted">Products shown</span></div>
-      <div class="stat"><strong id="statCategories">8</strong><span class="muted">Categories to explore</span></div>
-      <div class="stat"><strong id="statCart">0</strong><span class="muted">Items in your cart</span></div>
-    </div>
-    <div class="section-head"><div><h2>Shop by category</h2><p>Find something for your everyday needs.</p></div></div>
-    <div class="categories" id="categories"></div>
-    <div class="section-head" id="productsSection"><div><h2 id="productHeading">Featured products</h2><p>Explore available listings.</p></div><button class="btn small" id="clearFilters">Clear filters</button></div>
-    <div class="grid" id="productGrid"></div>
-    <div class="notice">Demo products are examples for testing the interface. Real product listings must come from verified sellers. Prices, availability and delivery are not confirmed.</div>
-  </section>
+  </header>
 
-  <section class="page" id="sell">
-    <div class="panel">
-      <h2>Seller dashboard</h2>
-      <p class="muted">Create a product listing for your marketplace. Configure Firebase below to publish listings online.</p>
-      <div id="sellerStatus" class="notice">Browsing in demo mode. Configure Firebase to sign in and publish real listings.</div>
-      <form id="productForm">
-        <div class="form-grid">
-          <div class="field"><label for="pName">Product name *</label><input id="pName" maxlength="100" required placeholder="Example: Everyday backpack"></div>
-          <div class="field"><label for="pCategory">Category *</label><select id="pCategory" required></select></div>
-          <div class="field"><label for="pPrice">Price (PKR) *</label><input id="pPrice" type="number" min="1" max="100000000" required placeholder="2500"></div>
-          <div class="field"><label for="pStock">Stock quantity</label><input id="pStock" type="number" min="0" max="1000000" value="1"></div>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="nav-label">YOUR SPACE</div>
+      <nav class="nav" id="sideNav">
+        <button class="active" onclick="showSection('Home',this)"><span class="nav-icon">⌂</span> Home Feed</button>
+        <button onclick="showSection('Explore',this)"><span class="nav-icon">⌕</span> Explore</button>
+        <button onclick="showSection('Reels',this)"><span class="nav-icon">▷</span> Reels & Videos</button>
+        <button onclick="showSection('Messages',this)"><span class="nav-icon">✉</span> Messages <span class="nav-count">3</span></button>
+        <button onclick="showSection('Notifications',this)"><span class="nav-icon">♧</span> Notifications</button>
+        <button onclick="showSection('Live',this)"><span class="nav-icon">◉</span> Live</button>
+        <button onclick="showSection('Marketplace',this)"><span class="nav-icon">▣</span> Marketplace</button>
+        <button onclick="showSection('News',this)"><span class="nav-icon">▤</span> News & Trends</button>
+        <button onclick="showSection('Profile',this)"><span class="nav-icon">♙</span> My Profile</button>
+        <button onclick="showSection('Settings',this)"><span class="nav-icon">⚙</span> Settings</button>
+      </nav>
+      <div class="sidebar-card">
+        <h3>✨ Your world, your way</h3>
+        <p>Share your ideas, discover new creators and connect with the world.</p>
+        <button class="gradient-btn" onclick="openComposer()">＋ Create a post</button>
+      </div>
+      <div class="footer">
+        <b>ORVIX SOCIAL</b><br>
+        About · Community · Privacy · Help<br>
+        © 2026 ORVIX<br>
+        <b>MADE IN MIAN ABDULLAH</b>
+      </div>
+    </aside>
+
+    <main class="content" id="mainContent">
+      <section id="homeSection">
+        <div class="welcome">
+          <h1>Your world. Your people. <span style="color:var(--brand)">Your ORVIX.</span></h1>
+          <p>Discover ideas, share moments and connect with people everywhere.</p>
         </div>
-        <div class="field"><label for="pImage">Product image URL (optional)</label><input id="pImage" type="url" placeholder="https://example.com/product.jpg"></div>
-        <div class="field"><label for="pDescription">Description *</label><textarea id="pDescription" maxlength="3000" required placeholder="Describe materials, size, features and condition accurately..."></textarea></div>
-        <button class="btn primary" type="submit">Publish product</button>
-      </form>
-      <p class="muted">For online publishing, you must sign in and configure Firestore security rules. Image URL input does not upload a file to Firebase Storage.</p>
-    </div>
-    <div class="panel"><h2>Your listings</h2><div id="myListings" class="muted">Sign in and connect Firebase to load your online listings.</div></div>
-  </section>
 
-  <section class="page" id="cart">
-    <div class="panel"><h2>Your shopping cart</h2><p class="muted">Review items before proceeding.</p><div id="cartItems"></div><div class="total-row"><span>Estimated total</span><span id="cartTotal">PKR 0</span></div><button class="btn primary" id="checkoutBtn">Continue to checkout</button><div class="notice">Checkout is a demo only. No payment will be collected and no order will be placed.</div></div>
-  </section>
+        <section class="stories-card">
+          <div class="section-heading">
+            <h2>Stories <span style="color:var(--muted);font-weight:400">· Moments today</span></h2>
+            <button class="subtle-btn" onclick="notify('Stories upload aglay phase mein add hoga.')">View all →</button>
+          </div>
+          <div class="stories">
+            <button class="story add" onclick="notify('Story upload abhi demo hai.')" aria-label="Add story">
+              <span class="story-ring">＋</span><span class="story-name">Your story</span>
+            </button>
+            <button class="story" onclick="notify('Demo story selected.')"><span class="story-ring"><img src="https://i.pravatar.cc/100?img=47" alt=""></span><span class="story-name">Ayesha</span></button>
+            <button class="story" onclick="notify('Demo story selected.')"><span class="story-ring"><img src="https://i.pravatar.cc/100?img=12" alt=""></span><span class="story-name">Hamza</span></button>
+            <button class="story" onclick="notify('Demo story selected.')"><span class="story-ring"><img src="https://i.pravatar.cc/100?img=44" alt=""></span><span class="story-name">Sarah</span></button>
+            <button class="story" onclick="notify('Demo story selected.')"><span class="story-ring"><img src="https://i.pravatar.cc/100?img=68" alt=""></span><span class="story-name">Usman</span></button>
+            <button class="story" onclick="notify('Demo story selected.')"><span class="story-ring"><img src="https://i.pravatar.cc/100?img=25" alt=""></span><span class="story-name">Zara</span></button>
+            <button class="story" onclick="notify('Demo story selected.')"><span class="story-ring"><img src="https://i.pravatar.cc/100?img=59" alt=""></span><span class="story-name">Ali</span></button>
+          </div>
+        </section>
 
-  <section class="page" id="wishlist">
-    <div class="panel"><h2>Your wishlist ♡</h2><p class="muted">Products you want to revisit.</p><div class="grid" id="wishlistGrid"></div></div>
-  </section>
+        <section class="composer">
+          <div class="composer-top">
+            <img class="avatar" src="https://i.pravatar.cc/100?img=12" alt="">
+            <input id="composerInput" type="text" placeholder="What's on your mind? Share with the world..." onclick="openComposer()" readonly>
+          </div>
+          <div class="composer-bottom">
+            <button class="quick-action" onclick="openComposer()">▧ Photo</button>
+            <button class="quick-action" onclick="notify('Video upload feature aglay phase mein connect hoga.')">▷ Video</button>
+            <button class="quick-action" onclick="notify('Live streaming abhi available nahi.')">◉ Go Live</button>
+            <button class="gradient-btn" onclick="openComposer()">Create Post</button>
+          </div>
+        </section>
 
-  <section class="page" id="orders">
-    <div class="panel"><h2>My orders</h2><p class="muted">Your online order history will be shown here when a secure order system is implemented.</p><div class="notice">No real orders are placed by this starter app.</div></div>
-  </section>
+        <div id="feed">
+          <article class="post" data-search="nature travel mountains beautiful pakistan">
+            <div class="post-head">
+              <img class="avatar" src="https://i.pravatar.cc/100?img=47" alt="Ayesha">
+              <div class="post-user"><strong>Ayesha Khan <span class="verified">✓</span></strong><small>@ayesha.explores · 12 min ago</small></div>
+              <button class="more" onclick="notify('Post options demo.')">···</button>
+            </div>
+            <div class="post-text">Sometimes all you need is fresh air, beautiful mountains, and a little time for yourself. 🌿 Where would you love to travel next?</div>
+            <img class="post-image" src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1100&q=85" alt="Beautiful mountain landscape" loading="lazy">
+            <div class="post-stats"><span class="like-count">♥ 248 likes</span><span>36 comments · 12 shares</span></div>
+            <div class="post-actions">
+              <button class="like-btn" onclick="toggleLike(this)">♡ Like</button>
+              <button onclick="notify('Comments demo — database baad mein connect hogi.')">▢ Comment</button>
+              <button onclick="sharePost(this)">↗ Share</button>
+              <button onclick="notify('Post save feature aglay phase mein aayega.')">♧ Save</button>
+            </div>
+          </article>
 
-  <section class="page" id="profile">
-    <div class="panel"><h2>Account & settings</h2><p class="muted">Manage your account and check the connection status.</p>
-      <div class="field"><label for="displayName">Display name</label><input id="displayName" placeholder="Your name"></div>
-      <div class="field"><label for="displayEmail">Email</label><input id="displayEmail" readonly placeholder="Sign in to see your email"></div>
-      <button class="btn primary" id="saveProfile">Save display name</button>
-      <button class="btn" id="logoutBtn">Sign out</button>
-      <div class="section-head"><div><h2>Connection status</h2><p>Current Firebase configuration state.</p></div></div>
-      <div id="connectionStatus" class="notice">Firebase is not configured yet.</div>
-      <button class="btn" id="openFirebaseGuide">How to connect Firebase</button>
-    </div>
-  </section>
+          <article class="post" data-search="technology ai future ideas innovation">
+            <div class="post-head">
+              <img class="avatar" src="https://i.pravatar.cc/100?img=12" alt="Hamza">
+              <div class="post-user"><strong>Hamza Ahmed <span class="verified">✓</span></strong><small>@hamza.tech · 34 min ago</small></div>
+              <button class="more" onclick="notify('Post options demo.')">···</button>
+            </div>
+            <div class="post-text">The future belongs to people who keep learning. 💡 What is one skill you want to master this year? #Learning #Technology</div>
+            <img class="post-image" src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1100&q=85" alt="Technology circuit board" loading="lazy">
+            <div class="post-stats"><span class="like-count">♥ 176 likes</span><span>24 comments · 8 shares</span></div>
+            <div class="post-actions">
+              <button class="like-btn" onclick="toggleLike(this)">♡ Like</button>
+              <button onclick="notify('Comments demo — database baad mein connect hogi.')">▢ Comment</button>
+              <button onclick="sharePost(this)">↗ Share</button>
+              <button onclick="notify('Post save feature aglay phase mein aayega.')">♧ Save</button>
+            </div>
+          </article>
 
-  <section class="page" id="firebaseGuide">
-    <div class="panel">
-      <h2>Connect your Firebase project</h2>
-      <p class="muted">Open Firebase Console → Project settings → General → Your apps → Web app. Register a web app and copy its configuration into the code below in the JavaScript section.</p>
-      <ol class="muted">
-        <li>Enable Email/Password and Google under Authentication → Sign-in method.</li>
-        <li>Create Firestore Database in production mode.</li>
-        <li>Replace the sample firebaseConfig values in this file with your project's actual values.</li>
-        <li>Set secure Firestore rules before publishing. Do not allow unrestricted public writes.</li>
-      </ol>
-      <a class="btn primary" href="https://console.firebase.google.com/" target="_blank" rel="noopener">Open Firebase Console ↗</a>
-      <div class="notice">The Firebase configuration object identifies your project; it is not a substitute for security rules. Never put service-account keys or private API secrets in frontend code.</div>
-    </div>
-  </section>
+          <article class="post" data-search="friends community positive motivation">
+            <div class="post-head">
+              <img class="avatar" src="https://i.pravatar.cc/100?img=44" alt="Sarah">
+              <div class="post-user"><strong>Sarah Malik</strong><small>@sarah.daily · 1 hour ago</small></div>
+              <button class="more" onclick="notify('Post options demo.')">···</button>
+            </div>
+            <div class="post-text">A small reminder: your journey doesn't have to look like anyone else's. Keep going at your own pace. 💜</div>
+            <div class="post-stats"><span class="like-count">♥ 92 likes</span><span>11 comments · 5 shares</span></div>
+            <div class="post-actions">
+              <button class="like-btn" onclick="toggleLike(this)">♡ Like</button>
+              <button onclick="notify('Comments demo — database baad mein connect hogi.')">▢ Comment</button>
+              <button onclick="sharePost(this)">↗ Share</button>
+              <button onclick="notify('Post save feature aglay phase mein aayega.')">♧ Save</button>
+            </div>
+          </article>
+        </div>
+      </section>
+      <section id="otherSection" class="panel hidden"></section>
+    </main>
 
-  <footer class="footer">ORVIX MARKETPLACE · MADE IN MIAN ABDULLAH<br>Discover products. Support sellers. Shop smarter.</footer>
-</main>
+    <aside class="rightbar">
+      <section class="right-card">
+        <div class="section-heading"><h2>🔥 Trending now</h2><button class="subtle-btn" onclick="showSection('Explore')">See all</button></div>
+        <div class="trend"><span class="trend-num">01</span><div><strong>#TechForEveryone</strong><small>12.8K posts</small></div></div>
+        <div class="trend"><span class="trend-num">02</span><div><strong>#TravelDiaries</strong><small>8.4K posts</small></div></div>
+        <div class="trend"><span class="trend-num">03</span><div><strong>#CreatorLife</strong><small>6.1K posts</small></div></div>
+        <div class="trend"><span class="trend-num">04</span><div><strong>#ORVIXCommunity</strong><small>2.3K posts</small></div></div>
+      </section>
+      <section class="right-card">
+        <div class="section-heading"><h2>✨ People to follow</h2><button class="subtle-btn" onclick="showSection('Explore')">More</button></div>
+        <div class="person"><img class="avatar" src="https://i.pravatar.cc/100?img=68" alt=""><div class="person-info"><strong>Usman Raza</strong><small>Creator · 12K followers</small></div><button class="follow" onclick="toggleFollow(this)">Follow</button></div>
+        <div class="person"><img class="avatar" src="https://i.pravatar.cc/100?img=25" alt=""><div class="person-info"><strong>Zara Noor</strong><small>Photography</small></div><button class="follow" onclick="toggleFollow(this)">Follow</button></div>
+        <div class="person"><img class="avatar" src="https://i.pravatar.cc/100?img=59" alt=""><div class="person-info"><strong>Ali Hassan</strong><small>Tech enthusiast</small></div><button class="follow" onclick="toggleFollow(this)">Follow</button></div>
+      </section>
+      <section class="right-card">
+        <h2>🌍 One world, many voices</h2>
+        <p style="color:var(--muted);font-size:12px;line-height:1.7;margin:0">Our vision is to help people share ideas and connect across borders.</p>
+        <p style="font-size:10px;color:var(--brand);font-weight:800;letter-spacing:1px;margin-bottom:0">MADE IN MIAN ABDULLAH</p>
+      </section>
+    </aside>
+  </div>
 
-<nav class="mobile-nav" aria-label="Mobile navigation">
-  <button data-page="home"><span>⌂</span>Home</button>
-  <button data-page="sell"><span>＋</span>Sell</button>
-  <button data-page="wishlist"><span>♡</span>Wishlist</button>
-  <button data-page="cart"><span>🛒</span>Cart</button>
-  <button data-page="profile"><span>◉</span>Account</button>
-</nav>
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <button class="active" onclick="showSection('Home',this)">⌂<span>Home</span></button>
+    <button onclick="showSection('Explore',this)">⌕<span>Explore</span></button>
+    <button onclick="openComposer()">⊕<span>Create</span></button>
+    <button onclick="showSection('Messages',this)">✉<span>Chat</span></button>
+    <button onclick="showSection('Profile',this)">♙<span>Profile</span></button>
+  </nav>
+</div>
 
-<div class="modal-backdrop" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+<div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+<div id="composerModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle" onclick="if(event.target===this)closeComposer()">
   <div class="modal">
-    <div class="modal-top"><h2 id="authTitle">Welcome to ORVIX</h2><button class="close" id="closeAuth" aria-label="Close">×</button></div>
-    <p class="muted">Sign in or create your marketplace account.</p>
-    <div class="field"><label for="authEmail">Email address</label><input id="authEmail" type="email" autocomplete="email" placeholder="you@example.com"></div>
-    <div class="field"><label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="current-password" minlength="6" placeholder="At least 6 characters"></div>
-    <div class="actions"><button class="btn primary" id="loginBtn">Login</button><button class="btn" id="signupBtn">Create account</button></div>
-    <button class="btn" id="googleBtn" style="width:100%;margin-top:10px">Continue with Google</button>
-    <button class="btn ghost" id="resetPasswordBtn" style="width:100%;margin-top:6px">Forgot password?</button>
-    <div id="authMessage" class="status" role="status"></div>
+    <h2 id="modalTitle">Create a post</h2>
+    <textarea id="postText" maxlength="1000" placeholder="Share something with the ORVIX community..."></textarea>
+    <div class="modal-row">
+      <button class="cancel-btn" onclick="closeComposer()">Cancel</button>
+      <button class="gradient-btn" onclick="publishPost()">Publish post</button>
+    </div>
   </div>
 </div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import {
-  getAuth, onAuthStateChanged, createUserWithEmailAndPassword,
-  signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup,
-  signOut, sendPasswordResetEmail, updateProfile
-} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-import {
-  getFirestore, collection, addDoc, getDocs, query, where,
-  onSnapshot, serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+<script>
+  let toastTimer;
+  let activeSection = "Home";
 
-/* PASTE YOUR OWN FIREBASE WEB APP CONFIG BELOW */
-const firebaseConfig = {
-  apiKey: "PASTE_YOUR_API_KEY",
-  authDomain: "PASTE_YOUR_AUTH_DOMAIN",
-  projectId: "PASTE_YOUR_PROJECT_ID",
-  storageBucket: "PASTE_YOUR_STORAGE_BUCKET",
-  messagingSenderId: "PASTE_YOUR_MESSAGING_SENDER_ID",
-  appId: "PASTE_YOUR_APP_ID"
-};
+  function notify(message) {
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.classList.remove("hidden");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.add("hidden"), 2800);
+  }
 
-const categoriesList = [
-  {name:"All",icon:"✦"},
-  {name:"Electronics",icon:"🎧"},
-  {name:"Fashion",icon:"👕"},
-  {name:"Home",icon:"🏠"},
-  {name:"Beauty",icon:"✨"},
-  {name:"Sports",icon:"⚽"},
-  {name:"Accessories",icon:"⌚"},
-  {name:"Toys",icon:"🧸"},
-  {name:"Other",icon:"📦"}
-];
+  function toggleLike(button) {
+    const post = button.closest(".post");
+    const count = post.querySelector(".like-count");
+    const wasLiked = button.classList.contains("liked");
+    let number = parseInt(count.textContent.replace(/\D/g, ""), 10) || 0;
+    if (wasLiked) {
+      button.classList.remove("liked");
+      button.textContent = "♡ Like";
+      number = Math.max(0, number - 1);
+    } else {
+      button.classList.add("liked");
+      button.textContent = "♥ Liked";
+      number++;
+    }
+    count.textContent = "♥ " + number + " likes";
+  }
 
-const demoProducts = [
- {id:"demo1",name:"Wireless Headphones",category:"Electronics",price:4500,stock:15,description:"Everyday wireless headphones. Check the seller's specifications before purchase.",sellerName:"ORVIX Demo Store",emoji:"🎧",tag:"POPULAR"},
- {id:"demo2",name:"Classic Everyday Hoodie",category:"Fashion",price:2800,stock:20,description:"A casual everyday hoodie. Confirm fabric, sizing and colour with the seller.",sellerName:"ORVIX Demo Store",emoji:"👕",tag:"STYLE"},
- {id:"demo3",name:"Minimal Desk Lamp",category:"Home",price:1900,stock:9,description:"A simple desk lamp concept for home and workspace use.",sellerName:"ORVIX Demo Store",emoji:"💡",tag:"HOME"},
- {id:"demo4",name:"Everyday Backpack",category:"Accessories",price:3200,stock:8,description:"A versatile backpack concept. Confirm dimensions and materials before ordering.",sellerName:"ORVIX Demo Store",emoji:"🎒",tag:"PICK"},
- {id:"demo5",name:"Sports Football",category:"Sports",price:2200,stock:12,description:"A football listing example. Confirm size and material before purchase.",sellerName:"ORVIX Demo Store",emoji:"⚽",tag:"SPORT"},
- {id:"demo6",name:"Skin Care Set",category:"Beauty",price:1750,stock:10,description:"A beauty product listing example. Review ingredients and product information before buying.",sellerName:"ORVIX Demo Store",emoji:"🧴",tag:"BEAUTY"},
- {id:"demo7",name:"Smart Watch",category:"Electronics",price:5900,stock:6,description:"A smartwatch listing example. Verify compatibility, features and warranty with the seller.",sellerName:"ORVIX Demo Store",emoji:"⌚",tag:"TECH"},
- {id:"demo8",name:"Building Blocks Set",category:"Toys",price:1450,stock:11,description:"A toy listing example. Check age recommendations and safety information.",sellerName:"ORVIX Demo Store",emoji:"🧸",tag:"FUN"}
-];
+  function toggleFollow(button) {
+    const following = button.textContent === "Following";
+    button.textContent = following ? "Follow" : "Following";
+    button.style.background = following ? "#f7f6ff" : "#efedff";
+    notify(following ? "Demo: unfollowed." : "Demo: following!");
+  }
 
-const $ = id => document.getElementById(id);
-const money = value => "PKR " + Number(value||0).toLocaleString("en-PK",{maximumFractionDigits:2});
-let auth = null, db = null, currentUser = null, firebaseReady = false;
-let products = [...demoProducts], selectedCategory = "All", searchTerm = "";
-let cart = readStore("orvix_cart",[]), wishlist = readStore("orvix_wishlist",[]);
-let unsubscribeProducts = null;
+  function sharePost(button) {
+    const text = "Check out ORVIX SOCIAL — MADE IN MIAN ABDULLAH!";
+    if (navigator.share) {
+      navigator.share({ title: "ORVIX SOCIAL", text }).catch(() => {});
+    } else if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(() => notify("Share text copied!"));
+    } else {
+      notify("ORVIX SOCIAL — MADE IN MIAN ABDULLAH");
+    }
+  }
 
-function readStore(key,fallback){
-  try { const val=JSON.parse(localStorage.getItem(key)||"null");return Array.isArray(val)?val:fallback; }
-  catch { return fallback; }
-}
-function writeStore(key,value){localStorage.setItem(key,JSON.stringify(value));}
-function escapeHTML(value){
-  return String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
-}
-function safeImageUrl(value){
-  try{const u=new URL(value);return ["https:","http:"].includes(u.protocol)?u.href:"";}
-  catch{return "";}
-}
-function navigate(page){
-  if(!$ (page)) return;
-  document.querySelectorAll(".page").forEach(el=>el.classList.remove("active"));
-  $(page).classList.add("active");
-  window.scrollTo({top:0,behavior:"smooth"});
-  if(page==="cart")renderCart();
-  if(page==="wishlist")renderWishlist();
-  if(page==="sell")renderMyListings();
-}
-document.querySelectorAll("[data-page]").forEach(el=>{
-  el.addEventListener("click",()=>navigate(el.dataset.page));
-});
-document.querySelectorAll("[data-scroll]").forEach(el=>{
-  el.addEventListener("click",()=>{
-    navigate("home");
-    setTimeout(()=>$(el.dataset.scroll)?.scrollIntoView({behavior:"smooth"}),80);
-  });
-});
-document.querySelector(".brand").addEventListener("keydown",e=>{
-  if(e.key==="Enter"||e.key===" "){e.preventDefault();navigate("home");}
-});
-$("searchInput").addEventListener("input",e=>{
-  searchTerm=e.target.value.trim().toLowerCase();
-  renderProducts();
-});
+  function openComposer() {
+    document.getElementById("composerModal").classList.remove("hidden");
+    setTimeout(() => document.getElementById("postText").focus(), 50);
+  }
 
-function renderCategories(){
-  $("categories").innerHTML=categoriesList.map(c=>
-    `<button class="cat ${selectedCategory===c.name?"active":""}" data-cat="${escapeHTML(c.name)}">${c.icon} ${escapeHTML(c.name)}</button>`
-  ).join("");
-  $("categories").querySelectorAll("[data-cat]").forEach(btn=>{
-    btn.onclick=()=>{selectedCategory=btn.dataset.cat;renderCategories();renderProducts();};
-  });
-  $("pCategory").innerHTML=categoriesList.filter(c=>c.name!=="All").map(c=>
-    `<option value="${escapeHTML(c.name)}">${c.icon} ${escapeHTML(c.name)}</option>`
-  ).join("");
-}
+  function closeComposer() {
+    document.getElementById("composerModal").classList.add("hidden");
+  }
 
-function visibleProducts(){
-  return products.filter(p=>{
-    const categoryOK=selectedCategory==="All"||p.category===selectedCategory;
-    const haystack=[p.name,p.description,p.category,p.sellerName].join(" ").toLowerCase();
-    return categoryOK&&haystack.includes(searchTerm);
-  });
-}
-function productCard(p){
-  const liked=wishlist.includes(p.id);
-  const image=safeImageUrl(p.imageUrl||"");
-  const visual=image
-    ? `<img src="${escapeHTML(image)}" alt="${escapeHTML(p.name)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`
-    : `<div class="placeholder" aria-hidden="true">${escapeHTML(p.emoji||"📦")}</div>`;
-  return `<article class="product">
-    <div class="product-image">${visual}<span class="product-tag">${escapeHTML(p.tag||p.category||"PRODUCT")}</span>
-    <button class="heart ${liked?"liked":""}" data-wish="${escapeHTML(p.id)}" aria-label="Toggle wishlist">${liked?"♥":"♡"}</button></div>
-    <div class="product-body"><div class="product-category">${escapeHTML(p.category||"Other")}</div>
-    <div class="product-title">${escapeHTML(p.name)}</div>
-    <div class="product-desc">${escapeHTML(p.description||"Product details not provided.")}</div>
-    <div class="price-row"><div class="price">${money(p.price)}</div></div>
-    <div class="seller">Seller: ${escapeHTML(p.sellerName||"Marketplace seller")}</div>
-    <div class="product-actions" style="margin-top:12px">
-      <button class="btn primary" data-add="${escapeHTML(p.id)}">＋ Add to cart</button>
-      <button class="btn" data-view="${escapeHTML(p.id)}">Details</button>
-    </div></div></article>`;
-}
-function renderProducts(){
-  const items=visibleProducts();
-  $("productGrid").innerHTML=items.length?items.map(productCard).join(""):`<div class="empty">No matching products found.<br>Try another search or category.</div>`;
-  $("productHeading").textContent=searchTerm?"Search results":selectedCategory==="All"?"Featured products":selectedCategory+" products";
-  $("statProducts").textContent=products.length;
-  $("statCategories").textContent=categoriesList.length-1;
-  $("productGrid").querySelectorAll("[data-add]").forEach(b=>b.onclick=()=>addToCart(b.dataset.add));
-  $("productGrid").querySelectorAll("[data-wish]").forEach(b=>b.onclick=()=>toggleWishlist(b.dataset.wish));
-  $("productGrid").querySelectorAll("[data-view]").forEach(b=>b.onclick=()=>showDetails(b.dataset.view));
-  updateCounts();
-}
-function findProduct(id){return products.find(p=>p.id===id)||demoProducts.find(p=>p.id===id);}
-function addToCart(id){
-  const p=findProduct(id);if(!p)return;
-  const existing=cart.find(item=>item.id===id);
-  if(existing)existing.qty++;
-  else cart.push({id,qty:1});
-  writeStore("orvix_cart",cart);updateCounts();
-  alert("Added to cart: "+p.name);
-}
-function toggleWishlist(id){
-  wishlist=wishlist.includes(id)?wishlist.filter(x=>x!==id):[...wishlist,id];
-  writeStore("orvix_wishlist",wishlist);renderProducts();renderWishlist();
-}
-function updateCounts(){
-  $("cartCount").textContent=cart.reduce((sum,item)=>sum+item.qty,0);
-  $("wishCount").textContent=wishlist.length;
-  $("statCart").textContent=cart.reduce((sum,item)=>sum+item.qty,0);
-}
-function showDetails(id){
-  const p=findProduct(id);if(!p)return;
-  alert(p.name+"\n\n"+p.description+"\n\nPrice: "+money(p.price)+"\nCategory: "+p.category+"\nSeller: "+(p.sellerName||"Marketplace seller")+"\n\nDemo listing: please verify details with the seller.");
-}
-function renderCart(){
-  const items=cart.map(item=>({...item,product:findProduct(item.id)})).filter(x=>x.product);
-  if(!items.length){$("cartItems").innerHTML='<div class="empty">Your cart is empty.<br>Explore products and add something you like.</div>';$("cartTotal").textContent=money(0);return;}
-  $("cartItems").innerHTML=items.map(item=>{
-    const p=item.product, img=safeImageUrl(p.imageUrl||"");
-    return `<div class="cart-row">
-      ${img?`<img src="${escapeHTML(img)}" alt="">`:`<div class="cart-emoji">${escapeHTML(p.emoji||"📦")}</div>`}
-      <div class="cart-info"><strong>${escapeHTML(p.name)}</strong><span class="muted">${money(p.price)} · Quantity: ${item.qty}</span>
-      <div class="actions"><button class="btn small" data-qty="${escapeHTML(p.id)}" data-delta="-1">−</button><button class="btn small" data-qty="${escapeHTML(p.id)}" data-delta="1">+</button><button class="btn small" data-remove="${escapeHTML(p.id)}">Remove</button></div></div>
-      <strong>${money(p.price*item.qty)}</strong></div>`;
-  }).join("");
-  $("cartTotal").textContent=money(items.reduce((sum,item)=>sum+item.product.price*item.qty,0));
-  $("cartItems").querySelectorAll("[data-qty]").forEach(b=>b.onclick=()=>{
-    const item=cart.find(x=>x.id===b.dataset.qty);if(!item)return;
-    item.qty+=Number(b.dataset.delta);if(item.qty<1)cart=cart.filter(x=>x.id!==b.dataset.qty);
-    writeStore("orvix_cart",cart);renderCart();updateCounts();
-  });
-  $("cartItems").querySelectorAll("[data-remove]").forEach(b=>b.onclick=()=>{
-    cart=cart.filter(x=>x.id!==b.dataset.remove);writeStore("orvix_cart",cart);renderCart();updateCounts();
-  });
-}
-function renderWishlist(){
-  const items=wishlist.map(findProduct).filter(Boolean);
-  $("wishlistGrid").innerHTML=items.length?items.map(productCard).join(""):'<div class="empty">Your wishlist is empty.<br>Tap ♡ on any product to save it.</div>';
-  $("wishlistGrid").querySelectorAll("[data-add]").forEach(b=>b.onclick=()=>addToCart(b.dataset.add));
-  $("wishlistGrid").querySelectorAll("[data-wish]").forEach(b=>b.onclick=()=>toggleWishlist(b.dataset.wish));
-  $("wishlistGrid").querySelectorAll("[data-view]").forEach(b=>b.onclick=()=>showDetails(b.dataset.view));
-}
-$("clearFilters").onclick=()=>{
-  selectedCategory="All";searchTerm="";$("searchInput").value="";
-  renderCategories();renderProducts();
-};
-$("checkoutBtn").onclick=()=>{
-  alert("Checkout is not connected yet. No payment or order has been made.");
-};
+  function publishPost() {
+    const field = document.getElementById("postText");
+    const text = field.value.trim();
+    if (!text) {
+      notify("Pehle apni post likho.");
+      field.focus();
+      return;
+    }
+    const article = document.createElement("article");
+    article.className = "post";
+    article.dataset.search = text.toLowerCase();
+    const head = document.createElement("div");
+    head.className = "post-head";
+    head.innerHTML = '<img class="avatar" src="https://i.pravatar.cc/100?img=12" alt=""><div class="post-user"><strong>Your profile</strong><small>@you · just now · local demo</small></div>';
+    const body = document.createElement("div");
+    body.className = "post-text";
+    body.textContent = text;
+    const actions = document.createElement("div");
+    actions.className = "post-actions";
+    actions.innerHTML = '<button class="like-btn" onclick="toggleLike(this)">♡ Like</button><button onclick="notify(\'Real comments ke liye database chahiye.\')">▢ Comment</button><button onclick="sharePost(this)">↗ Share</button>';
+    const stats = document.createElement("div");
+    stats.className = "post-stats";
+    stats.innerHTML = '<span class="like-count">♥ 0 likes</span><span>Demo post</span>';
+    article.append(head, body, stats, actions);
+    document.getElementById("feed").prepend(article);
+    field.value = "";
+    closeComposer();
+    showSection("Home");
+    notify("Post screen par add ho gayi. Abhi sirf isi browser session ka demo hai.");
+  }
 
-/* FIREBASE AUTH AND FIRESTORE */
-function configIsReady(){
-  return firebaseConfig.apiKey!=="PASTE_YOUR_API_KEY"&&
-    firebaseConfig.authDomain!=="PASTE_YOUR_AUTH_DOMAIN"&&
-    firebaseConfig.projectId!=="PASTE_YOUR_PROJECT_ID"&&
-    Boolean(firebaseConfig.appId);
-}
-function setConnection(message,success=false){
-  $("connectionStatus").textContent=message;
-  $("connectionStatus").className="notice"+(success?" success":"");
-}
-function authMessage(message){$("authMessage").textContent=message;}
-function openAuth(){ $("authModal").classList.add("open");authMessage(""); }
-function closeAuth(){ $("authModal").classList.remove("open"); }
-$("accountBtn").onclick=()=>currentUser?navigate("profile"):openAuth();
-$("closeAuth").onclick=closeAuth;
-$("authModal").addEventListener("click",e=>{if(e.target===$("authModal"))closeAuth();});
-$("loginBtn").onclick=async()=>{
-  if(!auth){authMessage("Firebase configure karo aur page refresh karo.");return;}
-  const email=$("authEmail").value.trim(),password=$("authPassword").value;
-  if(!email||!password){authMessage("Email aur password dono enter karo.");return;}
-  try{await signInWithEmailAndPassword(auth,email,password);closeAuth();}
-  catch(e){authMessage(e.message);}
-};
-$("signupBtn").onclick=async()=>{
-  if(!auth){authMessage("Pehle Firebase Web App configuration add karo.");return;}
-  const email=$("authEmail").value.trim(),password=$("authPassword").value;
-  if(!email||password.length<6){authMessage("Valid email aur kam az kam 6 characters ka password enter karo.");return;}
-  try{await createUserWithEmailAndPassword(auth,email,password);closeAuth();}
-  catch(e){authMessage(e.message);}
-};
-$("googleBtn").onclick=async()=>{
-  if(!auth){authMessage("Pehle Firebase configuration add karo.");return;}
-  try{await signInWithPopup(auth,new GoogleAuthProvider());closeAuth();}
-  catch(e){authMessage(e.message);}
-};
-$("resetPasswordBtn").onclick=async()=>{
-  if(!auth){authMessage("Pehle Firebase configuration add karo.");return;}
-  const email=$("authEmail").value.trim();
-  if(!email){authMessage("Pehle email address enter karo.");return;}
-  try{await sendPasswordResetEmail(auth,email);authMessage("Password reset email bhej di gayi hai. Inbox check karo.");}
-  catch(e){authMessage(e.message);}
-};
-$("logoutBtn").onclick=async()=>{
-  if(auth&&currentUser){try{await signOut(auth);}catch(e){alert(e.message);}}
-  else alert("Abhi koi Firebase account sign in nahi hai.");
-};
-$("saveProfile").onclick=async()=>{
-  const name=$("displayName").value.trim();
-  if(!currentUser){alert("Display name local profile ke liye nahi, Firebase profile ke liye save karne ko login zaroori hai.");return;}
-  try{await updateProfile(currentUser,{displayName:name});renderUser(currentUser);alert("Profile name updated.");}
-  catch(e){alert(e.message);}
-};
-function renderUser(user){
-  currentUser=user;
-  $("accountBtn").textContent=user?(user.displayName||user.email?.split("@")[0]||"Account"):"Login";
-  $("displayName").value=user?.displayName||"";
-  $("displayEmail").value=user?.email||"";
-  if(user)loadMyListings();
-  else $("myListings").textContent="Sign in to view your listings.";
-}
-$("openFirebaseGuide").onclick=()=>navigate("firebaseGuide");
+  const sectionContent = {
+    Explore: ["Explore ORVIX", "Discover creators, new interests and popular topics.", "Search ka use karke feed mein matching demo posts dhoond sakte ho."],
+    Reels: ["Reels & Videos", "Short videos aur creator content ke liye jagah.", "Video upload aur video playback system aglay phase mein add hoga."],
+    Messages: ["Messages", "Apni community se baat karne ki jagah.", "Real private chat, delivery status aur calls ke liye backend aur additional service chahiye."],
+    Notifications: ["Notifications", "Likes, comments aur follows ki updates.", "Abhi sample interface hai; real notifications baad mein connect hongi."],
+    Live: ["ORVIX Live", "Live streaming aur community sessions.", "Real live video ke liye streaming provider aur safety controls ki zaroorat hogi."],
+    Marketplace: ["ORVIX Marketplace", "Products explore karo aur sellers se connect ho.", "Listings, secure payments aur orders abhi implement nahi huay."],
+    News: ["News & Trends", "Apni duniya se updated raho.", "Real country-based news ke liye reliable news API aur source links connect karenge."],
+    Profile: ["Your Profile", "Apni identity aur posts ko ek jagah manage karo.", "Real profile editing aur photo upload aglay phase mein add honge."],
+    Settings: ["Settings", "ORVIX ke future account aur privacy controls.", "Firebase login, privacy controls aur logout abhi setup nahi huay."]
+  };
 
-if(configIsReady()){
-  try{
-    const app=initializeApp(firebaseConfig);
-    auth=getAuth(app);
-    db=getFirestore(app);
-    firebaseReady=true;
-    setConnection("Firebase SDK initialized. Authentication and Firestore are configured; verify your rules and sign-in settings.",true);
-    onAuthStateChanged(auth,user=>{
-      renderUser(user);
-      if(user){loadOnlineProducts();}
-      else{
-        if(unsubscribeProducts){unsubscribeProducts();unsubscribeProducts=null;}
-        products=[...demoProducts];renderProducts();
-      }
+  function showSection(name, button) {
+    activeSection = name;
+    const home = document.getElementById("homeSection");
+    const other = document.getElementById("otherSection");
+    if (name === "Home") {
+      home.classList.remove("hidden");
+      other.classList.add("hidden");
+    } else {
+      home.classList.add("hidden");
+      other.classList.remove("hidden");
+      const details = sectionContent[name] || sectionContent.Explore;
+      other.innerHTML = '<div class="empty-state"><div style="font-size:38px;color:var(--brand)">✦</div><h2></h2><p></p><p></p><button class="gradient-btn" onclick="showSection(\'Home\')">Back to Home</button></div>';
+      other.querySelector("h2").textContent = details[0];
+      other.querySelectorAll("p")[0].textContent = details[1];
+      other.querySelectorAll("p")[1].textContent = details[2];
+    }
+    document.querySelectorAll(".nav button, .mobile-nav button").forEach(b => b.classList.remove("active"));
+    if (button) button.classList.add("active");
+    document.querySelectorAll("#sideNav button").forEach(b => {
+      if (b.textContent.trim().includes(name) || (name === "Home" && b.textContent.includes("Home Feed"))) b.classList.add("active");
     });
-  }catch(e){
-    setConnection("Firebase initialization failed: "+e.message);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
-}else{
-  setConnection("Demo mode: replace the firebaseConfig placeholders with your real Firebase Web App values.");
-  $("sellerStatus").textContent="Demo mode. Add Firebase configuration and sign in to publish products online.";
-  renderUser(null);
-}
 
-function loadOnlineProducts(){
-  if(!db||!currentUser)return;
-  if(unsubscribeProducts)unsubscribeProducts();
-  // Live product listing will be enabled after secure rules are set.
-  import("https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js").then(({onSnapshot,collection})=>{
-    unsubscribeProducts=onSnapshot(collection(db,"products"),snapshot=>{
-      const online=snapshot.docs.map(doc=>({id:doc.id,...doc.data(),online:true}));
-      products=[...online,...demoProducts];
-      renderProducts();
-    },error=>{
-      console.error("Firestore products read failed:",error);
-      $("sellerStatus").textContent="Could not load online products. Check Firestore security rules.";
+  document.getElementById("searchInput").addEventListener("input", function () {
+    const query = this.value.trim().toLowerCase();
+    if (activeSection !== "Home") showSection("Home");
+    const posts = document.querySelectorAll("#feed .post");
+    let matches = 0;
+    posts.forEach(post => {
+      const text = (post.innerText + " " + (post.dataset.search || "")).toLowerCase();
+      const visible = !query || text.includes(query);
+      post.classList.toggle("hidden", !visible);
+      if (visible) matches++;
     });
-  }).catch(err=>console.error(err));
-}
-async function loadMyListings(){
-  if(!db||!currentUser){$("myListings").textContent="Sign in and configure Firebase to view your listings.";return;}
-  try{
-    const q=query(collection(db,"products"),where("sellerId","==",currentUser.uid));
-    const snap=await getDocs(q);
-    if(!snap.size){$("myListings").textContent="You have no online listings yet.";return;}
-    $("myListings").innerHTML=snap.docs.map(doc=>{
-      const p=doc.data();
-      return `<div class="cart-row"><div class="cart-info"><strong>${escapeHTML(p.name||"Product")}</strong><span class="muted">${money(p.price)} · ${escapeHTML(p.category||"Other")}</span></div></div>`;
-    }).join("");
-  }catch(e){
-    $("myListings").textContent="Listings could not be loaded. Firestore rules must permit a seller to read their own products.";
-  }
-}
-$("productForm").onsubmit=async e=>{
-  e.preventDefault();
-  if(!currentUser||!db){
-    alert("Product online publish karne ke liye Firebase configure karo aur login karo.");
-    return;
-  }
-  const name=$("pName").value.trim();
-  const category=$("pCategory").value;
-  const price=Number($("pPrice").value);
-  const stock=Number($("pStock").value)||0;
-  const description=$("pDescription").value.trim();
-  const imageUrl=safeImageUrl($("pImage").value.trim());
-  if(!name||!description||!Number.isFinite(price)||price<=0){
-    alert("Valid product name, description aur price enter karo.");return;
-  }
-  try{
-    await addDoc(collection(db,"products"),{
-      name,category,price,stock,description,
-      imageUrl:imageUrl||null,
-      sellerId:currentUser.uid,
-      sellerName:currentUser.displayName||currentUser.email||"Marketplace seller",
-      createdAt:serverTimestamp()
-    });
-    alert("Product Firestore mein publish ho gaya.");
-    e.target.reset();
-    renderMyListings();
-  }catch(err){
-    console.error(err);
-    alert("Product save nahi hua. Firestore security rules check karo.");
-  }
-};
+    let empty = document.getElementById("noResults");
+    if (!empty) {
+      empty = document.createElement("div");
+      empty.id = "noResults";
+      empty.className = "empty-state";
+      empty.textContent = "No matching demo posts found.";
+      document.getElementById("feed").append(empty);
+    }
+    empty.classList.toggle("hidden", matches !== 0);
+  });
 
-renderCategories();
-renderProducts();
-renderCart();
-renderWishlist();
-updateCounts();
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") closeComposer();
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "enter" &&
+        !document.getElementById("composerModal").classList.contains("hidden")) publishPost();
+  });
 </script>
 </body>
 </html>
