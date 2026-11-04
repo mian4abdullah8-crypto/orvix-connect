@@ -1,527 +1,424 @@
- 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#09090d">
-<title>ORVIX SOCIAL — MADE IN MIAN ABDULLAH</title>
-<style>
-:root{--bg:#09090d;--panel:#14141b;--line:#292933;--text:#f7f7fb;--muted:#a4a4b5;--pink:#ff3264;--purple:#8855ff}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif}
-button,input,textarea{font:inherit}
-button{cursor:pointer;border:0;border-radius:11px;padding:11px 14px;background:linear-gradient(120deg,var(--pink),var(--purple));color:white;font-weight:700}
-button:disabled{opacity:.5;cursor:wait}
-input,textarea{width:100%;background:#0b0b10;color:white;border:1px solid #363642;border-radius:10px;padding:12px;margin:7px 0 13px}
-label{font-size:13px;color:#d0d0da}
-.small{font-size:12px;color:var(--muted);line-height:1.5}
-.muted{color:var(--muted)}
-.hidden{display:none!important}
-.top{height:66px;position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:0 20px;background:#09090df2;border-bottom:1px solid var(--line);backdrop-filter:blur(16px)}
-.logo{font-size:21px;font-weight:950;letter-spacing:-.8px}.logo span{color:var(--pink)}
-.layout{max-width:1150px;margin:auto;padding:20px 14px;display:grid;grid-template-columns:205px minmax(0,700px);gap:25px;justify-content:center}
-.side{position:sticky;top:85px;height:max-content}
-.nav{width:100%;display:block;text-align:left;background:transparent;color:#ddd;border:1px solid transparent;margin:3px 0;padding:14px}
-.nav.active,.nav:hover{background:#1b1b24;border-color:#343440}
-.main{min-width:0}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:18px;margin-bottom:16px}
-h1,h2,h3,p{margin-top:0}
-h2{font-size:21px;margin-bottom:10px}
-.primary{background:linear-gradient(120deg,var(--pink),var(--purple))}
-.secondary{background:#292933}
-.row{display:flex;align-items:center;gap:12px}
-.avatar{width:44px;height:44px;border-radius:50%;object-fit:cover;background:#272731;border:1px solid #41414c;flex-shrink:0}
-.avatar.big{width:104px;height:104px;border:3px solid var(--purple)}
-.profile-head{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
-.stats{display:flex;gap:26px;margin:20px 0}
-.stat strong{display:block;font-size:21px}.stat span{font-size:12px;color:var(--muted)}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
-.tile{aspect-ratio:3/4;background:#22222b;position:relative;border-radius:8px;overflow:hidden}
-.tile video{width:100%;height:100%;object-fit:cover}
-.tile .tilelabel{position:absolute;bottom:7px;left:7px;background:#000a;border-radius:6px;padding:5px;font-size:11px}
-.feed{display:flex;flex-direction:column;gap:17px}
-.post{overflow:hidden;padding:0}
-.post-head{display:flex;align-items:center;gap:10px;padding:15px}
-.post-head .who{flex:1;min-width:0}
-.post-head .who strong{display:block;overflow-wrap:anywhere}
-.post-video{display:block;width:100%;max-height:76vh;aspect-ratio:9/12;object-fit:contain;background:#000}
-.post-actions{display:flex;align-items:center;gap:9px;padding:12px 14px}
-.post-actions button{background:#262630;padding:9px 12px}
-.post-actions button.liked{color:#ff4e79;border:1px solid #ff4e79}
-.caption{padding:0 15px 12px;line-height:1.5;overflow-wrap:anywhere}
-.comments{border-top:1px solid var(--line);padding:12px 14px}
-.comment-list{max-height:180px;overflow:auto}
-.comment{padding:7px 0;font-size:13px;overflow-wrap:anywhere}
-.comment strong{margin-right:5px}
-.comment-form{display:flex;gap:8px;margin-top:9px}
-.comment-form input{margin:0;min-width:0}
-.comment-form button{padding:9px 12px}
-.progress{height:7px;background:#343440;border-radius:9px;overflow:hidden;margin:10px 0}
-.progress div{height:100%;width:0;background:linear-gradient(90deg,var(--pink),var(--purple))}
-.notice{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;color:#ffd27d;margin-top:10px}
-.user-card{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
-.user-card:last-child{border-bottom:0}
-.user-info{flex:1;min-width:0}.user-info strong{display:block;overflow-wrap:anywhere}
-.auth{max-width:430px;margin:55px auto;padding:24px;background:var(--panel);border:1px solid var(--line);border-radius:18px}
-.auth h1{font-size:27px}
-.footer{text-align:center;color:#777;font-size:11px;padding:20px}
-@media(max-width:720px){
- .top{padding:0 12px}.logo{font-size:18px}
- .layout{display:block;padding:10px 8px 84px}
- .side{position:fixed;z-index:30;bottom:0;top:auto;left:0;right:0;display:flex;justify-content:space-around;background:#101016;border-top:1px solid var(--line);padding:5px 2px}
- .nav{width:auto;margin:0;padding:12px 9px;text-align:center;font-size:12px}
- .card{padding:14px}.post-video{max-height:70dvh}
- .auth{margin:25px 12px;padding:20px}
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VYROVA — Global Video</title>
+  <style>
+    :root{--bg:#0b0b0f;--panel:#15151d;--line:#292936;--text:#f7f7fb;--muted:#a5a5b5;--accent:#7658ff}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font:15px Arial,sans-serif}
+    button,input,textarea{font:inherit}
+    button{cursor:pointer;border:0;border-radius:10px;padding:11px 15px;background:var(--accent);color:white;font-weight:700}
+    button:disabled{opacity:.5;cursor:not-allowed}
+    input,textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;background:#0f0f15;color:white;margin:6px 0}
+    textarea{min-height:75px;resize:vertical}
+    header{position:sticky;top:0;z-index:5;background:#101016ed;border-bottom:1px solid var(--line);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .brand{font-size:23px;font-weight:900;letter-spacing:1px}.brand span{color:#9c87ff}
+    .tag{font-size:11px;color:var(--muted);margin-top:4px}
+    main{max-width:1050px;margin:auto;padding:22px 16px}
+    .layout{display:grid;grid-template-columns:280px minmax(0,1fr);gap:22px;align-items:start}
+    .panel,.post{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:17px;margin-bottom:16px}
+    h2,h3,p{margin-top:0}h2{font-size:20px}h3{font-size:17px}
+    .muted,.small{color:var(--muted)}.small{font-size:12px;line-height:1.6}
+    .stack{display:grid;gap:8px}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .row>*{min-width:0}.grow{flex:1}
+    .outline{background:transparent;border:1px solid var(--line)}
+    .danger{background:#642e39}.hidden{display:none!important}
+    .post video{display:block;width:100%;max-height:520px;background:black;border-radius:12px;margin:12px 0}
+    .post-title{font-size:18px;font-weight:700;margin:12px 0 7px;overflow-wrap:anywhere}
+    .post-desc{white-space:pre-wrap;overflow-wrap:anywhere;color:#dedee8}
+    .comments{border-top:1px solid var(--line);padding-top:12px;margin-top:12px}
+    .comment{padding:9px 0;border-bottom:1px solid #292936}
+    #status{padding:10px 14px;border-radius:10px;background:#222233;margin-bottom:15px;white-space:pre-wrap}
+    #progress{height:6px;background:#333;border-radius:8px;overflow:hidden;margin:8px 0}
+    #bar{height:100%;width:0;background:#9c87ff;transition:width .2s}
+    .empty{text-align:center;padding:35px 12px;color:var(--muted)}
+    footer{text-align:center;color:var(--muted);font-size:12px;padding:25px}
+    @media(max-width:740px){.layout{grid-template-columns:1fr}header{padding:12px 4%}.brand{font-size:20px}main{padding:15px 10px}}
+  </style>
 </head>
 <body>
-<header class="top">
+<header>
   <div>
-    <div class="logo">ORVIX<span> SOCIAL</span></div>
-    <div class="small">MADE IN MIAN ABDULLAH</div>
+    <div class="brand">▶ VYR<span>OVA</span></div>
+    <div class="tag">MADE IN MIAN ABDULLAH</div>
   </div>
-  <div id="topUser" class="row hidden">
-    <img id="topAvatar" class="avatar" alt="Profile">
-    <button id="logoutBtn" class="secondary">Logout</button>
+  <div class="row">
+    <span id="who" class="small">Guest</span>
+    <button id="logout" class="outline hidden">Log out</button>
   </div>
 </header>
 
-<section id="authScreen" class="auth">
-  <h1>Join ORVIX</h1>
-  <p class="small">Apna account banayein aur apni videos share karein.</p>
-  <label>Email address</label>
-  <input id="email" type="email" autocomplete="email" placeholder="you@example.com">
-  <label>Password</label>
-  <input id="password" type="password" autocomplete="current-password" placeholder="At least 6 characters">
-  <button id="loginBtn" style="width:100%;margin:5px 0">Login</button>
-  <button id="signupBtn" class="secondary" style="width:100%;margin:5px 0">Create account</button>
-  <div id="authMsg" class="notice"></div>
-</section>
+<main>
+  <div id="status">Connecting to Firebase…</div>
 
-<div id="app" class="layout hidden">
-  <aside class="side">
-    <button class="nav active" data-page="feed">⌂ &nbsp; Home feed</button>
-    <button class="nav" data-page="discover">◎ &nbsp; Discover people</button>
-    <button class="nav" data-page="upload">＋ &nbsp; Upload reel</button>
-    <button class="nav" data-page="profile">◉ &nbsp; My profile</button>
-  </aside>
+  <div class="layout">
+    <aside>
+      <section class="panel" id="authPanel">
+        <h2>Join VYROVA</h2>
+        <p class="small">Create an account to upload videos, like and comment.</p>
+        <form id="authForm" class="stack">
+          <input id="name" placeholder="Your display name (for signup)">
+          <input id="email" type="email" placeholder="Email address" required>
+          <input id="password" type="password" placeholder="Password (6+ characters)" minlength="6" required>
+          <button id="authSubmit" type="submit">Create account</button>
+          <button id="authMode" class="outline" type="button">Already have an account? Log in</button>
+        </form>
+      </section>
 
-  <main class="main">
-    <section id="page-feed">
-      <div class="card">
-        <h2>Your ORVIX feed</h2>
-        <p class="small">Real reels published by ORVIX users. Scroll to explore.</p>
+      <section class="panel hidden" id="uploadPanel">
+        <h2>Upload a video</h2>
+        <p class="small">MP4, WebM or MOV. Maximum 100 MB per video in this first version.</p>
+        <form id="uploadForm" class="stack">
+          <input id="videoTitle" placeholder="Video title" maxlength="120" required>
+          <textarea id="videoDesc" placeholder="Description (optional)" maxlength="2000"></textarea>
+          <input id="videoFile" type="file" accept="video/mp4,video/webm,video/quicktime" required>
+          <div id="progressWrap" class="hidden">
+            <div id="progress"><div id="bar"></div></div>
+            <div id="progressText" class="small">Preparing upload…</div>
+          </div>
+          <button id="uploadButton" type="submit">Upload video</button>
+        </form>
+      </section>
+
+      <section class="panel">
+        <h3>Creator earning</h3>
+        <p class="small">Ads revenue share, tips and memberships are planned for a later phase. No earnings are generated or promised in this version.</p>
+      </section>
+    </aside>
+
+    <section>
+      <div class="row" style="margin-bottom:14px">
+        <h2 class="grow" style="margin:0">Latest videos</h2>
+        <button id="refresh" class="outline">Refresh</button>
       </div>
-      <div id="feed" class="feed"><div class="card muted">Feed load ho rahi hai…</div></div>
+      <div id="feed"><div class="empty">Loading videos…</div></div>
     </section>
-
-    <section id="page-discover" class="hidden">
-      <div class="card">
-        <h2>Discover people</h2>
-        <p class="small">Firebase par registered profiles. Follow ya unfollow karein.</p>
-        <input id="userSearch" placeholder="Search username or name">
-        <div id="peopleList"></div>
-        <button id="loadPeopleBtn" class="secondary">Refresh people</button>
-        <div id="peopleMsg" class="notice"></div>
-      </div>
-    </section>
-
-    <section id="page-upload" class="hidden">
-      <div class="card">
-        <h2>Publish a reel</h2>
-        <p class="small">MP4 ya WebM video select karein. Upload ke waqt page band na karein.</p>
-        <label>Video file</label>
-        <input id="videoFile" type="file" accept="video/mp4,video/webm">
-        <label>Caption</label>
-        <textarea id="caption" rows="3" maxlength="2000" placeholder="What is happening in your video?"></textarea>
-        <div class="progress"><div id="uploadProgress"></div></div>
-        <div id="uploadPercent" class="small"></div>
-        <button id="publishBtn">Upload and publish</button>
-        <div id="uploadMsg" class="notice"></div>
-      </div>
-    </section>
-
-    <section id="page-profile" class="hidden">
-      <div class="card">
-        <div class="profile-head">
-          <img id="myAvatar" class="avatar big" alt="Your DP">
-          <div><h2 id="myName">My profile</h2><div id="myHandle" class="small"></div><p id="myBio" style="margin-top:9px"></p></div>
-        </div>
-        <div class="stats">
-          <div class="stat"><strong id="myPosts">0</strong><span>Reels</span></div>
-          <div class="stat"><strong id="myFollowers">0</strong><span>Followers</span></div>
-          <div class="stat"><strong id="myFollowing">0</strong><span>Following</span></div>
-        </div>
-        <button id="editProfileBtn" class="secondary">Edit profile</button>
-        <hr style="border-color:var(--line);margin:20px 0">
-        <h3>Profile picture</h3>
-        <input id="dpFile" type="file" accept="image/*">
-        <button id="dpBtn">Upload new DP</button>
-        <div id="dpMsg" class="notice"></div>
-      </div>
-      <div class="card"><h3>My reels</h3><div id="myGrid" class="grid"></div><div id="myEmpty" class="small">Abhi aapki koi reel nahi hai.</div></div>
-    </section>
-  </main>
-</div>
-<div class="footer">ORVIX SOCIAL · MADE IN MIAN ABDULLAH</div>
+  </div>
+</main>
+<footer>VYROVA · Global Video Platform · Phase 1</footer>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-import {
- getAuth,onAuthStateChanged,createUserWithEmailAndPassword,
- signInWithEmailAndPassword,signOut,updateProfile
-} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-import {
- getFirestore,collection,doc,getDoc,getDocs,setDoc,addDoc,deleteDoc,
- query,orderBy,limit,onSnapshot,serverTimestamp,where
-} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
-import {
- getStorage,ref,uploadBytesResumable,getDownloadURL
-} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-storage.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+  import {
+    getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+    onAuthStateChanged, updateProfile, signOut
+  } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+  import {
+    getFirestore, collection, addDoc, doc, setDoc, deleteDoc, getDoc,
+    getDocs, query, orderBy, limit, serverTimestamp, getCountFromServer
+  } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+  import {
+    getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject
+  } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-storage.js";
 
-/* Existing project: orvix-marketplace */
-const firebaseConfig = {
- apiKey: "AIzaSyD7vYjXA3xn_uonUIEkUUzx9Z4r5M2UOLk",
- authDomain: "orvix-marketplace.firebaseapp.com",
- projectId: "orvix-marketplace",
- storageBucket: "orvix-marketplace.firebasestorage.app",
- messagingSenderId: "644314808302",
- appId: "1:572b04a2dd09172790d8ff",
- measurementId: "G-XXZXX5F0HN"
-};
+  // Firebase Console > Project settings > Your apps > SDK setup and configuration
+  // Yahan apne project orvix-marketplace ki actual config paste karo.
+  const firebaseConfig = {
+    apiKey: "PASTE_YOUR_API_KEY",
+    authDomain: "orvix-marketplace.firebaseapp.com",
+    projectId: "orvix-marketplace",
+    storageBucket: "PASTE_YOUR_ACTUAL_STORAGE_BUCKET",
+    messagingSenderId: "PASTE_YOUR_MESSAGING_SENDER_ID",
+    appId: "PASTE_YOUR_APP_ID"
+  };
 
-const fb=initializeApp(firebaseConfig);
-const auth=getAuth(fb),db=getFirestore(fb),storage=getStorage(fb);
-const $=id=>document.getElementById(id);
-let me=null,myProfile={},reels=[],users=[];
-let unsubFeed=null,unsubProfile=null;
-let engagementUnsubs=[];
-let busy=false;
+  const $ = id => document.getElementById(id);
+  const status = (message, error = false) => {
+    $("status").textContent = message;
+    $("status").style.color = error ? "#ff9caa" : "#d7d3ff";
+  };
+  const escapeHTML = value => String(value ?? "").replace(/[&<>"']/g, c =>
+    ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])
+  );
+  const niceDate = value => value?.toDate
+    ? value.toDate().toLocaleDateString() : "Just now";
+  const friendlyError = error => {
+    const messages = {
+      "auth/email-already-in-use":"This email is already registered.",
+      "auth/invalid-credential":"Email or password is incorrect.",
+      "auth/weak-password":"Choose a stronger password.",
+      "auth/invalid-email":"Enter a valid email address.",
+      "auth/operation-not-allowed":"Enable Email/Password in Firebase Authentication.",
+      "storage/unauthorized":"Storage Rules blocked this action. Check the rules and billing plan.",
+      "storage/canceled":"Upload cancelled."
+    };
+    return messages[error.code] || error.message || "Something went wrong.";
+  };
 
-function msg(id,text,error=false){
- const e=$(id);if(!e)return;
- e.textContent=text;e.style.color=error?"#ff7777":"#ffd27d";
-}
-function esc(s=""){
- return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-}
-function fallbackAvatar(name="ORVIX"){
- return "https://ui-avatars.com/api/?name="+encodeURIComponent(name)+"&background=262633&color=ffffff&size=256";
-}
-function avatar(p={},name="ORVIX"){
- return p.photoURL||fallbackAvatar(p.displayName||name);
-}
-function count(n){n=Number(n)||0;return n>=1e6?(n/1e6).toFixed(1)+"M":n>=1e3?(n/1e3).toFixed(1)+"K":String(n);}
-function cleanFileName(s){return s.replace(/[^a-zA-Z0-9._-]/g,"_").slice(-90)||"file";}
-function showPage(name){
- ["feed","discover","upload","profile"].forEach(p=>$("page-"+p).classList.toggle("hidden",p!==name));
- document.querySelectorAll(".nav").forEach(b=>b.classList.toggle("active",b.dataset.page===name));
- if(name==="discover")loadPeople();
- if(name==="profile")renderMyProfile();
-}
-document.querySelectorAll(".nav").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
+  let app, auth, db, storage, currentUser = null, signupMode = true;
+  let busy = false;
 
-function friendlyError(e){
- const c=e?.code||"",m=e?.message||String(e);
- if(c.includes("auth/email-already-in-use"))return "Yeh email pehle registered hai. Login karein.";
- if(c.includes("auth/invalid-credential"))return "Email ya password sahi nahi.";
- if(c.includes("auth/weak-password"))return "Password kam az kam 6 characters ka rakhein.";
- if(c.includes("auth/unauthorized-domain"))return "Firebase Authentication mein is website ka domain Authorized domains mein add karein.";
- if(c.includes("storage/unauthorized"))return "Storage permission denied. Firebase Storage Rules check karein.";
- if(c.includes("storage/bucket-not-found"))return "Storage bucket nahi mila. Firebase Console mein Storage setup aur bucket name check karein.";
- if(c.includes("storage/quota-exceeded"))return "Firebase Storage quota/billing limit aa gayi hai.";
- if(c.includes("permission-denied"))return "Firestore permission denied. Neeche diye gaye Firestore Rules publish karein.";
- if(c.includes("unavailable"))return "Firebase unavailable hai. Internet connection check karein.";
- return m;
-}
+  try {
+    if (firebaseConfig.apiKey.startsWith("PASTE_") ||
+        firebaseConfig.storageBucket.startsWith("PASTE_") ||
+        firebaseConfig.appId.startsWith("PASTE_")) {
+      throw new Error("First paste your real Firebase web config in index.html.");
+    }
+    app = initializeApp(firebaseConfig);
+    auth = getAuth(app);
+    db = getFirestore(app);
+    storage = getStorage(app);
+    status("Firebase connected. Sign in or create an account.");
+  } catch (error) {
+    status(error.message, true);
+  }
 
-$("loginBtn").onclick=async()=>{
- msg("authMsg","Login ho raha hai…");
- try{await signInWithEmailAndPassword(auth,$("email").value.trim(),$("password").value);msg("authMsg","");}
- catch(e){msg("authMsg",friendlyError(e),true);}
-};
-$("signupBtn").onclick=async()=>{
- const email=$("email").value.trim(),password=$("password").value;
- if(!email||password.length<6)return msg("authMsg","Email likhein aur password kam az kam 6 characters rakhein.",true);
- msg("authMsg","Account ban raha hai…");
- try{await createUserWithEmailAndPassword(auth,email,password);msg("authMsg","Account ban gaya.");}
- catch(e){msg("authMsg",friendlyError(e),true);}
-};
-$("logoutBtn").onclick=()=>signOut(auth);
-
-async function ensureProfile(user){
- const r=doc(db,"users",user.uid),s=await getDoc(r);
- if(!s.exists()){
-  const base=(user.email||"orvix_user").split("@")[0].replace(/[^a-zA-Z0-9_]/g,"").slice(0,24)||"orvix_user";
-  await setDoc(r,{
-   uid:user.uid,displayName:user.displayName||base,
-   username:base,bio:"Welcome to my ORVIX profile!",
-   photoURL:user.photoURL||"",createdAt:serverTimestamp()
+  $("authMode").addEventListener("click", () => {
+    signupMode = !signupMode;
+    $("name").classList.toggle("hidden", !signupMode);
+    $("name").required = signupMode;
+    $("authSubmit").textContent = signupMode ? "Create account" : "Log in";
+    $("authMode").textContent = signupMode
+      ? "Already have an account? Log in"
+      : "New here? Create account";
   });
-  myProfile={uid:user.uid,displayName:user.displayName||base,username:base,bio:"Welcome to my ORVIX profile!",photoURL:user.photoURL||""};
- }else myProfile=s.data();
- paintProfile();
-}
-function paintProfile(){
- if(!me)return;
- const name=myProfile.displayName||me.displayName||"ORVIX User";
- $("myName").textContent=name;
- $("myHandle").textContent="@"+(myProfile.username||"orvix_user");
- $("myBio").textContent=myProfile.bio||"";
- $("myAvatar").src=avatar(myProfile,name);
- $("topAvatar").src=avatar(myProfile,name);
-}
 
-function startFeed(){
- if(unsubFeed)unsubFeed();
- unsubFeed=onSnapshot(query(collection(db,"reels"),orderBy("createdAt","desc"),limit(40)),snap=>{
-  reels=snap.docs.map(d=>({id:d.id,...d.data()}));
-  renderFeed();renderMyProfile();
- },e=>{$("feed").innerHTML='<div class="card notice">'+esc(friendlyError(e))+'</div>';});
-}
-function clearEngagement(){
- engagementUnsubs.forEach(f=>f());
- engagementUnsubs=[];
-}
-function renderFeed(){
- clearEngagement();
- if(!reels.length){
-  $("feed").innerHTML='<div class="card">Abhi koi real reel publish nahi hui. Upload Reel se pehli video share karein.</div>';
-  return;
- }
- $("feed").innerHTML=reels.map(r=>`
-  <article class="card post" data-post="${esc(r.id)}">
-   <div class="post-head">
-    <img class="avatar" src="${esc(r.photoURL||fallbackAvatar(r.displayName||r.username))}" alt="">
-    <div class="who"><strong>${esc(r.displayName||r.username||"ORVIX user")}</strong><span class="small">@${esc(r.username||"orvix_user")}</span></div>
-   </div>
-   <video class="post-video" src="${esc(r.videoURL)}" controls playsinline loop preload="metadata"></video>
-   <div class="post-actions">
-    <button class="likeBtn" data-like="${esc(r.id)}">♡ Like <span class="likeCount">0</span></button>
-    <button class="secondary" data-comments="${esc(r.id)}">💬 Comments</button>
-   </div>
-   ${r.caption?`<div class="caption"><strong>@${esc(r.username||"orvix_user")}</strong> ${esc(r.caption)}</div>`:""}
-   <div class="comments">
-    <div class="small comment-count">Loading comments…</div>
-    <div class="comment-list"></div>
-    <form class="comment-form" data-comment-form="${esc(r.id)}">
-     <input name="comment" maxlength="1000" placeholder="Write a comment…" required>
-     <button type="submit">Send</button>
-    </form>
-    <div class="small comment-msg"></div>
-   </div>
-  </article>`).join("");
-
- $("feed").querySelectorAll("video").forEach(v=>{
-  v.addEventListener("play",()=>{$("feed").querySelectorAll("video").forEach(other=>{if(other!==v)other.pause();});});
- });
- $("feed").querySelectorAll("[data-like]").forEach(b=>b.onclick=()=>toggleLike(b.dataset.like,b));
- $("feed").querySelectorAll("[data-comments]").forEach(b=>b.onclick=()=>{
-  const card=b.closest(".post");
-  card.querySelector(".comment-form input").focus();
- });
- $("feed").querySelectorAll("[data-comment-form]").forEach(form=>form.onsubmit=async ev=>{
-  ev.preventDefault();
-  const id=form.dataset.commentForm,input=form.elements.comment,text=input.value.trim();
-  if(!text)return;
-  const button=form.querySelector("button");button.disabled=true;
-  const out=form.closest(".post").querySelector(".comment-msg");
-  try{
-   await addDoc(collection(db,"reels",id,"comments"),{
-    uid:me.uid,username:myProfile.username||me.email.split("@")[0],
-    displayName:myProfile.displayName||me.displayName||"ORVIX User",
-    text,createdAt:serverTimestamp()
-   });
-   input.value="";out.textContent="Comment published.";
-  }catch(e){out.textContent=friendlyError(e);}
-  finally{button.disabled=false;}
- });
- reels.forEach(r=>watchEngagement(r.id));
-}
-function watchEngagement(id){
- const card=$("feed").querySelector(`[data-post="${CSS.escape(id)}"]`);
- if(!card)return;
- const likesRef=collection(db,"reels",id,"likes");
- const commentsRef=collection(db,"reels",id,"comments");
- engagementUnsubs.push(onSnapshot(likesRef,snap=>{
-  const b=card.querySelector(".likeBtn");if(!b)return;
-  b.querySelector(".likeCount").textContent=count(snap.size);
-  const mine=snap.docs.some(d=>d.id===me.uid);
-  b.classList.toggle("liked",mine);b.firstChild.textContent=mine?"♥ Liked ":"♡ Like ";
- },e=>console.error("Likes listener",e)));
- engagementUnsubs.push(onSnapshot(query(commentsRef,orderBy("createdAt","desc"),limit(30)),snap=>{
-  card.querySelector(".comment-count").textContent=snap.size+" recent comments";
-  const list=card.querySelector(".comment-list");
-  list.innerHTML=snap.docs.slice().reverse().map(d=>{
-   const c=d.data();return `<div class="comment"><strong>${esc(c.displayName||c.username||"User")}</strong>${esc(c.text||"")}</div>`;
-  }).join("");
- },e=>{card.querySelector(".comment-count").textContent="Comments: "+friendlyError(e);}));
-}
-async function toggleLike(id,button){
- button.disabled=true;
- try{
-  const likeRef=doc(db,"reels",id,"likes",me.uid);
-  const existing=await getDoc(likeRef);
-  if(existing.exists())await deleteDoc(likeRef);
-  else await setDoc(likeRef,{uid:me.uid,createdAt:serverTimestamp()});
- }catch(e){alert(friendlyError(e));}
- finally{button.disabled=false;}
-}
-
-async function uploadFile(path,file,onProgress){
- return new Promise((resolve,reject)=>{
-  const task=uploadBytesResumable(ref(storage,path),file,{contentType:file.type});
-  task.on("state_changed",s=>onProgress?.(Math.round(s.bytesTransferred/Math.max(1,s.totalBytes)*100)),reject,
-   async()=>{try{resolve(await getDownloadURL(task.snapshot.ref));}catch(e){reject(e);}});
- });
-}
-$("publishBtn").onclick=async()=>{
- if(busy)return;
- const file=$("videoFile").files[0],caption=$("caption").value.trim();
- if(!file)return msg("uploadMsg","Pehle video select karein.",true);
- if(!["video/mp4","video/webm"].includes(file.type))return msg("uploadMsg","MP4 ya WebM video select karein.",true);
- if(file.size>100*1024*1024)return msg("uploadMsg","Video 100 MB se chhoti honi chahiye.",true);
- busy=true;$("publishBtn").disabled=true;
- $("uploadProgress").style.width="0%";msg("uploadMsg","Upload shuru ho raha hai…");
- let path="";
- try{
-  path=`reels/${me.uid}/${Date.now()}_${cleanFileName(file.name)}`;
-  const videoURL=await uploadFile(path,file,p=>{
-   $("uploadProgress").style.width=p+"%";$("uploadPercent").textContent=p+"% uploaded";
-   msg("uploadMsg","Video upload ho rahi hai: "+p+"%");
+  $("authForm").addEventListener("submit", async event => {
+    event.preventDefault();
+    if (!auth || busy) return;
+    busy = true;
+    $("authSubmit").disabled = true;
+    try {
+      const email = $("email").value.trim();
+      const password = $("password").value;
+      if (signupMode) {
+        const name = $("name").value.trim();
+        if (!name) throw new Error("Enter a display name.");
+        const result = await createUserWithEmailAndPassword(auth, email, password);
+        await updateProfile(result.user, { displayName: name });
+        await setDoc(doc(db, "users", result.user.uid), {
+          displayName: name, email, createdAt: serverTimestamp()
+        });
+        status("Account created successfully.");
+      } else {
+        await signInWithEmailAndPassword(auth, email, password);
+        status("You are logged in.");
+      }
+      $("password").value = "";
+    } catch (error) {
+      status(friendlyError(error), true);
+    } finally {
+      busy = false;
+      $("authSubmit").disabled = false;
+    }
   });
-  await addDoc(collection(db,"reels"),{
-   uid:me.uid,username:myProfile.username||me.email.split("@")[0],
-   displayName:myProfile.displayName||me.displayName||"ORVIX User",
-   photoURL:myProfile.photoURL||me.photoURL||"",
-   videoURL,storagePath:path,caption,createdAt:serverTimestamp()
+
+  $("logout").addEventListener("click", async () => {
+    try { await signOut(auth); status("Logged out."); }
+    catch (error) { status(friendlyError(error), true); }
   });
-  $("videoFile").value="";$("caption").value="";
-  msg("uploadMsg","Reel successfully publish ho gayi.");
-  showPage("feed");
- }catch(e){msg("uploadMsg","Publish fail hua:\n"+friendlyError(e),true);console.error(e);}
- finally{busy=false;$("publishBtn").disabled=false;}
-};
 
-$("dpBtn").onclick=async()=>{
- const file=$("dpFile").files[0];
- if(!file)return msg("dpMsg","Pehle image select karein.",true);
- if(!file.type.startsWith("image/"))return msg("dpMsg","Image file select karein.",true);
- if(file.size>8*1024*1024)return msg("dpMsg","Image 8 MB se chhoti honi chahiye.",true);
- $("dpBtn").disabled=true;
- try{
-  const path=`profiles/${me.uid}/avatar_${Date.now()}_${cleanFileName(file.name)}`;
-  const photoURL=await uploadFile(path,file,p=>msg("dpMsg","Uploading "+p+"%"));
-  await setDoc(doc(db,"users",me.uid),{photoURL},{merge:true});
-  myProfile.photoURL=photoURL;paintProfile();
-  msg("dpMsg","Profile picture update ho gayi.");
- }catch(e){msg("dpMsg",friendlyError(e),true);}
- finally{$("dpBtn").disabled=false;}
-};
-
-$("editProfileBtn").onclick=async()=>{
- const name=prompt("Display name:",myProfile.displayName||"");
- if(name===null)return;
- const username=prompt("Username (letters, numbers, underscore):",myProfile.username||"");
- if(username===null)return;
- const bio=prompt("Bio:",myProfile.bio||"");
- if(bio===null)return;
- const u=username.trim().replace(/[^a-zA-Z0-9_]/g,"").slice(0,24);
- if(!name.trim()||!u)return alert("Name aur valid username zaroori hain.");
- try{
-  await setDoc(doc(db,"users",me.uid),{
-   displayName:name.trim().slice(0,60),username:u,bio:bio.trim().slice(0,250)
-  },{merge:true});
-  await updateProfile(me,{displayName:name.trim().slice(0,60)});
-  myProfile={...myProfile,displayName:name.trim().slice(0,60),username:u,bio:bio.trim().slice(0,250)};
-  paintProfile();alert("Profile save ho gayi.");
- }catch(e){alert(friendlyError(e));}
-};
-
-async function renderMyProfile(){
- if(!me)return;
- const mine=reels.filter(r=>r.uid===me.uid);
- $("myPosts").textContent=mine.length;
- $("myGrid").innerHTML=mine.map(r=>`<div class="tile"><video src="${esc(r.videoURL)}" muted playsinline controls preload="metadata"></video><div class="tilelabel">${esc((r.caption||"Reel").slice(0,35))}</div></div>`).join("");
- $("myEmpty").classList.toggle("hidden",mine.length>0);
- try{
-  const [followers,following]=await Promise.all([
-   getDocs(collection(db,"users",me.uid,"followers")),
-   getDocs(collection(db,"users",me.uid,"following"))
-  ]);
-  $("myFollowers").textContent=followers.size;
-  $("myFollowing").textContent=following.size;
- }catch(e){console.error(e);}
-}
-async function loadPeople(){
- if(!me)return;
- msg("peopleMsg","Profiles load ho rahe hain…");
- try{
-  const snap=await getDocs(query(collection(db,"users"),orderBy("createdAt","desc"),limit(50)));
-  users=snap.docs.map(d=>({id:d.id,...d.data()})).filter(u=>u.id!==me.uid);
-  renderPeople();msg("peopleMsg",users.length?"Registered users loaded.":"Abhi doosre profiles nahi mile.");
- }catch(e){msg("peopleMsg",friendlyError(e),true);}
-}
-function renderPeople(){
- const term=$("userSearch").value.trim().toLowerCase();
- const list=users.filter(u=>(u.displayName||"").toLowerCase().includes(term)||(u.username||"").toLowerCase().includes(term));
- $("peopleList").innerHTML=list.map(u=>`
-  <div class="user-card" data-person="${esc(u.id)}">
-   <img class="avatar" src="${esc(avatar(u))}" alt="">
-   <div class="user-info"><strong>${esc(u.displayName||"ORVIX user")}</strong><span class="small">@${esc(u.username||"orvix_user")}</span></div>
-   <button class="followBtn" data-follow="${esc(u.id)}">Follow</button>
-  </div>`).join("")||'<p class="small">Koi profile match nahi hui.</p>';
- list.forEach(u=>watchFollowButton(u.id));
-}
-function watchFollowButton(uid){
- const button=$("peopleList").querySelector(`[data-follow="${CSS.escape(uid)}"]`);
- if(!button)return;
- const followRef=doc(db,"users",me.uid,"following",uid);
- const stop=onSnapshot(followRef,snap=>{
-  if(!button.isConnected){stop();return;}
-  const following=snap.exists();
-  button.textContent=following?"Following · Unfollow":"Follow";
-  button.classList.toggle("secondary",following);
- },e=>console.error(e));
- button.onclick=async()=>{
-  button.disabled=true;
-  try{
-   const existing=await getDoc(followRef);
-   const otherFollowerRef=doc(db,"users",uid,"followers",me.uid);
-   if(existing.exists()){
-    await deleteDoc(followRef);
-    await deleteDoc(otherFollowerRef);
-   }else{
-    await setDoc(followRef,{uid,createdAt:serverTimestamp()});
-    await setDoc(otherFollowerRef,{uid:me.uid,createdAt:serverTimestamp()});
-   }
-   renderMyProfile();
-  }catch(e){alert(friendlyError(e));}
-  finally{button.disabled=false;}
- };
-}
-$("userSearch").addEventListener("input",renderPeople);
-$("loadPeopleBtn").onclick=loadPeople;
-
-onAuthStateChanged(auth,async user=>{
- me=user;
- $("authScreen").classList.toggle("hidden",!!user);
- $("app").classList.toggle("hidden",!user);
- $("topUser").classList.toggle("hidden",!user);
- if(unsubFeed){unsubFeed();unsubFeed=null;}
- if(unsubProfile){unsubProfile();unsubProfile=null;}
- clearEngagement();
- if(!user){reels=[];return;}
- try{
-  await ensureProfile(user);
-  unsubProfile=onSnapshot(doc(db,"users",user.uid),snap=>{
-   if(snap.exists()){myProfile=snap.data();paintProfile();renderMyProfile();}
+  onAuthStateChanged(auth, user => {
+    currentUser = user;
+    $("who").textContent = user ? (user.displayName || user.email) : "Guest";
+    $("authPanel").classList.toggle("hidden", !!user);
+    $("uploadPanel").classList.toggle("hidden", !user);
+    $("logout").classList.toggle("hidden", !user);
   });
-  startFeed();showPage("feed");
- }catch(e){msg("authMsg","Setup error:\n"+friendlyError(e),true);console.error(e);}
-});
+
+  async function loadFeed() {
+    if (!db) return;
+    $("feed").innerHTML = '<div class="empty">Loading videos…</div>';
+    try {
+      const q = query(collection(db, "videos"), orderBy("createdAt", "desc"), limit(50));
+      const result = await getDocs(q);
+      if (result.empty) {
+        $("feed").innerHTML = '<div class="empty">No videos yet. Sign in and upload the first video!</div>';
+        return;
+      }
+      const posts = result.docs.map(d => ({id:d.id, ...d.data()}));
+      $("feed").innerHTML = posts.map(post => `
+        <article class="post" data-post="${escapeHTML(post.id)}">
+          <div class="row">
+            <div class="grow">
+              <strong>${escapeHTML(post.userName || "Creator")}</strong>
+              <div class="small">${escapeHTML(niceDate(post.createdAt))}</div>
+            </div>
+            ${currentUser?.uid === post.uid
+              ? '<button class="danger" data-action="delete">Delete</button>' : ''}
+          </div>
+          <div class="post-title">${escapeHTML(post.title)}</div>
+          ${post.description ? `<div class="post-desc">${escapeHTML(post.description)}</div>` : ""}
+          <video controls preload="metadata" playsinline src="${escapeHTML(post.videoUrl)}"></video>
+          <div class="row">
+            <button class="outline" data-action="like">♡ Like <span class="like-count">…</span></button>
+            <button class="outline" data-action="comments">Comments</button>
+          </div>
+          <div class="comments hidden">
+            <form class="comment-form row">
+              <input class="comment-input grow" placeholder="Write a comment…" maxlength="500" required>
+              <button type="submit">Send</button>
+            </form>
+            <div class="comment-list small">Open comments to load them.</div>
+          </div>
+        </article>`).join("");
+
+      for (const post of posts) {
+        const card = document.querySelector(`[data-post="${post.id}"]`);
+        try {
+          const count = await getCountFromServer(collection(db, "videos", post.id, "likes"));
+          card.querySelector(".like-count").textContent = count.data().count;
+          if (currentUser) {
+            const liked = await getDoc(doc(db, "videos", post.id, "likes", currentUser.uid));
+            if (liked.exists()) card.querySelector('[data-action="like"]').textContent =
+              "♥ Liked " + count.data().count;
+          }
+        } catch (error) {
+          card.querySelector(".like-count").textContent = "—";
+        }
+      }
+    } catch (error) {
+      status("Feed error: " + friendlyError(error), true);
+      $("feed").innerHTML = '<div class="empty">Could not load videos. Check Firestore setup and rules.</div>';
+    }
+  }
+
+  $("refresh").addEventListener("click", loadFeed);
+
+  $("uploadForm").addEventListener("submit", async event => {
+    event.preventDefault();
+    if (!currentUser) return status("Please log in first.", true);
+    if (busy) return;
+    const file = $("videoFile").files[0];
+    if (!file) return status("Select a video first.", true);
+    if (file.size > 100 * 1024 * 1024) return status("Video limit is 100 MB.", true);
+    if (!["video/mp4","video/webm","video/quicktime"].includes(file.type))
+      return status("Choose an MP4, WebM or MOV video.", true);
+
+    busy = true;
+    $("uploadButton").disabled = true;
+    $("progressWrap").classList.remove("hidden");
+    $("bar").style.width = "0%";
+    let uploadedRef = null;
+
+    try {
+      const title = $("videoTitle").value.trim();
+      const description = $("videoDesc").value.trim();
+      const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+      const path = `videos/${currentUser.uid}/${Date.now()}_${safeName}`;
+      uploadedRef = ref(storage, path);
+      const task = uploadBytesResumable(uploadedRef, file, {contentType:file.type});
+
+      await new Promise((resolve, reject) => {
+        task.on("state_changed", snapshot => {
+          const percent = Math.round(snapshot.bytesTransferred / snapshot.totalBytes * 100);
+          $("bar").style.width = percent + "%";
+          $("progressText").textContent = `Uploading: ${percent}%`;
+        }, reject, resolve);
+      });
+
+      const videoUrl = await getDownloadURL(uploadedRef);
+      await addDoc(collection(db, "videos"), {
+        uid: currentUser.uid,
+        userName: currentUser.displayName || currentUser.email,
+        title, description, videoUrl, storagePath: path,
+        createdAt: serverTimestamp()
+      });
+
+      $("uploadForm").reset();
+      $("progressText").textContent = "Upload complete!";
+      status("Video uploaded and published.");
+      await loadFeed();
+    } catch (error) {
+      status("Upload failed: " + friendlyError(error), true);
+      $("progressText").textContent = "Upload failed.";
+      // If the database write failed after the file upload, the file may remain in Storage.
+    } finally {
+      busy = false;
+      $("uploadButton").disabled = false;
+    }
+  });
+
+  $("feed").addEventListener("click", async event => {
+    const button = event.target.closest("button[data-action]");
+    if (!button) return;
+    const card = button.closest("[data-post]");
+    const postId = card.dataset.post;
+    const action = button.dataset.action;
+
+    if (action === "like") {
+      if (!currentUser) return status("Log in to like videos.", true);
+      button.disabled = true;
+      try {
+        const likeRef = doc(db, "videos", postId, "likes", currentUser.uid);
+        const existing = await getDoc(likeRef);
+        if (existing.exists()) await deleteDoc(likeRef);
+        else await setDoc(likeRef, {uid:currentUser.uid, createdAt:serverTimestamp()});
+        await loadFeed();
+      } catch (error) { status(friendlyError(error), true); }
+      finally { button.disabled = false; }
+    }
+
+    if (action === "comments") {
+      const area = card.querySelector(".comments");
+      area.classList.toggle("hidden");
+      if (!area.classList.contains("hidden")) await loadComments(postId, card);
+    }
+
+    if (action === "delete") {
+      if (!currentUser || !confirm("Delete your video permanently?")) return;
+      button.disabled = true;
+      try {
+        const postRef = doc(db, "videos", postId);
+        const postSnap = await getDoc(postRef);
+        if (!postSnap.exists() || postSnap.data().uid !== currentUser.uid)
+          throw new Error("You can only delete your own video.");
+        const data = postSnap.data();
+        await deleteDoc(postRef);
+        if (data.storagePath) {
+          try { await deleteObject(ref(storage, data.storagePath)); }
+          catch (storageError) { console.warn("Storage cleanup needed:", storageError); }
+        }
+        status("Video deleted from the feed.");
+        await loadFeed();
+      } catch (error) { status(friendlyError(error), true); }
+      finally { button.disabled = false; }
+    }
+  });
+
+  async function loadComments(postId, card) {
+    const list = card.querySelector(".comment-list");
+    list.textContent = "Loading comments…";
+    try {
+      const q = query(collection(db, "videos", postId, "comments"),
+        orderBy("createdAt", "desc"), limit(30));
+      const result = await getDocs(q);
+      list.innerHTML = result.empty ? "No comments yet." : result.docs.map(d => {
+        const c = d.data();
+        return `<div class="comment"><strong>${escapeHTML(c.userName || "User")}</strong>
+          <div>${escapeHTML(c.text)}</div><span>${escapeHTML(niceDate(c.createdAt))}</span></div>`;
+      }).join("");
+    } catch (error) { list.textContent = "Could not load comments."; }
+  }
+
+  $("feed").addEventListener("submit", async event => {
+    if (!event.target.matches(".comment-form")) return;
+    event.preventDefault();
+    if (!currentUser) return status("Log in to comment.", true);
+    const form = event.target;
+    const card = form.closest("[data-post]");
+    const input = form.querySelector(".comment-input");
+    const text = input.value.trim();
+    if (!text) return;
+    const send = form.querySelector("button");
+    send.disabled = true;
+    try {
+      await addDoc(collection(db, "videos", card.dataset.post, "comments"), {
+        uid:currentUser.uid,
+        userName:currentUser.displayName || currentUser.email,
+        text, createdAt:serverTimestamp()
+      });
+      input.value = "";
+      await loadComments(card.dataset.post, card);
+      status("Comment posted.");
+    } catch (error) { status(friendlyError(error), true); }
+    finally { send.disabled = false; }
+  });
+
+  if (db) loadFeed();
 </script>
 </body>
 </html>
