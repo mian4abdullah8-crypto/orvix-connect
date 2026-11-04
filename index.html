@@ -2,832 +2,812 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VYROVA — Made in Mian Abdullah</title>
-  <meta name="theme-color" content="#09090b">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0f0f0f">
+<title>VYROVA — Watch, Create, Share</title>
 
-  <style>
-    :root {
-      --bg: #09090b;
-      --panel: #141419;
-      --panel2: #1d1d25;
-      --text: #f8fafc;
-      --muted: #a1a1aa;
-      --accent: #8b5cf6;
-      --border: #30303a;
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    button, input, textarea { font: inherit; }
-    button { cursor: pointer; }
-
-    header {
-      height: 68px;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 12px 20px;
-      background: rgba(9,9,11,.96);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .brand { font-size: 24px; font-weight: 900; letter-spacing: 1px; }
-    .brand span { color: #a78bfa; }
-    .small { font-size: 12px; color: var(--muted); margin-top: 4px; }
-    .header-right { display: flex; gap: 8px; align-items: center; }
-
-    .layout {
-      display: grid;
-      grid-template-columns: 210px minmax(0, 1fr);
-      max-width: 1300px;
-      margin: auto;
-    }
-
-    aside {
-      padding: 20px 12px;
-      border-right: 1px solid var(--border);
-      min-height: calc(100vh - 68px);
-    }
-
-    .navbtn {
-      display: block;
-      width: 100%;
-      text-align: left;
-      border: 0;
-      background: transparent;
-      color: var(--text);
-      padding: 14px;
-      margin-bottom: 5px;
-      border-radius: 12px;
-    }
-
-    .navbtn:hover, .navbtn.active { background: var(--panel2); }
-    main { min-width: 0; padding: 22px; }
-
-    .panel {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 18px;
-      margin-bottom: 20px;
-    }
-
-    h1, h2, h3 { margin-top: 0; }
-    h1 { font-size: 27px; }
-    h2 { font-size: 20px; }
-    p { line-height: 1.5; }
-
-    .muted { color: var(--muted); }
-    .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
-
-    .btn {
-      border: 0;
-      border-radius: 10px;
-      padding: 11px 15px;
-      background: var(--accent);
-      color: white;
-      font-weight: 700;
-    }
-
-    .btn:hover { filter: brightness(1.12); }
-    .btn.secondary { background: var(--panel2); border: 1px solid var(--border); }
-    .btn.danger { background: #991b1b; }
-    .btn:disabled { opacity: .55; cursor: not-allowed; }
-
-    input, textarea {
-      display: block;
-      width: 100%;
-      color: var(--text);
-      background: #0d0d12;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px;
-      margin: 9px 0;
-      outline: none;
-    }
-
-    input:focus, textarea:focus { border-color: var(--accent); }
-    input[type="file"] { padding: 9px; }
-    textarea { min-height: 80px; resize: vertical; }
-
-    .auth-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-    }
-
-    .video-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .video-card {
-      overflow: hidden;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      min-width: 0;
-    }
-
-    .video-card video {
-      display: block;
-      width: 100%;
-      max-height: 420px;
-      background: #000;
-      aspect-ratio: 16 / 9;
-    }
-
-    .video-info { padding: 15px; }
-    .video-info h3 { overflow-wrap: anywhere; margin-bottom: 7px; }
-    .video-meta { font-size: 12px; color: var(--muted); margin-bottom: 12px; }
-    .comments { margin-top: 15px; border-top: 1px solid var(--border); padding-top: 12px; }
-    .comment { padding: 8px 0; border-bottom: 1px solid #282832; overflow-wrap: anywhere; }
-    .hidden { display: none !important; }
-    .status { font-size: 14px; margin-top: 10px; overflow-wrap: anywhere; }
-    .success { color: #86efac; }
-    .error { color: #fca5a5; }
-    .empty { text-align: center; padding: 35px 10px; color: var(--muted); }
-    .profile-avatar {
-      width: 60px; height: 60px; border-radius: 50%;
-      background: #29213f; display: grid; place-items: center;
-      font-size: 24px; font-weight: 900;
-    }
-
-    footer {
-      padding: 25px 10px;
-      color: var(--muted);
-      text-align: center;
-      font-size: 12px;
-    }
-
-    @media (max-width: 760px) {
-      .layout { grid-template-columns: 1fr; }
-      aside {
-        min-height: auto;
-        display: flex;
-        gap: 5px;
-        overflow-x: auto;
-        padding: 8px;
-        border-right: 0;
-        border-bottom: 1px solid var(--border);
-      }
-      .navbtn { width: auto; white-space: nowrap; padding: 11px; }
-      main { padding: 12px; }
-      header { padding: 10px 12px; }
-      .brand { font-size: 20px; }
-      .video-grid, .auth-grid { grid-template-columns: 1fr; }
-      .header-right .small { display: none; }
-    }
-  </style>
+<style>
+:root{
+  --bg:#0f0f0f;--panel:#181818;--hover:#272727;--text:#f5f5f5;
+  --muted:#aaa;--border:#303030;--red:#ff2438;--blue:#a78bfa;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:Arial,Helvetica,sans-serif}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+button:disabled{opacity:.55;cursor:not-allowed}
+.topbar{height:66px;position:fixed;inset:0 0 auto;z-index:20;
+  display:flex;align-items:center;justify-content:space-between;gap:18px;
+  padding:0 24px;background:#0f0f0f;border-bottom:1px solid #222}
+.brand{display:flex;align-items:center;gap:10px;min-width:215px;
+  font-size:24px;font-weight:900;letter-spacing:.4px}
+.brand-icon{width:37px;height:27px;background:var(--red);border-radius:9px;
+  display:grid;place-items:center;color:white;font-size:17px}
+.brand span{color:#ff4051}
+.brand small{display:block;color:#aaa;font-size:9px;letter-spacing:1.2px;margin-top:4px}
+.searchbar{display:flex;align-items:center;max-width:680px;width:100%;gap:10px}
+.searchbar input{flex:1;min-width:0;border:1px solid #383838;background:#121212;
+  color:white;padding:12px 17px;border-radius:30px 0 0 30px;outline:none}
+.searchbar input:focus{border-color:#777}
+.searchbar button{border:1px solid #383838;background:#272727;color:white;
+  padding:11px 19px;border-radius:0 30px 30px 0;margin-left:-10px}
+.top-actions{display:flex;align-items:center;gap:10px}
+.btn{border:0;border-radius:22px;padding:10px 16px;background:var(--red);
+  color:white;font-weight:700}
+.btn:hover{filter:brightness(1.12)}
+.btn.dark{background:#272727;color:white}
+.btn.outline{background:transparent;border:1px solid #444}
+.btn.danger{background:#9f1d2a}
+.round{width:39px;height:39px;border:0;border-radius:50%;
+  background:#252525;color:white;font-size:17px}
+.avatar{width:35px;height:35px;border-radius:50%;background:#7436dc;
+  color:white;display:grid;place-items:center;font-weight:bold;overflow:hidden;
+  flex-shrink:0}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.sidebar{position:fixed;left:0;top:66px;bottom:0;width:225px;
+  padding:15px 12px;overflow-y:auto;border-right:1px solid #222}
+.nav{width:100%;display:flex;align-items:center;gap:18px;text-align:left;
+  border:0;background:transparent;color:#eee;padding:12px 14px;
+  margin-bottom:4px;border-radius:10px}
+.nav:hover,.nav.active{background:#292929}
+.nav.active{font-weight:bold}
+.nav .ico{font-size:19px;width:23px;text-align:center}
+.nav-heading{padding:16px 12px 8px;font-weight:bold}
+.side-note{font-size:12px;line-height:1.5;color:#888;padding:16px 12px}
+main{margin-left:225px;padding:88px 25px 35px;min-width:0}
+.chips{display:flex;gap:10px;overflow-x:auto;padding:0 0 20px;
+  scrollbar-width:thin}
+.chip{white-space:nowrap;border:0;border-radius:9px;padding:9px 15px;
+  background:#272727;color:white}
+.chip.active{background:#f5f5f5;color:#111;font-weight:bold}
+.hero{position:relative;display:flex;align-items:center;gap:20px;
+  min-height:210px;padding:28px 32px;margin-bottom:27px;overflow:hidden;
+  border:1px solid #39304c;border-radius:18px;
+  background:radial-gradient(ellipse at 80% 30%,#5726a8 0,#24113e 35%,#111 75%)}
+.hero h1{font-size:clamp(30px,4vw,52px);margin:10px 0}
+.hero p{color:#ddd;line-height:1.5;max-width:460px}
+.hero .eyebrow{font-weight:bold;color:#c4b5fd}
+.hero-art{font-size:clamp(65px,11vw,130px);margin-left:auto;
+  filter:drop-shadow(0 0 28px #a855f7)}
+.section-title{font-size:21px;margin:12px 0 18px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:25px 17px}
+.card{min-width:0}
+.player-wrap{position:relative;aspect-ratio:16/9;border-radius:12px;
+  overflow:hidden;background:#202020}
+.player-wrap video{width:100%;height:100%;object-fit:contain;background:#050505}
+.duration{position:absolute;right:8px;bottom:8px;background:#000c;
+  border-radius:4px;padding:4px 6px;font-size:12px}
+.card-details{display:flex;gap:11px;padding-top:12px}
+.card-title{font-size:15px;font-weight:bold;line-height:1.4;
+  margin:0 0 6px;overflow-wrap:anywhere}
+.meta{font-size:13px;line-height:1.6;color:var(--muted);overflow-wrap:anywhere}
+.card-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+.small-btn{border:0;border-radius:18px;padding:7px 10px;background:#272727;color:#eee}
+.comments{background:#191919;border:1px solid #333;border-radius:12px;
+  margin-top:12px;padding:12px}
+.comment{padding:9px 0;border-bottom:1px solid #333;overflow-wrap:anywhere}
+.field{display:block;width:100%;padding:12px;border:1px solid #444;
+  border-radius:10px;background:#121212;color:white;margin:8px 0 14px}
+textarea.field{min-height:90px;resize:vertical}
+.panel{max-width:800px;margin:0 auto 22px;padding:24px;
+  background:var(--panel);border:1px solid var(--border);border-radius:16px}
+.panel h1{margin-top:0}
+.muted{color:var(--muted);line-height:1.5}
+.auth-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.status{font-size:14px;line-height:1.5;margin:12px 0;overflow-wrap:anywhere}
+.error{color:#ff9c9c}.success{color:#8ce5a4}
+.hidden{display:none!important}
+.empty{padding:45px 15px;text-align:center;color:#aaa;
+  border:1px dashed #444;border-radius:15px;line-height:1.7}
+.profile-head{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.big-avatar{width:85px;height:85px;font-size:30px}
+.footer{text-align:center;color:#777;font-size:12px;padding:30px 0}
+@media(max-width:1150px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sidebar{width:190px}.brand{min-width:180px}main{margin-left:190px}}
+@media(max-width:760px){
+  .topbar{height:60px;padding:0 12px;gap:9px}
+  .brand{min-width:0;font-size:20px}.brand-icon{width:31px;height:24px}
+  .brand small{display:none}.searchbar{max-width:none}
+  .searchbar input{padding:10px;width:80px}.searchbar button{padding:10px 12px}
+  .top-actions .create-label{display:none}
+  .sidebar{top:auto;bottom:0;left:0;right:0;width:auto;height:62px;
+    display:flex;align-items:center;justify-content:space-around;
+    padding:4px;background:#111;border-top:1px solid #333;z-index:25}
+  .sidebar .nav{width:auto;display:flex;flex-direction:column;gap:3px;
+    padding:6px 8px;margin:0;font-size:10px;border-radius:8px}
+  .sidebar .nav .ico{font-size:19px;width:auto}
+  .sidebar .nav-heading,.sidebar .side-note,.sidebar .extra{display:none}
+  main{margin-left:0;padding:76px 12px 85px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 10px}
+  .hero{padding:20px;min-height:175px}.hero-art{display:none}
+  .hero h1{font-size:32px}.hero p{font-size:13px}
+  .auth-grid{grid-template-columns:1fr}
+}
+@media(max-width:420px){
+  .grid{grid-template-columns:1fr}
+  .searchbar button{display:none}
+  .searchbar input{border-radius:22px}
+  .topbar{gap:7px}.brand{font-size:17px}
+}
+</style>
 </head>
 
 <body>
-  <header>
-    <div>
-      <div class="brand">VYR<span>OVA</span></div>
-      <div class="small">MADE IN MIAN ABDULLAH</div>
-    </div>
-    <div class="header-right">
-      <span id="headerUser" class="small">Guest user</span>
-      <button id="headerAuthBtn" class="btn" type="button">Sign in</button>
-    </div>
-  </header>
-
-  <div class="layout">
-    <aside>
-      <button class="navbtn active" data-page="home">🏠 Home</button>
-      <button class="navbtn" data-page="upload">➕ Upload video</button>
-      <button class="navbtn" data-page="profile">👤 My profile</button>
-      <button class="navbtn" data-page="account">🔐 Account</button>
-    </aside>
-
-    <main>
-      <section id="page-home">
-        <div class="panel">
-          <h1>Discover videos 🌎</h1>
-          <p class="muted">Watch videos, share your creativity, and connect with creators around the world.</p>
-          <div class="row">
-            <button class="btn" id="homeUploadBtn" type="button">Upload a video</button>
-            <button class="btn secondary" id="refreshBtn" type="button">Refresh feed</button>
-          </div>
-        </div>
-
-        <div id="feedStatus" class="status muted" role="status">Loading videos…</div>
-        <div id="videoFeed" class="video-grid"></div>
-      </section>
-
-      <section id="page-upload" class="hidden">
-        <div class="panel">
-          <h1>Upload your video</h1>
-          <p class="muted">MP4, WebM ya QuickTime video select karein. Starter version mein maximum file size 100 MB hai.</p>
-          <div id="uploadGuestNotice" class="muted">Video upload karne ke liye pehle sign in karein.</div>
-          <form id="uploadForm">
-            <label for="videoTitle">Video title</label>
-            <input id="videoTitle" maxlength="120" required placeholder="Apni video ka title likhein">
-
-            <label for="videoDescription">Description (optional)</label>
-            <textarea id="videoDescription" maxlength="2000" placeholder="Video ke bare mein batayein"></textarea>
-
-            <label for="videoFile">Select video</label>
-            <input id="videoFile" type="file" accept="video/mp4,video/webm,video/quicktime" required>
-
-            <button id="uploadBtn" class="btn" type="submit">Upload video</button>
-            <div id="uploadStatus" class="status" role="status"></div>
-          </form>
-        </div>
-      </section>
-
-      <section id="page-profile" class="hidden">
-        <div class="panel">
-          <div class="row">
-            <div class="profile-avatar" id="avatar">V</div>
-            <div>
-              <h1 id="profileName">Your profile</h1>
-              <div id="profileEmail" class="muted">Sign in to view your account.</div>
-            </div>
-          </div>
-          <p id="profileStats" class="muted">Your uploaded videos will appear in the feed.</p>
-          <button id="profileAuthBtn" class="btn" type="button">Sign in</button>
-        </div>
-      </section>
-
-      <section id="page-account" class="hidden">
-        <div class="panel">
-          <h1>Account & settings</h1>
-          <p id="accountStatus" class="muted">You are not signed in.</p>
-          <button id="accountAuthBtn" class="btn" type="button">Sign in</button>
-          <button id="logoutBtn" class="btn danger hidden" type="button">Sign out</button>
-          <p class="muted">Your account is managed by Firebase Authentication.</p>
-        </div>
-      </section>
-
-      <section id="page-auth" class="hidden">
-        <div class="panel">
-          <h1>Welcome to VYROVA</h1>
-          <p class="muted">Google ya email ke zariye sign in karein.</p>
-
-          <div class="auth-grid">
-            <div>
-              <h2>Email account</h2>
-              <form id="loginForm">
-                <input id="loginEmail" type="email" autocomplete="email" required placeholder="Email address">
-                <input id="loginPassword" type="password" autocomplete="current-password" required minlength="6" placeholder="Password">
-                <button class="btn" type="submit">Sign in</button>
-              </form>
-              <p class="muted">Naya account banane ke liye neeche signup karein.</p>
-            </div>
-
-            <div>
-              <h2>Create account</h2>
-              <form id="signupForm">
-                <input id="signupName" maxlength="50" required placeholder="Your display name">
-                <input id="signupEmail" type="email" autocomplete="email" required placeholder="Email address">
-                <input id="signupPassword" type="password" autocomplete="new-password" required minlength="6" placeholder="Password (at least 6 characters)">
-                <button class="btn" type="submit">Create account</button>
-              </form>
-            </div>
-          </div>
-
-          <div class="panel" style="margin-top:18px;margin-bottom:0">
-            <h2>Quick sign in</h2>
-            <button id="googleBtn" class="btn secondary" type="button">🌐 Continue with Google</button>
-            <div id="authStatus" class="status" role="status"></div>
-          </div>
-        </div>
-      </section>
-
-      <footer>VYROVA · MADE IN MIAN ABDULLAH</footer>
-    </main>
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-icon">▶</div>
+    <div>VYR<span>OVA</span><small>MADE IN MIAN ABDULLAH</small></div>
   </div>
 
-  <script type="module">
-    import { initializeApp } from
-      "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-
-    import {
-      getAuth, onAuthStateChanged, createUserWithEmailAndPassword,
-      signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup,
-      signOut, updateProfile
-    } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-
-    import {
-      getFirestore, collection, addDoc, getDocs, doc, getDoc,
-      deleteDoc, query, orderBy, limit, serverTimestamp
-    } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
-
-    import {
-      getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject
-    } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-storage.js";
-
-    // IMPORTANT: Firebase Console > Project settings > Your apps
-    // Replace the placeholder values below with your actual web app config.
-    const firebaseConfig = {
-      apiKey: "PASTE_YOUR_API_KEY",
-      authDomain: "orvix-marketplace.firebaseapp.com",
-      projectId: "orvix-marketplace",
-      storageBucket: "PASTE_YOUR_ACTUAL_STORAGE_BUCKET",
-      messagingSenderId: "PASTE_YOUR_MESSAGING_SENDER_ID",
-      appId: "PASTE_YOUR_APP_ID"
-    };
-
-    const $ = (id) => document.getElementById(id);
-    let app, auth, db, storage, currentUser = null;
-    let loadedVideos = [];
-    let currentPage = "home";
-    let feedBusy = false;
-
-    function setStatus(id, message, type = "") {
-      const el = $(id);
-      el.textContent = message;
-      el.className = "status " + type;
-    }
-
-    function showPage(page) {
-      currentPage = page;
-      document.querySelectorAll("main > section").forEach(s => s.classList.add("hidden"));
-      $("page-" + page).classList.remove("hidden");
-
-      document.querySelectorAll(".navbtn").forEach(btn => {
-        btn.classList.toggle("active", btn.dataset.page === page);
-      });
-
-      if (page === "profile") updateProfileView();
-      if (page === "home") loadFeed();
-    }
-
-    document.querySelectorAll(".navbtn").forEach(btn => {
-      btn.addEventListener("click", () => showPage(btn.dataset.page));
-    });
-
-    $("homeUploadBtn").addEventListener("click", () => {
-      showPage(currentUser ? "upload" : "auth");
-    });
-
-    $("headerAuthBtn").addEventListener("click", () => {
-      showPage(currentUser ? "account" : "auth");
-    });
-
-    $("profileAuthBtn").addEventListener("click", () => {
-      showPage(currentUser ? "account" : "auth");
-    });
-
-    $("accountAuthBtn").addEventListener("click", () => showPage("auth"));
-    $("refreshBtn").addEventListener("click", loadFeed);
-
-    function updateProfileView() {
-      const name = currentUser?.displayName || "VYROVA creator";
-      $("profileName").textContent = name;
-      $("profileEmail").textContent = currentUser?.email || "Sign in to view your account.";
-      $("avatar").textContent = name.charAt(0).toUpperCase();
-      $("profileStats").textContent = currentUser
-        ? "Account UID: " + currentUser.uid
-        : "Sign in to upload videos and interact.";
-    }
-
-    function updateAuthUI() {
-      $("headerUser").textContent = currentUser
-        ? (currentUser.displayName || currentUser.email || "Signed in")
-        : "Guest user";
-
-      $("headerAuthBtn").textContent = currentUser ? "My account" : "Sign in";
-      $("accountStatus").textContent = currentUser
-        ? "Signed in as " + (currentUser.email || currentUser.uid)
-        : "You are not signed in.";
-
-      $("accountAuthBtn").classList.toggle("hidden", !!currentUser);
-      $("logoutBtn").classList.toggle("hidden", !currentUser);
-      $("uploadGuestNotice").textContent = currentUser
-        ? "Signed in. You can upload a video."
-        : "Video upload karne ke liye pehle sign in karein.";
-
-      $("uploadBtn").disabled = !currentUser;
-      $("profileAuthBtn").textContent = currentUser ? "Account settings" : "Sign in";
-      updateProfileView();
-    }
-
-    function readableError(error) {
-      const messages = {
-        "auth/email-already-in-use": "Yeh email pehle se registered hai.",
-        "auth/invalid-email": "Email address check karein.",
-        "auth/weak-password": "Password kam az kam 6 characters ka hona chahiye.",
-        "auth/invalid-credential": "Email ya password sahi nahi hai.",
-        "auth/popup-closed-by-user": "Google sign in window band ho gayi.",
-        "auth/popup-blocked": "Browser ne popup block kiya. Popups allow karke dobara try karein.",
-        "auth/unauthorized-domain": "Firebase Console mein is website ka domain Authorized domains mein add karein.",
-        "auth/operation-not-allowed": "Firebase Authentication mein yeh sign-in method enable karein.",
-        "permission-denied": "Firebase Firestore Rules check karein.",
-        "storage/unauthorized": "Firebase Storage Rules ya bucket configuration check karein.",
-        "storage/canceled": "Upload cancel ho gaya."
-      };
-
-      return messages[error.code] ||
-        ((error.code ? error.code + ": " : "") + (error.message || "Unknown error"));
-    }
-
-    $("loginForm").addEventListener("submit", async (event) => {
-      event.preventDefault();
-      try {
-        setStatus("authStatus", "Signing in…");
-        await signInWithEmailAndPassword(
-          auth, $("loginEmail").value.trim(), $("loginPassword").value
-        );
-        setStatus("authStatus", "Sign in successful.", "success");
-        showPage("home");
-      } catch (error) {
-        setStatus("authStatus", readableError(error), "error");
-      }
-    });
-
-    $("signupForm").addEventListener("submit", async (event) => {
-      event.preventDefault();
-      try {
-        setStatus("authStatus", "Creating account…");
-        const name = $("signupName").value.trim();
-        const credential = await createUserWithEmailAndPassword(
-          auth, $("signupEmail").value.trim(), $("signupPassword").value
-        );
-        await updateProfile(credential.user, { displayName: name });
-        currentUser = auth.currentUser;
-        updateAuthUI();
-        setStatus("authStatus", "Account created successfully.", "success");
-        showPage("home");
-      } catch (error) {
-        setStatus("authStatus", readableError(error), "error");
-      }
-    });
-
-    $("googleBtn").addEventListener("click", async () => {
-      try {
-        setStatus("authStatus", "Opening Google sign in…");
-        const provider = new GoogleAuthProvider();
-        provider.setCustomParameters({ prompt: "select_account" });
-        await signInWithPopup(auth, provider);
-        setStatus("authStatus", "Google sign in successful.", "success");
-        showPage("home");
-      } catch (error) {
-        setStatus("authStatus", readableError(error), "error");
-      }
-    });
-
-    $("logoutBtn").addEventListener("click", async () => {
-      try {
-        await signOut(auth);
-        showPage("home");
-      } catch (error) {
-        setStatus("authStatus", readableError(error), "error");
-      }
-    });
-
-    function escapeHTML(value = "") {
-      return String(value).replace(/[&<>"']/g, ch => ({
-        "&": "&amp;", "<": "&lt;", ">": "&gt;",
-        '"': "&quot;", "'": "&#39;"
-      })[ch]);
-    }
-
-    async function loadFeed() {
-      if (!db || feedBusy) return;
-      feedBusy = true;
-      $("feedStatus").textContent = "Loading videos…";
-
-      try {
-        const videosQuery = query(
-          collection(db, "videos"),
-          orderBy("createdAt", "desc"),
-          limit(40)
-        );
-        const snapshot = await getDocs(videosQuery);
-        loadedVideos = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-        renderFeed();
-        $("feedStatus").textContent = loadedVideos.length
-          ? loadedVideos.length + " recent videos"
-          : "Abhi koi video nahi. Pehli video upload karein!";
-      } catch (error) {
-        $("feedStatus").textContent =
-          "Feed load nahi hui: " + readableError(error) +
-          " — Firestore Rules aur database check karein.";
-      } finally {
-        feedBusy = false;
-      }
-    }
-
-    function renderFeed() {
-      const feed = $("videoFeed");
-      feed.replaceChildren();
-
-      if (!loadedVideos.length) {
-        const empty = document.createElement("div");
-        empty.className = "empty";
-        empty.textContent = "No videos yet. Be the first creator!";
-        feed.appendChild(empty);
-        return;
-      }
-
-      for (const video of loadedVideos) {
-        const card = document.createElement("article");
-        card.className = "video-card";
-
-        const player = document.createElement("video");
-        player.controls = true;
-        player.preload = "metadata";
-        player.playsInline = true;
-        player.src = video.videoUrl;
-        player.setAttribute("aria-label", video.title || "Uploaded video");
-
-        const info = document.createElement("div");
-        info.className = "video-info";
-
-        const title = document.createElement("h3");
-        title.textContent = video.title || "Untitled video";
-
-        const meta = document.createElement("div");
-        meta.className = "video-meta";
-        meta.textContent = "By " + (video.displayName || video.email || "VYROVA creator");
-
-        const description = document.createElement("p");
-        description.textContent = video.description || "";
-        description.style.whiteSpace = "pre-wrap";
-        description.style.overflowWrap = "anywhere";
-
-        const actions = document.createElement("div");
-        actions.className = "row";
-
-        const likeBtn = document.createElement("button");
-        likeBtn.className = "btn secondary";
-        likeBtn.textContent = "❤️ Like";
-        likeBtn.addEventListener("click", () => toggleLike(video, likeBtn));
-
-        const commentsBtn = document.createElement("button");
-        commentsBtn.className = "btn secondary";
-        commentsBtn.textContent = "💬 Comments";
-        commentsBtn.addEventListener("click", () => toggleComments(video.id, card));
-
-        actions.append(likeBtn, commentsBtn);
-
-        if (currentUser && currentUser.uid === video.uid) {
-          const deleteBtn = document.createElement("button");
-          deleteBtn.className = "btn danger";
-          deleteBtn.textContent = "Delete";
-          deleteBtn.addEventListener("click", () => deleteVideo(video));
-          actions.appendChild(deleteBtn);
-        }
-
-        info.append(title, meta, description, actions);
-        card.append(player, info);
-        feed.appendChild(card);
-      }
-    }
-
-    async function toggleLike(video, button) {
-      if (!currentUser) {
-        showPage("auth");
-        return;
-      }
-
-      button.disabled = true;
-      try {
-        const likeRef = doc(db, "videos", video.id, "likes", currentUser.uid);
-        const likeSnapshot = await getDoc(likeRef);
-
-        if (likeSnapshot.exists()) {
-          await deleteDoc(likeRef);
-          button.textContent = "❤️ Like";
-        } else {
-          await addDoc(
-            collection(db, "videos", video.id, "likes"),
-            { uid: currentUser.uid, createdAt: serverTimestamp() }
-          ).catch(async () => {
-            // The rules use the signed-in UID as the like document ID.
-            const { setDoc } = await import(
-              "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js"
-            );
-            await setDoc(likeRef, {
-              uid: currentUser.uid,
-              createdAt: serverTimestamp()
-            });
-          });
-          button.textContent = "💜 Liked";
-        }
-      } catch (error) {
-        alert("Like save nahi hua: " + readableError(error));
-      } finally {
-        button.disabled = false;
-      }
-    }
-
-    async function toggleComments(videoId, card) {
-      let area = card.querySelector(".comments");
-      if (area) {
-        area.remove();
-        return;
-      }
-
-      area = document.createElement("div");
-      area.className = "comments";
-      area.textContent = "Loading comments…";
-      card.querySelector(".video-info").appendChild(area);
-
-      try {
-        const commentsQuery = query(
-          collection(db, "videos", videoId, "comments"),
-          orderBy("createdAt", "asc"),
-          limit(50)
-        );
-        const snapshot = await getDocs(commentsQuery);
-        area.replaceChildren();
-
-        const list = document.createElement("div");
-        for (const item of snapshot.docs) {
-          const data = item.data();
-          const line = document.createElement("div");
-          line.className = "comment";
-          line.textContent = (data.displayName || "User") + ": " + data.text;
-          list.appendChild(line);
-        }
-        if (snapshot.empty) list.textContent = "Abhi koi comment nahi.";
-
-        const form = document.createElement("form");
-        const input = document.createElement("input");
-        input.maxLength = 500;
-        input.required = true;
-        input.placeholder = currentUser ? "Write a comment…" : "Sign in to comment";
-
-        const send = document.createElement("button");
-        send.className = "btn";
-        send.type = "submit";
-        send.textContent = "Post comment";
-        send.disabled = !currentUser;
-
-        form.append(input, send);
-        form.addEventListener("submit", async (event) => {
-          event.preventDefault();
-          if (!currentUser) return;
-          send.disabled = true;
-          try {
-            await addDoc(collection(db, "videos", videoId, "comments"), {
-              uid: currentUser.uid,
-              displayName: currentUser.displayName || currentUser.email || "Creator",
-              text: input.value.trim(),
-              createdAt: serverTimestamp()
-            });
-            await toggleComments(videoId, card);
-            await toggleComments(videoId, card);
-          } catch (error) {
-            alert("Comment save nahi hua: " + readableError(error));
-          } finally {
-            send.disabled = false;
-          }
-        });
-
-        area.append(list, form);
-      } catch (error) {
-        area.textContent = "Comments load nahi huay: " + readableError(error);
-      }
-    }
-
-    async function deleteVideo(video) {
-      if (!currentUser || currentUser.uid !== video.uid) return;
-      if (!confirm("Kya aap waqai apni video delete karna chahte hain?")) return;
-
-      try {
-        await deleteDoc(doc(db, "videos", video.id));
-        if (video.storagePath) {
-          try {
-            await deleteObject(ref(storage, video.storagePath));
-          } catch (storageError) {
-            console.warn("Video record deleted; file cleanup failed:", storageError);
-          }
-        }
-        await loadFeed();
-      } catch (error) {
-        alert("Delete nahi hua: " + readableError(error));
-      }
-    }
-
-    $("uploadForm").addEventListener("submit", async (event) => {
-      event.preventDefault();
-      if (!currentUser) {
-        showPage("auth");
-        return;
-      }
-
-      const file = $("videoFile").files[0];
-      const title = $("videoTitle").value.trim();
-      const description = $("videoDescription").value.trim();
-
-      if (!file) {
-        setStatus("uploadStatus", "Pehle video file select karein.", "error");
-        return;
-      }
-
-      const allowedTypes = ["video/mp4", "video/webm", "video/quicktime"];
-      if (!allowedTypes.includes(file.type)) {
-        setStatus("uploadStatus", "Sirf MP4, WebM ya QuickTime video select karein.", "error");
-        return;
-      }
-
-      if (file.size > 100 * 1024 * 1024) {
-        setStatus("uploadStatus", "Video maximum 100 MB ki honi chahiye.", "error");
-        return;
-      }
-
-      $("uploadBtn").disabled = true;
-      setStatus("uploadStatus", "Upload shuru ho raha hai…");
-
-      const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
-      const storagePath = `videos/${currentUser.uid}/${Date.now()}_${safeName}`;
-      const fileRef = ref(storage, storagePath);
-      const task = uploadBytesResumable(fileRef, file, { contentType: file.type });
-
-      task.on("state_changed",
-        snapshot => {
-          const percent = Math.round(
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          );
-          setStatus("uploadStatus", `Uploading… ${percent}%`);
-        },
-        error => {
-          $("uploadBtn").disabled = false;
-          setStatus("uploadStatus", readableError(error), "error");
-        },
-        async () => {
-          try {
-            const videoUrl = await getDownloadURL(task.snapshot.ref);
-            await addDoc(collection(db, "videos"), {
-              uid: currentUser.uid,
-              email: currentUser.email || "",
-              displayName: currentUser.displayName || "VYROVA creator",
-              title,
-              description,
-              videoUrl,
-              storagePath,
-              contentType: file.type,
-              size: file.size,
-              createdAt: serverTimestamp()
-            });
-
-            $("uploadForm").reset();
-            setStatus("uploadStatus", "Video upload ho gayi!", "success");
-            await loadFeed();
-            showPage("home");
-          } catch (error) {
-            setStatus("uploadStatus", readableError(error), "error");
-          } finally {
-            $("uploadBtn").disabled = !currentUser;
-          }
-        }
-      );
-    });
-
-    function checkConfig() {
-      const values = [
-        firebaseConfig.apiKey,
-        firebaseConfig.appId,
-        firebaseConfig.messagingSenderId,
-        firebaseConfig.storageBucket
-      ];
-      return values.every(v => v && !v.startsWith("PASTE_"));
-    }
-
-    if (!checkConfig()) {
-      $("feedStatus").textContent =
-        "Setup required: index.html mein Firebase web app config ke tamam placeholder values replace karein.";
-      $("authStatus").textContent =
-        "Firebase Console > Project settings > Your apps se actual config copy karein.";
-      $("uploadBtn").disabled = true;
+  <form id="searchForm" class="searchbar">
+    <input id="searchInput" type="search" placeholder="Search videos and creators..." aria-label="Search videos">
+    <button type="submit" aria-label="Search">⌕</button>
+  </form>
+
+  <div class="top-actions">
+    <button id="createTopBtn" class="btn dark" type="button">＋ <span class="create-label">Create</span></button>
+    <button id="topAuthBtn" class="round" type="button" title="Account">👤</button>
+    <div id="topAvatar" class="avatar hidden">V</div>
+  </div>
+</header>
+
+<aside class="sidebar">
+  <button class="nav active" data-page="home"><span class="ico">⌂</span>Home</button>
+  <button class="nav" data-page="shorts"><span class="ico">▣</span>Shorts</button>
+  <button class="nav" data-page="subscriptions"><span class="ico">▤</span>Subscriptions</button>
+  <div class="nav-heading extra">You　⌄</div>
+  <button class="nav extra" data-page="history"><span class="ico">◷</span>History</button>
+  <button class="nav extra" data-page="yourvideos"><span class="ico">▻</span>Your videos</button>
+  <button class="nav extra" data-page="liked"><span class="ico">♡</span>Liked videos</button>
+  <div class="nav-heading">Explore</div>
+  <button class="nav" data-category="Gaming"><span class="ico">🎮</span>Gaming</button>
+  <button class="nav" data-category="Music"><span class="ico">♫</span>Music</button>
+  <button class="nav" data-category="Sports"><span class="ico">⚽</span>Sports</button>
+  <button class="nav" data-category="News"><span class="ico">▤</span>News</button>
+  <button class="nav" data-category="Education"><span class="ico">🎓</span>Education</button>
+  <button class="nav" data-category="Technology"><span class="ico">⌘</span>Technology</button>
+  <div class="side-note">VYROVA<br>Watch · Create · Share<br><br>MADE IN MIAN ABDULLAH</div>
+</aside>
+
+<main>
+  <section id="page-home">
+    <div class="chips" id="categoryChips">
+      <button class="chip active" data-category="All">All</button>
+      <button class="chip" data-category="Gaming">Gaming</button>
+      <button class="chip" data-category="Music">Music</button>
+      <button class="chip" data-category="Sports">Sports</button>
+      <button class="chip" data-category="News">News</button>
+      <button class="chip" data-category="Education">Education</button>
+      <button class="chip" data-category="Technology">Technology</button>
+      <button class="chip" data-category="Entertainment">Entertainment</button>
+      <button class="chip" data-category="Recently Uploaded">Recently Uploaded</button>
+    </div>
+
+    <div class="hero">
+      <div>
+        <div class="eyebrow">WELCOME TO YOUR VIDEO WORLD</div>
+        <h1>Watch. Create. <span style="color:#ff4051">Share.</span></h1>
+        <p>Discover creators, publish your videos, and build your own community on VYROVA.</p>
+        <button id="exploreBtn" class="btn" type="button">▶ Explore videos</button>
+      </div>
+      <div class="hero-art" aria-hidden="true">▷</div>
+    </div>
+
+    <h2 class="section-title" id="feedHeading">Latest videos</h2>
+    <div id="feedStatus" class="status muted" role="status">Connecting to VYROVA…</div>
+    <div id="videoFeed" class="grid"></div>
+  </section>
+
+  <section id="page-upload" class="hidden">
+    <div class="panel">
+      <h1>＋ Upload a video</h1>
+      <p class="muted">Upload your own MP4, WebM, or QuickTime video. Maximum file size in this starter version: 100 MB.</p>
+      <form id="uploadForm">
+        <label for="videoTitle">Video title</label>
+        <input class="field" id="videoTitle" maxlength="120" required placeholder="Enter a clear title">
+        <label for="videoDescription">Description</label>
+        <textarea class="field" id="videoDescription" maxlength="2000" placeholder="Tell viewers about your video"></textarea>
+        <label for="videoCategory">Category</label>
+        <select class="field" id="videoCategory">
+          <option>Entertainment</option><option>Gaming</option><option>Music</option>
+          <option>Sports</option><option>News</option><option>Education</option>
+          <option>Technology</option><option>Other</option>
+        </select>
+        <label for="videoFile">Choose video file</label>
+        <input class="field" id="videoFile" type="file" accept="video/mp4,video/webm,video/quicktime" required>
+        <button id="uploadBtn" class="btn" type="submit">Upload video</button>
+        <div id="uploadStatus" class="status" role="status"></div>
+      </form>
+    </div>
+  </section>
+
+  <section id="page-auth" class="hidden">
+    <div class="panel">
+      <h1>Welcome to VYROVA</h1>
+      <p class="muted">Sign in to upload videos and interact with creators.</p>
+      <div class="auth-grid">
+        <div>
+          <h2>Sign in</h2>
+          <form id="loginForm">
+            <input class="field" id="loginEmail" type="email" autocomplete="email" required placeholder="Email address">
+            <input class="field" id="loginPassword" type="password" autocomplete="current-password" minlength="6" required placeholder="Password">
+            <button class="btn" type="submit">Sign in</button>
+          </form>
+        </div>
+        <div>
+          <h2>Create account</h2>
+          <form id="signupForm">
+            <input class="field" id="signupName" maxlength="50" required placeholder="Your display name">
+            <input class="field" id="signupEmail" type="email" autocomplete="email" required placeholder="Email address">
+            <input class="field" id="signupPassword" type="password" autocomplete="new-password" minlength="6" required placeholder="Password (minimum 6 characters)">
+            <button class="btn" type="submit">Create account</button>
+          </form>
+        </div>
+      </div>
+      <hr style="border-color:#333;margin:25px 0">
+      <button id="googleBtn" class="btn dark" type="button">🌐 Continue with Google</button>
+      <div id="authStatus" class="status" role="status"></div>
+    </div>
+  </section>
+
+  <section id="page-profile" class="hidden">
+    <div class="panel">
+      <div class="profile-head">
+        <div id="profileAvatar" class="avatar big-avatar">V</div>
+        <div>
+          <h1 id="profileName">Your channel</h1>
+          <p id="profileEmail" class="muted">Sign in to view your creator account.</p>
+          <p id="profileCount" class="muted"></p>
+        </div>
+      </div>
+      <hr style="border-color:#333;margin:24px 0">
+      <button id="profileUploadBtn" class="btn" type="button">＋ Upload video</button>
+      <button id="profileSignInBtn" class="btn dark" type="button">Sign in</button>
+    </div>
+    <h2 class="section-title">Your videos</h2>
+    <div id="myVideos" class="grid"></div>
+  </section>
+
+  <section id="page-account" class="hidden">
+    <div class="panel">
+      <h1>Account</h1>
+      <p id="accountInfo" class="muted">You are browsing as a guest.</p>
+      <button id="accountSignInBtn" class="btn" type="button">Sign in</button>
+      <button id="logoutBtn" class="btn danger hidden" type="button">Sign out</button>
+      <p class="muted">Your account is protected by Firebase Authentication. Keep your password private.</p>
+    </div>
+  </section>
+
+  <section id="page-shorts" class="hidden">
+    <div class="panel"><h1>Shorts</h1><p class="muted">Vertical short-video viewing is a future phase. Videos currently appear in the main feed.</p><button class="btn" data-goto="home">Browse videos</button></div>
+  </section>
+  <section id="page-subscriptions" class="hidden">
+    <div class="panel"><h1>Subscriptions</h1><p class="muted">Creator follow/subscription system will be added in the next phase. Your real uploaded videos are available on Home.</p><button class="btn" data-goto="home">Browse videos</button></div>
+  </section>
+  <section id="page-history" class="hidden">
+    <div class="panel"><h1>History</h1><p class="muted">Watch history is not saved in this starter version.</p><button class="btn" data-goto="home">Browse videos</button></div>
+  </section>
+  <section id="page-yourvideos" class="hidden">
+    <div class="panel"><h1>Your videos</h1><p class="muted">Manage your uploaded videos from your creator profile.</p><button class="btn" data-goto="profile">Open your channel</button></div>
+  </section>
+  <section id="page-liked" class="hidden">
+    <div class="panel"><h1>Liked videos</h1><p class="muted">This starter version saves likes, but does not yet build a separate liked-videos page.</p><button class="btn" data-goto="home">Browse videos</button></div>
+  </section>
+
+  <div class="footer">VYROVA · MADE IN MIAN ABDULLAH</div>
+</main>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import {
+  getAuth, onAuthStateChanged, createUserWithEmailAndPassword,
+  signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup,
+  signOut, updateProfile
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+import {
+  getFirestore, collection, addDoc, getDocs, getDoc, doc,
+  setDoc, deleteDoc, query, orderBy, limit, serverTimestamp,
+  onSnapshot
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+import {
+  getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-storage.js";
+
+/* Replace these values with your actual Firebase Web App config. */
+const firebaseConfig = {
+  apiKey: "PASTE_YOUR_API_KEY",
+  authDomain: "orvix-marketplace.firebaseapp.com",
+  projectId: "orvix-marketplace",
+  storageBucket: "PASTE_YOUR_ACTUAL_STORAGE_BUCKET",
+  messagingSenderId: "PASTE_YOUR_MESSAGING_SENDER_ID",
+  appId: "PASTE_YOUR_APP_ID"
+};
+
+const $ = id => document.getElementById(id);
+let auth, db, storage, currentUser = null;
+let allVideos = [];
+let activeCategory = "All";
+let searchTerm = "";
+let unsubscribeFeed = null;
+let loaded = false;
+
+function status(id, message, kind = "") {
+  const el = $(id);
+  if (!el) return;
+  el.textContent = message;
+  el.className = "status " + kind;
+}
+
+function friendlyError(error) {
+  const known = {
+    "auth/email-already-in-use": "This email already has an account.",
+    "auth/invalid-email": "Please check your email address.",
+    "auth/weak-password": "Use a password of at least 6 characters.",
+    "auth/invalid-credential": "The email or password is incorrect.",
+    "auth/popup-closed-by-user": "The Google sign-in window was closed.",
+    "auth/popup-blocked": "Your browser blocked the Google popup. Allow popups and try again.",
+    "auth/unauthorized-domain": "Add this website domain in Firebase Authentication > Settings > Authorized domains.",
+    "auth/operation-not-allowed": "Enable this sign-in method in Firebase Authentication.",
+    "permission-denied": "Firestore denied the request. Check your Firestore Rules.",
+    "storage/unauthorized": "Storage denied the upload. Check Storage Rules and bucket setup."
+  };
+  return known[error.code] || ((error.code || "Error") + ": " + (error.message || "Please try again."));
+}
+
+function showPage(page) {
+  document.querySelectorAll("main > section").forEach(el => el.classList.add("hidden"));
+  const section = $("page-" + page);
+  if (section) section.classList.remove("hidden");
+  document.querySelectorAll(".nav[data-page]").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.page === page);
+  });
+  if (page === "home") renderFeed();
+  if (page === "profile") renderProfile();
+}
+
+document.querySelectorAll(".nav[data-page]").forEach(btn =>
+  btn.addEventListener("click", () => showPage(btn.dataset.page))
+);
+document.querySelectorAll("[data-goto]").forEach(btn =>
+  btn.addEventListener("click", () => showPage(btn.dataset.goto))
+);
+
+$("exploreBtn").addEventListener("click", () => {
+  $("videoFeed").scrollIntoView({behavior:"smooth", block:"start"});
+});
+$("createTopBtn").addEventListener("click", () => showPage(currentUser ? "upload" : "auth"));
+$("topAuthBtn").addEventListener("click", () => showPage(currentUser ? "account" : "auth"));
+$("profileUploadBtn").addEventListener("click", () => showPage(currentUser ? "upload" : "auth"));
+$("profileSignInBtn").addEventListener("click", () => showPage("auth"));
+$("accountSignInBtn").addEventListener("click", () => showPage("auth"));
+
+document.querySelectorAll("[data-category]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    activeCategory = btn.dataset.category;
+    document.querySelectorAll(".chip").forEach(chip =>
+      chip.classList.toggle("active", chip.dataset.category === activeCategory)
+    );
+    showPage("home");
+    renderFeed();
+  });
+});
+
+$("searchForm").addEventListener("submit", event => {
+  event.preventDefault();
+  searchTerm = $("searchInput").value.trim().toLowerCase();
+  showPage("home");
+  renderFeed();
+});
+
+function updateAuthUI() {
+  $("topAuthBtn").classList.toggle("hidden", !!currentUser);
+  $("topAvatar").classList.toggle("hidden", !currentUser);
+  $("topAvatar").textContent = (currentUser?.displayName || currentUser?.email || "V").charAt(0).toUpperCase();
+  $("accountSignInBtn").classList.toggle("hidden", !!currentUser);
+  $("logoutBtn").classList.toggle("hidden", !currentUser);
+  $("accountInfo").textContent = currentUser
+    ? `Signed in as ${currentUser.displayName || currentUser.email}`
+    : "You are browsing as a guest.";
+  $("profileSignInBtn").classList.toggle("hidden", !!currentUser);
+  $("profileUploadBtn").disabled = !currentUser;
+  renderProfile();
+  renderFeed();
+}
+
+function renderProfile() {
+  const name = currentUser?.displayName || "Your channel";
+  $("profileName").textContent = name;
+  $("profileEmail").textContent = currentUser?.email || "Sign in to create your channel.";
+  $("profileAvatar").textContent = name.charAt(0).toUpperCase();
+  const mine = currentUser ? allVideos.filter(v => v.uid === currentUser.uid) : [];
+  $("profileCount").textContent = currentUser ? `${mine.length} uploaded video(s)` : "";
+  const holder = $("myVideos");
+  holder.replaceChildren();
+  if (!currentUser) {
+    holder.innerHTML = '<div class="empty">Sign in to view your creator account.</div>';
+    return;
+  }
+  if (!mine.length) {
+    holder.innerHTML = '<div class="empty">You have not uploaded any videos yet.<br>Use “Upload video” to publish your first video.</div>';
+    return;
+  }
+  mine.forEach(video => holder.appendChild(makeVideoCard(video)));
+}
+
+function makeVideoCard(video) {
+  const card = document.createElement("article");
+  card.className = "card";
+
+  const wrap = document.createElement("div");
+  wrap.className = "player-wrap";
+  const player = document.createElement("video");
+  player.controls = true;
+  player.preload = "metadata";
+  player.playsInline = true;
+  player.src = video.videoUrl;
+  player.setAttribute("aria-label", video.title || "Video");
+  wrap.appendChild(player);
+
+  const details = document.createElement("div");
+  details.className = "card-details";
+  const avatar = document.createElement("div");
+  avatar.className = "avatar";
+  avatar.textContent = (video.displayName || "V").charAt(0).toUpperCase();
+
+  const body = document.createElement("div");
+  body.style.minWidth = "0";
+  const title = document.createElement("h3");
+  title.className = "card-title";
+  title.textContent = video.title || "Untitled video";
+  const meta = document.createElement("div");
+  meta.className = "meta";
+  meta.textContent = `${video.displayName || "VYROVA creator"} · ${video.category || "Other"}`;
+  const description = document.createElement("div");
+  description.className = "meta";
+  description.textContent = video.description || "";
+
+  const actions = document.createElement("div");
+  actions.className = "card-actions";
+  const like = document.createElement("button");
+  like.className = "small-btn";
+  like.textContent = "♡ Like";
+  like.addEventListener("click", () => toggleLike(video, like));
+
+  const comment = document.createElement("button");
+  comment.className = "small-btn";
+  comment.textContent = "💬 Comments";
+  comment.addEventListener("click", () => openComments(video, card));
+
+  actions.append(like, comment);
+
+  if (currentUser && currentUser.uid === video.uid) {
+    const del = document.createElement("button");
+    del.className = "small-btn";
+    del.textContent = "Delete";
+    del.addEventListener("click", () => deleteVideo(video));
+    actions.appendChild(del);
+  }
+
+  body.append(title, meta, description, actions);
+  details.append(avatar, body);
+  card.append(wrap, details);
+  return card;
+}
+
+function renderFeed() {
+  const holder = $("videoFeed");
+  if (!holder) return;
+  holder.replaceChildren();
+
+  let filtered = allVideos.filter(video => {
+    const categoryOK = activeCategory === "All" ||
+      activeCategory === "Recently Uploaded" ||
+      (video.category || "Other").toLowerCase() === activeCategory.toLowerCase();
+    const searchOK = !searchTerm ||
+      [video.title, video.description, video.displayName, video.category]
+        .some(value => String(value || "").toLowerCase().includes(searchTerm));
+    return categoryOK && searchOK;
+  });
+
+  if (activeCategory === "Recently Uploaded") filtered = filtered.slice(0, 20);
+
+  $("feedHeading").textContent = searchTerm
+    ? `Search results for “${$("searchInput").value.trim()}”`
+    : activeCategory === "All" ? "Latest videos" : activeCategory;
+
+  if (!loaded) {
+    $("feedStatus").textContent = "Connecting to VYROVA…";
+    return;
+  }
+  $("feedStatus").textContent = `${filtered.length} video(s)`;
+  if (!filtered.length) {
+    const empty = document.createElement("div");
+    empty.className = "empty";
+    empty.innerHTML = "No matching videos yet.<br>Upload your own video to start the feed.";
+    holder.appendChild(empty);
+    return;
+  }
+  filtered.forEach(video => holder.appendChild(makeVideoCard(video)));
+}
+
+async function toggleLike(video, button) {
+  if (!currentUser) {
+    showPage("auth");
+    return;
+  }
+  button.disabled = true;
+  try {
+    const likeRef = doc(db, "videos", video.id, "likes", currentUser.uid);
+    const existing = await getDoc(likeRef);
+    if (existing.exists()) {
+      await deleteDoc(likeRef);
+      button.textContent = "♡ Like";
     } else {
+      await setDoc(likeRef, {uid: currentUser.uid, createdAt: serverTimestamp()});
+      button.textContent = "♥ Liked";
+    }
+  } catch (error) {
+    alert("Like save nahi hua: " + friendlyError(error));
+  } finally {
+    button.disabled = false;
+  }
+}
+
+async function openComments(video, card) {
+  const existing = card.querySelector(".comments");
+  if (existing) {
+    existing.remove();
+    return;
+  }
+
+  const box = document.createElement("div");
+  box.className = "comments";
+  box.textContent = "Loading comments…";
+  card.appendChild(box);
+
+  try {
+    const commentsQuery = query(
+      collection(db, "videos", video.id, "comments"),
+      orderBy("createdAt", "asc"), limit(50)
+    );
+    const snap = await getDocs(commentsQuery);
+    box.replaceChildren();
+
+    const list = document.createElement("div");
+    if (snap.empty) {
+      list.textContent = "No comments yet.";
+      list.className = "muted";
+    }
+    snap.forEach(item => {
+      const data = item.data();
+      const line = document.createElement("div");
+      line.className = "comment";
+      line.textContent = `${data.displayName || "Creator"}: ${data.text || ""}`;
+      list.appendChild(line);
+    });
+
+    const form = document.createElement("form");
+    const input = document.createElement("input");
+    input.className = "field";
+    input.maxLength = 500;
+    input.required = true;
+    input.placeholder = currentUser ? "Write a comment…" : "Sign in to comment";
+    input.disabled = !currentUser;
+
+    const submit = document.createElement("button");
+    submit.className = "btn";
+    submit.type = "submit";
+    submit.textContent = "Post comment";
+    submit.disabled = !currentUser;
+
+    form.append(input, submit);
+    form.addEventListener("submit", async event => {
+      event.preventDefault();
+      if (!currentUser) return;
+      submit.disabled = true;
       try {
-        app = initializeApp(firebaseConfig);
-        auth = getAuth(app);
-        db = getFirestore(app);
-        storage = getStorage(app);
-
-        onAuthStateChanged(auth, user => {
-          currentUser = user;
-          updateAuthUI();
-          renderFeed();
-          if (currentPage === "home") loadFeed();
+        await addDoc(collection(db, "videos", video.id, "comments"), {
+          uid: currentUser.uid,
+          displayName: currentUser.displayName || currentUser.email || "Creator",
+          text: input.value.trim(),
+          createdAt: serverTimestamp()
         });
-
-        loadFeed();
+        await openComments(video, card);
+        await openComments(video, card);
       } catch (error) {
-        $("feedStatus").textContent = "Firebase setup error: " + readableError(error);
+        alert("Comment save nahi hua: " + friendlyError(error));
+      } finally {
+        submit.disabled = false;
+      }
+    });
+
+    box.append(list, form);
+  } catch (error) {
+    box.textContent = "Comments load nahi huay: " + friendlyError(error);
+  }
+}
+
+async function deleteVideo(video) {
+  if (!currentUser || currentUser.uid !== video.uid) return;
+  if (!confirm("Are you sure you want to delete your video?")) return;
+  try {
+    await deleteDoc(doc(db, "videos", video.id));
+    if (video.storagePath) {
+      try {
+        await deleteObject(ref(storage, video.storagePath));
+      } catch (err) {
+        console.warn("Video record deleted, but file cleanup failed:", err);
       }
     }
-  </script>
+  } catch (error) {
+    alert("Video delete nahi hui: " + friendlyError(error));
+  }
+}
+
+$("loginForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  try {
+    status("authStatus", "Signing in…");
+    await signInWithEmailAndPassword(auth, $("loginEmail").value.trim(), $("loginPassword").value);
+    status("authStatus", "Signed in successfully.", "success");
+    showPage("home");
+  } catch (error) {
+    status("authStatus", friendlyError(error), "error");
+  }
+});
+
+$("signupForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  try {
+    status("authStatus", "Creating your account…");
+    const name = $("signupName").value.trim();
+    const credential = await createUserWithEmailAndPassword(
+      auth, $("signupEmail").value.trim(), $("signupPassword").value
+    );
+    await updateProfile(credential.user, {displayName:name});
+    currentUser = auth.currentUser;
+    updateAuthUI();
+    status("authStatus", "Your account has been created.", "success");
+    showPage("home");
+  } catch (error) {
+    status("authStatus", friendlyError(error), "error");
+  }
+});
+
+$("googleBtn").addEventListener("click", async () => {
+  try {
+    status("authStatus", "Opening Google sign in…");
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({prompt:"select_account"});
+    await signInWithPopup(auth, provider);
+    status("authStatus", "Google sign in successful.", "success");
+    showPage("home");
+  } catch (error) {
+    status("authStatus", friendlyError(error), "error");
+  }
+});
+
+$("logoutBtn").addEventListener("click", async () => {
+  try {
+    await signOut(auth);
+    showPage("home");
+  } catch (error) {
+    alert(friendlyError(error));
+  }
+});
+
+$("uploadForm").addEventListener("submit", event => {
+  event.preventDefault();
+  if (!currentUser) {
+    showPage("auth");
+    return;
+  }
+
+  const file = $("videoFile").files[0];
+  const title = $("videoTitle").value.trim();
+  const description = $("videoDescription").value.trim();
+  const category = $("videoCategory").value;
+
+  if (!file) {
+    status("uploadStatus", "Please select a video file.", "error");
+    return;
+  }
+  if (!["video/mp4","video/webm","video/quicktime"].includes(file.type)) {
+    status("uploadStatus", "Use an MP4, WebM, or QuickTime video.", "error");
+    return;
+  }
+  if (file.size > 100 * 1024 * 1024) {
+    status("uploadStatus", "Maximum file size is 100 MB.", "error");
+    return;
+  }
+
+  $("uploadBtn").disabled = true;
+  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+  const storagePath = `videos/${currentUser.uid}/${Date.now()}_${safeName}`;
+  const task = uploadBytesResumable(
+    ref(storage, storagePath), file, {contentType:file.type}
+  );
+
+  task.on("state_changed",
+    snapshot => {
+      const percent = Math.round(snapshot.bytesTransferred / snapshot.totalBytes * 100);
+      status("uploadStatus", `Uploading video… ${percent}%`);
+    },
+    error => {
+      $("uploadBtn").disabled = false;
+      status("uploadStatus", friendlyError(error), "error");
+    },
+    async () => {
+      try {
+        const videoUrl = await getDownloadURL(task.snapshot.ref);
+        await addDoc(collection(db, "videos"), {
+          uid: currentUser.uid,
+          email: currentUser.email || "",
+          displayName: currentUser.displayName || "VYROVA creator",
+          title, description, category, videoUrl, storagePath,
+          contentType:file.type,
+          size:file.size,
+          createdAt:serverTimestamp()
+        });
+        $("uploadForm").reset();
+        status("uploadStatus", "Video published successfully!", "success");
+        showPage("home");
+      } catch (error) {
+        status("uploadStatus", friendlyError(error), "error");
+      } finally {
+        $("uploadBtn").disabled = !currentUser;
+      }
+    }
+  );
+});
+
+function configReady() {
+  return ["apiKey","appId","messagingSenderId","storageBucket"].every(key => {
+    const value = firebaseConfig[key];
+    return value && !value.startsWith("PASTE_");
+  });
+}
+
+if (!configReady()) {
+  loaded = true;
+  $("feedStatus").textContent =
+    "Setup required: add your real Firebase Web App config values in this file.";
+  $("videoFeed").innerHTML =
+    '<div class="empty">VYROVA is ready for setup.<br>Paste your Firebase config to connect real accounts and videos.</div>';
+  $("googleBtn").disabled = true;
+  $("uploadBtn").disabled = true;
+} else {
+  try {
+    const app = initializeApp(firebaseConfig);
+    auth = getAuth(app);
+    db = getFirestore(app);
+    storage = getStorage(app);
+
+    const videosQuery = query(
+      collection(db, "videos"), orderBy("createdAt", "desc"), limit(100)
+    );
+    unsubscribeFeed = onSnapshot(videosQuery, snapshot => {
+      allVideos = snapshot.docs.map(item => ({id:item.id, ...item.data()}));
+      loaded = true;
+      renderFeed();
+      renderProfile();
+    }, error => {
+      loaded = true;
+      $("feedStatus").textContent = "Feed error: " + friendlyError(error);
+      renderFeed();
+    });
+
+    onAuthStateChanged(auth, user => {
+      currentUser = user;
+      updateAuthUI();
+    });
+  } catch (error) {
+    loaded = true;
+    $("feedStatus").textContent = "Firebase setup error: " + friendlyError(error);
+  }
+}
+</script>
 </body>
 </html>
